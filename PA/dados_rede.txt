@@ -1,0 +1,20 @@
+# Ponto de Acesso TP-Link
+essid: smartenergy
+password: 20222023lesi
+ip: 10.10.10.1/24
+mac address: 30-B5-C2-CD-AD-66
+user: admin
+password: admin
+dhcp server: 10.10.10.100 a 10.10.10.199
+
+
+# Raspberry Pi 4 B
+ip: 10.10.10.2
+mac address: 
+user:
+password:
+
+mysql:
+- database:
+- user:
+- password:
