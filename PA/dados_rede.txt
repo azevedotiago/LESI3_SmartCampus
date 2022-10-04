@@ -1,4 +1,4 @@
-# Ponto de Acesso TP-Link
+# Ponto de Acesso TP-Link TL-WA801N
 essid: smartenergy
 password: 20222023lesi
 ip: 10.10.10.1/24
@@ -18,3 +18,9 @@ mysql:
 - database:
 - user:
 - password:
+
+
+
+
+# kit arduino
+https://osoyoo.com/?p=32504
