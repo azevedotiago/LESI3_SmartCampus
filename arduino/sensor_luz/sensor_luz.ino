@@ -26,4 +26,10 @@ void loop() {
   // Atraso com valor do lightVal
   delay(lightVal);
 
+  // desliga o led Verde
+  digitalWrite(ledPin, LOW);
+ 
+  // Atraso com valor do lightVal
+  delay(lightVal);
+
 }
