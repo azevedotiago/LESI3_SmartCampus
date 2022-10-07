@@ -13,16 +13,17 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  //Acender 
+  //Acender vermelho
   digitalWrite(redPin,HIGH);
   delay(ledDelay);
   digitalWrite(redPin,LOW);
 
- digitalWrite(greenPin,HIGH);
- delay(ledDelay);
- digitalWrite(greenPin,LOW);
+  // acender verde
+  digitalWrite(greenPin,HIGH);
+  delay(ledDelay);
+  digitalWrite(greenPin,LOW);
 
+  // acender amarelo
   digitalWrite(yellowPin,HIGH);
   delay(2000);
   digitalWrite(yellowPin,LOW);
