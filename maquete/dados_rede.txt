@@ -1,11 +1,13 @@
-# Ponto de Acesso TP-Link TL-WA801N
+# Ponto de Acesso Edimax EW-7206APg
 essid: smartenergy
 password: 20222023lesi
 ip: 10.10.10.1/24
-mac address: 30-B5-C2-CD-AD-66
 user: admin
 password: admin
 dhcp server: 10.10.10.100 a 10.10.10.199
+mac address: 00:1f:1f:a2:1c:aa
+
+
 
 
 # Raspberry Pi 4 B
