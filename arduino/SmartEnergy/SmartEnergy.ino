@@ -212,7 +212,7 @@ void loop() {
             "HTTP/1.1 200 OK\r\n"
             "Content-Type: text/html\r\n"
             "Connection: close\r\n"  // the connection will be closed after completion of the response
-            "Refresh: 10\r\n"        // refresh the page automatically every 5 sec
+            "Refresh: 5\r\n"        // refresh the page automatically every 5 sec
             "\r\n");
           client.print("<!DOCTYPE HTML>\r\n");
           client.print("<html>\r\n");
