@@ -17,6 +17,8 @@
 #include "SoftwareSerial.h"
 SoftwareSerial softserial(4, 5);  // RX, TX
 //#endif
+byte mac[6];
+IPAddress ip;
 
 char ssid[] = "smartenergy";   // your network SSID (name)
 char pass[] = "20222023lesi";  // your network password
@@ -27,6 +29,10 @@ int reqCount = 0;  // number of requests received
 #define LED 6 // pino do LED, porta PWM
 #define LDR 0 // pino de input do sensor de luz
 #define PIR 3 // pino de input do sensor de movimento
+#define LEDWIFION 10  // wireless conetado e a funcionar
+#define LEDWIFIOFF 11 // wireless nao conetado
+#define MAXLED 32
+
 int valLDR = 0;
 int valPIR = 0; 
 int statePIR = LOW; // sem deteção de movimento
@@ -80,15 +86,31 @@ void test() {
   }
   valPIR = LOW;
 
+  Serial.print("\n\n- Network LEDs... "); 
+  for(int i=0; i<=10; i++) {
+    analogWrite(LEDWIFION, 0);
+    analogWrite(LEDWIFIOFF, MAXLED);
+    delay(100);
+    analogWrite(LEDWIFION, MAXLED);
+    analogWrite(LEDWIFIOFF, 0);
+    delay(100);
+  }
+  analogWrite(LEDWIFION, 0);
+  analogWrite(LEDWIFIOFF, 0);
+
   Serial.println("\n");
 }
 
 
 void setup() {
   pinMode(LED, OUTPUT);
+  pinMode(LEDWIFION, OUTPUT);
+  pinMode(LEDWIFIOFF, OUTPUT);
   pinMode(LDR, INPUT);
   pinMode(PIR, INPUT);
   analogWrite(LED, 0); // Desliga os LEDs
+  analogWrite(LEDWIFION, 0);
+  analogWrite(LEDWIFIOFF, MAXLED);
 
 
   // initialize serial for debugging
@@ -101,6 +123,7 @@ void setup() {
   test();
 
   // initialize serial for ESP module
+  analogWrite(LEDWIFIOFF, MAXLED);
   Serial.println("\n[Network connection]");
   softserial.begin(115200);
   softserial.write("AT+CIOBAUD=9600\r\n");
@@ -119,14 +142,25 @@ void setup() {
 
   // attempt to connect to WiFi network
   while (status != WL_CONNECTED) {
+    analogWrite(LED, 255);
+    delay(20);
+    analogWrite(LED, 64);
+    delay(20);
+    analogWrite(LED, 255);
+    delay(20);
+    analogWrite(LED, 64);
+    delay(20);
     Serial.print("Attempting to connect to WPA SSID: ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network
     status = WiFi.begin(ssid, pass);
+    analogWrite(LED, 0);
   }
 
   Serial.println("You're connected to the network");
   printWifiStatus();
+  analogWrite(LEDWIFION, MAXLED);
+  analogWrite(LEDWIFIOFF, 0);
 
   // start the web server on port 80
   server.begin();
@@ -157,12 +191,21 @@ void loop() {
             "HTTP/1.1 200 OK\r\n"
             "Content-Type: text/html\r\n"
             "Connection: close\r\n"  // the connection will be closed after completion of the response
-            "Refresh: 20\r\n"        // refresh the page automatically every 20 sec
+            "Refresh: 10\r\n"        // refresh the page automatically every 5 sec
             "\r\n");
           client.print("<!DOCTYPE HTML>\r\n");
           client.print("<html>\r\n");
-          client.print("<h4>ESP8266 Wifi IoT lesson 1</h4>\r\n");
-          client.print("<h1>Hello World!</h1>\r\n");
+          client.print("<h4>Smart Energy Campus</h4>\r\n");
+          client.print("<h1>Lamp Post</h1>\r\n");
+          client.print("<h2>Network</h2>\r\n");
+          client.print("Mac Address: ");
+          client.print(mac[5],HEX);client.print(":");client.print(mac[4],HEX);client.print(":");client.print(mac[3],HEX);client.print(":");
+          client.print(mac[2],HEX);client.print(":");client.print(mac[1],HEX);client.print(":");client.print(mac[0],HEX);
+          client.print("<br>\r\n");
+          client.print("IP Address: ");
+          client.print(ip);
+          client.print("<br>\r\n");
+          client.print("<h2>Status</h2>\r\n");
           client.print("Requests received: ");
           client.print(++reqCount);
           client.print("<br>\r\n");
@@ -196,9 +239,23 @@ void printWifiStatus() {
   Serial.println(WiFi.SSID());
 
   // print your WiFi shield's IP address
-  IPAddress ip = WiFi.localIP();
+  ip = WiFi.localIP();
   Serial.print("IP Address: ");
   Serial.println(ip);
+  WiFi.macAddress(mac);
+  Serial.print("MAC: ");
+  Serial.print(mac[5],HEX);
+  Serial.print(":");
+  Serial.print(mac[4],HEX);
+  Serial.print(":");
+  Serial.print(mac[3],HEX);
+  Serial.print(":");
+  Serial.print(mac[2],HEX);
+  Serial.print(":");
+  Serial.print(mac[1],HEX);
+  Serial.print(":");
+  Serial.println(mac[0],HEX);
+
 
   // print where to go in the browser
   Serial.println();
