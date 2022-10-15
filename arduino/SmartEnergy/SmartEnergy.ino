@@ -194,7 +194,7 @@ void outputs() {
   if (valLDR <= 0 ) valLDR=0;
   if (valLDR >= 999) valLDR=999;
   int valLDRnew = (int) valLDR / 10; // converter para percentagem 0% a 100%
-  int valLEDnew =  (int) (255  * (valLDRnew / 100));
+  int valLEDnew =  (int) (255  * valLDRnew / 100);
  // if (valLEDnew < 0 ) valLEDnew=0;
  // if (valLEDnew > 254) valLEDnew=254;
 
