@@ -20,8 +20,12 @@ SoftwareSerial softserial(4, 5);  // RX, TX
 byte mac[6];
 IPAddress ip;
 
-char ssid[] = "smartenergy";   // your network SSID (name)
-char pass[] = "20222023lesi";  // your network password
+//char ssid[] = "smartenergy";   // your network SSID (name)
+//char pass[] = "20222023lesi";  // your network password
+
+char ssid[] = "digitalchip";   // your network SSID (name)
+char pass[] = "A253311201";  // your network password
+
 int status = WL_IDLE_STATUS;
 int reqCount = 0;  // number of requests received
 
@@ -33,6 +37,7 @@ int reqCount = 0;  // number of requests received
 #define LEDWIFIOFF 11 // wireless nao conetado
 #define MAXLED 32
 
+int valLED = 0;
 int valLDR = 0;
 int valPIR = 0; 
 int statePIR = LOW; // sem deteção de movimento
@@ -143,13 +148,22 @@ void setup() {
   // attempt to connect to WiFi network
   while (status != WL_CONNECTED) {
     analogWrite(LED, 255);
-    delay(20);
+    analogWrite(LEDWIFION, MAXLED);
+    analogWrite(LEDWIFIOFF, 0);
+    delay(100);
     analogWrite(LED, 64);
-    delay(20);
+    analogWrite(LEDWIFION, 0);
+    analogWrite(LEDWIFIOFF, MAXLED);
+    delay(100);
     analogWrite(LED, 255);
-    delay(20);
+    analogWrite(LEDWIFION, MAXLED);
+    analogWrite(LEDWIFIOFF, 0);
+    delay(100);
     analogWrite(LED, 64);
-    delay(20);
+    analogWrite(LEDWIFION, 0);
+    analogWrite(LEDWIFIOFF, MAXLED);
+    delay(100);
+
     Serial.print("Attempting to connect to WPA SSID: ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network
@@ -166,8 +180,15 @@ void setup() {
   server.begin();
 }
 
+void inputs() {
+  valLDR = analogRead(LDR);
+  valPIR = digitalRead(PIR);
+}
 
 void loop() {
+
+  // funcao para fazer a leitura de todos os inputs (sensores)
+  inputs();
 
   // listen for incoming clients
   WiFiEspClient client = server.available();
@@ -206,6 +227,10 @@ void loop() {
           client.print(ip);
           client.print("<br>\r\n");
           client.print("<h2>Status</h2>\r\n");
+          client.print("Light value: "); client.print(valLED); client.print("<br>\r\n");
+          client.print("LDR value: "); client.print(valLDR); client.print("<br>\r\n");
+          client.print("PIR value: "); client.print(valPIR); client.print("<br>\r\n");
+          client.print("<br>\r\n");
           client.print("Requests received: ");
           client.print(++reqCount);
           client.print("<br>\r\n");
