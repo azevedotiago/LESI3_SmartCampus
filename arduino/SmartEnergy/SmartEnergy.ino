@@ -36,6 +36,8 @@ int reqCount = 0;  // number of requests received
 #define LEDWIFION 10  // wireless conetado e a funcionar
 #define LEDWIFIOFF 11 // wireless nao conetado
 #define MAXLED 32
+#define LDRmax 1000
+#define LDRmin 40
 
 int valLED = 0;
 int valLDR = 0;
@@ -82,7 +84,7 @@ void test() {
 
   Serial.print("\n\n- Motion Sensor PIR... "); 
   for(int i=0; i<=255; i++) {
-    if ((i % 30) == 0) Serial.print("\n");
+    if ((i % 60) == 0) Serial.print("\n");
     valPIR = digitalRead(PIR);
     Serial.print(" ");
     Serial.print(valPIR);
@@ -183,12 +185,42 @@ void setup() {
 void inputs() {
   valLDR = analogRead(LDR);
   valPIR = digitalRead(PIR);
+  if (valPIR == HIGH) statePIR = HIGH;
+}
+
+void outputs() {
+  // LDRmax - sem sol, escuro
+  // LDRmin - muito sol
+  if (valLDR <= 0 ) valLDR=0;
+  if (valLDR >= 999) valLDR=999;
+  int valLDRnew = (int) valLDR / 10; // converter para percentagem 0% a 100%
+  int valLEDnew =  (int) (255  * (valLDRnew / 100));
+ // if (valLEDnew < 0 ) valLEDnew=0;
+ // if (valLEDnew > 254) valLEDnew=254;
+
+  if (valLED < valLEDnew) ++valLED;
+  if (valLED > valLEDnew) --valLED;
+
+  Serial.print("\nLight value: ");
+  Serial.print(valLED);
+  Serial.print("| Light value 2: ");
+  Serial.print(valLEDnew);
+  Serial.print("| LDR value: ");
+  Serial.print(valLDR);
+  Serial.print("| LDR %: ");
+  Serial.print(valLDRnew);
+  Serial.print("| PIR value: ");
+  Serial.print(valPIR);
+  Serial.print("| PIR state: ");
+  Serial.print(statePIR);
+  analogWrite(LED, valLED);
+  delay(50);
 }
 
 void loop() {
-
   // funcao para fazer a leitura de todos os inputs (sensores)
   inputs();
+  outputs();
 
   // listen for incoming clients
   WiFiEspClient client = server.available();
