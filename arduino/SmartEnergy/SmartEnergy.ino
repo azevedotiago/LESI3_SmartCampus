@@ -21,11 +21,11 @@ SoftwareSerial softserial(4, 5);  // RX, TX
 byte mac[6];
 IPAddress ip;
 
-//char ssid[] = "smartenergy";   // your network SSID (name)
-//char pass[] = "20222023lesi";  // your network password
+char ssid[] = "smartenergy";   // your network SSID (name)
+char pass[] = "20222023lesi";  // your network password
 
-char ssid[] = "digitalchip";   // your network SSID (name)
-char pass[] = "A253311201";  // your network password
+//char ssid[] = "digitalchip";   // your network SSID (name)
+//char pass[] = "A253311201";  // your network password
 
 int status = WL_IDLE_STATUS;
 int reqCount = 0;  // number of requests received
