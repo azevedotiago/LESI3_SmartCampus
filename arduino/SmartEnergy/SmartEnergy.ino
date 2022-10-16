@@ -17,6 +17,7 @@
 #include "SoftwareSerial.h"
 SoftwareSerial softserial(4, 5);  // RX, TX
 //#endif
+// network info variables
 byte mac[6];
 IPAddress ip;
 
@@ -29,7 +30,6 @@ char pass[] = "A253311201";  // your network password
 int status = WL_IDLE_STATUS;
 int reqCount = 0;  // number of requests received
 
-
 #define LED 6 // pino do LED, porta PWM
 #define LDR 0 // pino de input do sensor de luz
 #define PIR 3 // pino de input do sensor de movimento
@@ -38,11 +38,16 @@ int reqCount = 0;  // number of requests received
 #define MAXLED 32
 #define LDRmax 1000
 #define LDRmin 40
+#define LDRmed 600    // 600 para efeitos de testes dentro de casa
+#define TIMEmax 10 // tempo maximo LEDs ligados
+#define valLEDmin 30 // valor dos LEDs quando ligados mas sem movimentom, em standby 
 
 int valLED = 0;
 int valLDR = 0;
 int valPIR = 0; 
-int statePIR = LOW; // sem deteção de movimento
+int statePIR = LOW;  // sem deteção de movimento
+uint32_t timer = 0;     // temporizador para o tempo dos LEDs ligados 
+uint32_t timer2 = 0;
 
 WiFiEspServer server(80);
 
@@ -189,17 +194,38 @@ void inputs() {
 }
 
 void outputs() {
+
   // LDRmax - sem sol, escuro
   // LDRmin - muito sol
-  if (valLDR <= 0 ) valLDR=0;
-  if (valLDR >= 999) valLDR=999;
-  int valLDRnew = (int) valLDR / 10; // converter para percentagem 0% a 100%
+  if (valLDR <= LDRmin ) valLDR=LDRmin;
+  if (valLDR >= LDRmax) valLDR=LDRmax;
+  long valLDRnew = (long) (valLDR * 100 / LDRmax ); // converter para percentagem 0% a 100%
   int valLEDnew =  (int) (255  * valLDRnew / 100);
- // if (valLEDnew < 0 ) valLEDnew=0;
- // if (valLEDnew > 254) valLEDnew=254;
+  // if (valLEDnew < 0 ) valLEDnew=0;
+  // if (valLEDnew > 254) valLEDnew=254;
 
-  if (valLED < valLEDnew) ++valLED;
-  if (valLED > valLEDnew) --valLED;
+  if (valLDR >= LDRmed) {
+    if (statePIR==HIGH) {   // caso volte a detetar movimento reinicia o timer
+      statePIR = LOW;
+      timer = TIMEmax;
+    } 
+    
+
+    if (timer>0) {
+      timer = timer - (millis() - timer2);
+
+      if (valLED < valLEDnew) ++valLED;
+      if (valLED > valLEDnew) --valLED;
+    } else {
+      timer = 0;
+    }
+
+    analogWrite(LED, valLED);
+  } else {
+    valLED = valLEDmin;
+    analogWrite(LED, valLED);
+    statePIR = LOW;
+  }
 
   Serial.print("\nLight value: ");
   Serial.print(valLED);
@@ -213,8 +239,11 @@ void outputs() {
   Serial.print(valPIR);
   Serial.print("| PIR state: ");
   Serial.print(statePIR);
-  analogWrite(LED, valLED);
+  Serial.print("| Timer: ");
+  Serial.print(timer);
   delay(50);
+
+  timer2 = millis();
 }
 
 void loop() {
