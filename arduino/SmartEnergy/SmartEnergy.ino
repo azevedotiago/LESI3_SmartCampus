@@ -218,13 +218,13 @@ void outputs() {
       if (valLED > valLEDnew) --valLED;
     } else {
       timer = 0;
+      valLED = valLEDmin;
     }
 
     analogWrite(LED, valLED);
   } else {
-    valLED = valLEDmin;
+    valLED = 0;
     analogWrite(LED, valLED);
-    statePIR = LOW;
     timer = 0;
   }
 
