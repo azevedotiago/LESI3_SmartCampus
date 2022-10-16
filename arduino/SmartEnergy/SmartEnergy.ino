@@ -30,23 +30,23 @@ char pass[] = "20222023lesi";  // your network password
 int status = WL_IDLE_STATUS;
 int reqCount = 0;  // number of requests received
 
-#define LED 6 // pino do LED, porta PWM
-#define LDR 0 // pino de input do sensor de luz
-#define PIR 3 // pino de input do sensor de movimento
+#define LED 6         // pino de output dos LEDs, porta PWM
+#define LDR 0         // pino de input do sensor de luz
+#define PIR 3         // pino de input do sensor de movimento
 #define LEDWIFION 10  // wireless conetado e a funcionar
 #define LEDWIFIOFF 11 // wireless nao conetado
-#define MAXLED 32
-#define LDRmax 1000
-#define LDRmin 40
+#define MAXLED 24     // LED maximum value during tests
+#define LDRmax 1000   // LDR maximum input
+#define LDRmin 40     // LDR minimum input
 #define LDRmed 600    // 600 para efeitos de testes dentro de casa
 #define TIMEmax 15    // tempo maximo LEDs ligados
 #define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
 
-int valLED = 0;
-int valLDR = 0;
-int valPIR = 0; 
-int statePIR = LOW;  // sem deteção de movimento
-uint32_t timer = 0;     // temporizador para o tempo dos LEDs ligados 
+int valLED = 0;       // valor inicial
+int valLDR = 0;       // valor inicial
+int valPIR = 0;       // valor inicial
+int statePIR = LOW;   // sem deteção de movimento
+uint32_t timer = 0;   // temporizador para o tempo dos LEDs ligados 
 uint32_t timer2 = 0;
 
 WiFiEspServer server(80);
