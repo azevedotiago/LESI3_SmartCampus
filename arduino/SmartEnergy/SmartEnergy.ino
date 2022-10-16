@@ -214,8 +214,8 @@ void outputs() {
     if (timer>0) {
       timer = timer - (millis() - timer2);
 
-      if (valLED < valLEDnew) valLED=valLED+2;
-      if (valLED > valLEDnew) valLED=valLED-2;
+      if (valLED < valLEDnew) valLED=valLED+4;
+      if (valLED > valLEDnew) valLED=valLED-4;
     } else {
       timer = 0;
       valLED = valLEDmin;
@@ -292,6 +292,7 @@ void loop() {
           client.print("Light value: "); client.print(valLED); client.print("<br>\r\n");
           client.print("LDR value: "); client.print(valLDR); client.print("<br>\r\n");
           client.print("PIR value: "); client.print(valPIR); client.print("<br>\r\n");
+          client.print("Timer: "); client.print(timer); client.print("<br>\r\n");
           client.print("<br>\r\n");
           client.print("Requests received: ");
           client.print(++reqCount);
