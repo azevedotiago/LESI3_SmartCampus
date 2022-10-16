@@ -39,8 +39,8 @@ int reqCount = 0;  // number of requests received
 #define LDRmax 1000
 #define LDRmin 40
 #define LDRmed 600    // 600 para efeitos de testes dentro de casa
-#define TIMEmax 10 // tempo maximo LEDs ligados
-#define valLEDmin 2 // valor dos LEDs quando ligados mas sem movimentom, em standby 
+#define TIMEmax 15    // tempo maximo LEDs ligados
+#define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
 
 int valLED = 0;
 int valLDR = 0;
@@ -214,8 +214,8 @@ void outputs() {
     if (timer>0) {
       timer = timer - (millis() - timer2);
 
-      if (valLED < valLEDnew) ++valLED;
-      if (valLED > valLEDnew) --valLED;
+      if (valLED < valLEDnew) valLED=valLED+2;
+      if (valLED > valLEDnew) valLED=valLED-2;
     } else {
       timer = 0;
       valLED = valLEDmin;
