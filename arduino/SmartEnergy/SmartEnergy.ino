@@ -40,7 +40,7 @@ int reqCount = 0;  // number of requests received
 #define LDRmin 40
 #define LDRmed 600    // 600 para efeitos de testes dentro de casa
 #define TIMEmax 10 // tempo maximo LEDs ligados
-#define valLEDmin 30 // valor dos LEDs quando ligados mas sem movimentom, em standby 
+#define valLEDmin 2 // valor dos LEDs quando ligados mas sem movimentom, em standby 
 
 int valLED = 0;
 int valLDR = 0;
@@ -225,6 +225,7 @@ void outputs() {
     valLED = valLEDmin;
     analogWrite(LED, valLED);
     statePIR = LOW;
+    timer = 0;
   }
 
   Serial.print("\nLight value: ");
