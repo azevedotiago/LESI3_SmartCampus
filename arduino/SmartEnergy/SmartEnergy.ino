@@ -241,7 +241,7 @@ void outputs() {
   Serial.print("| PIR state: ");
   Serial.print(statePIR);
   Serial.print("| Timer: ");
-  Serial.print(timer);
+  Serial.print(timer,2);
   delay(50);
 
   timer2 = millis();
