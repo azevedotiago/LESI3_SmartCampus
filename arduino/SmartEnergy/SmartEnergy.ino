@@ -210,17 +210,19 @@ void outputs() {
   if (valLDR >= LDRmed) {
     if (statePIR==HIGH) {   // caso volte a detetar movimento reinicia o timer
       statePIR = LOW; 
-      timer = TIMEmax; // o tempo de LEDs ligados volta ao maximo
-      stateLED = HIGH; // liga os LEDs
+      timer = TIMEmax;      // o tempo de LEDs ligados volta ao maximo
+      stateLED = HIGH;      // liga os LEDs
     } 
     
 
     if (timer > 0) {              // ajusta o valor da iluminacao conforme a intensidade de luz "solar"
       timer = timer - (millis() - timer2);
 
+      // Ajusta o valor da iluminacao conforme o novo valor que devera ser guardado em velLEDnew
       if (valLED < valLEDnew) valLED=valLED+valINCREMENT;
       if (valLED > valLEDnew) valLED=valLED-valINCREMENT;
-    } else {                    // desliga os LEDs
+
+    } else {                      // desliga os LEDs
       timer = 0;
       stateLED = LOW; 
       if (valLED > valLEDmin) {
@@ -253,7 +255,7 @@ void outputs() {
   Serial.print(statePIR);
   Serial.print("| Timer: ");
   Serial.print(timer);
-  delay(50);
+  delay(100);
 
   timer2 = millis();
 }
@@ -346,16 +348,11 @@ void printWifiStatus() {
   Serial.println(ip);
   WiFi.macAddress(mac);
   Serial.print("MAC: ");
-  Serial.print(mac[5],HEX);
-  Serial.print(":");
-  Serial.print(mac[4],HEX);
-  Serial.print(":");
-  Serial.print(mac[3],HEX);
-  Serial.print(":");
-  Serial.print(mac[2],HEX);
-  Serial.print(":");
-  Serial.print(mac[1],HEX);
-  Serial.print(":");
+  Serial.print(mac[5],HEX);  Serial.print(":");
+  Serial.print(mac[4],HEX);  Serial.print(":");  
+  Serial.print(mac[3],HEX);  Serial.print(":");  
+  Serial.print(mac[2],HEX);  Serial.print(":");  
+  Serial.print(mac[1],HEX);  Serial.print(":");  
   Serial.println(mac[0],HEX);
 
 
