@@ -237,10 +237,12 @@ void outputs() {
     timer = 0;
   }
 
-  Serial.print("\nLight value: ");
+  Serial.print("\nLight actual value: ");
   Serial.print(valLED);
-  Serial.print("| Light value 2: ");
+  Serial.print("| Light next value: ");
   Serial.print(valLEDnew);
+  Serial.print("| Light state: ");
+  Serial.print(stateLED);
   Serial.print("| LDR value: ");
   Serial.print(valLDR);
   Serial.print("| LDR %: ");
