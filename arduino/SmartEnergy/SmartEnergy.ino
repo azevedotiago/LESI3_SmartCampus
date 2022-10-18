@@ -46,6 +46,7 @@ int reqCount = 0;  // number of requests received
 int valLED = 0;       // valor inicial
 int stateLED = LOW;   // valor inicial do estado dos LEDs desligados
 int valLDR = 0;       // valor inicial
+long valLDRnew = 0;   // valor incicial
 int valPIR = 0;       // valor inicial
 int statePIR = LOW;   // sem deteção de movimento
 uint32_t timer = 0;   // temporizador para o tempo dos LEDs ligados 
@@ -201,7 +202,7 @@ void outputs() {
   // LDRmin - muito sol
   if (valLDR <= LDRmin ) valLDR=LDRmin;
   if (valLDR >= LDRmax) valLDR=LDRmax;
-  long valLDRnew = (long) (valLDR * 100 / LDRmax ); // converter para percentagem 0% a 100%
+  valLDRnew = (long) (valLDR * 100 / LDRmax ); // converter para percentagem 0% a 100%
   int valLEDnew =  (int) (255  * valLDRnew / 100);
   // if (valLEDnew < 0 ) valLEDnew=0;
   // if (valLEDnew > 254) valLEDnew=254;
@@ -214,7 +215,7 @@ void outputs() {
     } 
     
 
-    if (timer>0) {              // ajusta o valor da iluminacao conforme a intensidade de luz "solar"
+    if (timer > 0) {              // ajusta o valor da iluminacao conforme a intensidade de luz "solar"
       timer = timer - (millis() - timer2);
 
       if (valLED < valLEDnew) valLED=valLED+valINCREMENT;
@@ -222,11 +223,10 @@ void outputs() {
     } else {                    // desliga os LEDs
       timer = 0;
       stateLED = LOW; 
-      //valLED = valLEDmin;
       if (valLED > valLEDmin) {
-        valLED=valLED-valINCREMENT;
+        valLED = valLED - valINCREMENT;
       } else {
-        valLED=valLEDmin;
+        valLED = valLEDmin;
       }
     }
 
@@ -301,8 +301,11 @@ void loop() {
           client.print("<br>\r\n");
           client.print("<h2>Status</h2>\r\n");
           client.print("Light value: "); client.print(valLED); client.print("<br>\r\n");
+          client.print("Light state: "); client.print(stateLED); client.print("<br>\r\n");
           client.print("LDR value: "); client.print(valLDR); client.print("<br>\r\n");
+          client.print("LDR %: "); client.print(valLDRnew); client.print("<br>\r\n");
           client.print("PIR value: "); client.print(valPIR); client.print("<br>\r\n");
+          client.print("PIR state: "); client.print(statePIR); client.print("<br>\r\n");
           client.print("Timer: "); client.print(timer); client.print("<br>\r\n");
           client.print("<br>\r\n");
           client.print("Requests received: ");
