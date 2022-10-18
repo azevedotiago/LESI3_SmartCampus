@@ -41,8 +41,10 @@ int reqCount = 0;  // number of requests received
 #define LDRmed 600    // 600 para efeitos de testes dentro de casa
 #define TIMEmax 15    // tempo maximo LEDs ligados
 #define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
+#define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
 int valLED = 0;       // valor inicial
+int stateLED = LOW;   // valor inicial do estado dos LEDs desligados
 int valLDR = 0;       // valor inicial
 int valPIR = 0;       // valor inicial
 int statePIR = LOW;   // sem deteção de movimento
@@ -206,19 +208,26 @@ void outputs() {
 
   if (valLDR >= LDRmed) {
     if (statePIR==HIGH) {   // caso volte a detetar movimento reinicia o timer
-      statePIR = LOW;
-      timer = TIMEmax;
+      statePIR = LOW; 
+      timer = TIMEmax; // o tempo de LEDs ligados volta ao maximo
+      stateLED = HIGH; // liga os LEDs
     } 
     
 
-    if (timer>0) {
+    if (timer>0) {              // ajusta o valor da iluminacao conforme a intensidade de luz "solar"
       timer = timer - (millis() - timer2);
 
-      if (valLED < valLEDnew) valLED=valLED+4;
-      if (valLED > valLEDnew) valLED=valLED-4;
-    } else {
+      if (valLED < valLEDnew) valLED=valLED+valINCREMENT;
+      if (valLED > valLEDnew) valLED=valLED-valINCREMENT;
+    } else {                    // desliga os LEDs
       timer = 0;
-      valLED = valLEDmin;
+      stateLED = LOW; 
+      //valLED = valLEDmin;
+      if (valLED > valLEDmin) {
+        valLED=valLED-valINCREMENT;
+      } else {
+        valLED=valLEDmin;
+      }
     }
 
     analogWrite(LED, valLED);
