@@ -55,7 +55,12 @@ uint32_t timer2 = 0;
 WiFiEspServer server(80);
 
 void info() {
-  Serial.println("\n\nSmart Energy Campus @ IPCA 2022/2023\n");
+  // informacao inicial no arranque do sistema
+  Serial.println("\n\nSmart Energy Campus version 0.1 @ IPCA 2022/2023\n");
+  Serial.println("\n 2727 Nuno Mendes");
+  Serial.println("\n21138 Rosario Silva");
+  Serial.println("\n21153 Tiago Azevedo");
+  Serial.println("\n21156 Francisco Pereira\n");
 }
 
 void test() {
