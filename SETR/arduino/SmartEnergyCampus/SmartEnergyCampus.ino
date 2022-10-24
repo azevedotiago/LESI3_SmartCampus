@@ -79,7 +79,7 @@ void test() {
     analogWrite(LED, i);
     delay(10);
   }
-  analogWrite(LED, 0);
+  analogWrite(LED, 0);    // desliga os LEDs
 
   Serial.print("\n\n- Light Sensor LDR... "); 
   for(int i=0; i<=255; i++) {
