@@ -4,9 +4,9 @@
   Year: 2022 / 2023");
         LESI @ IPCA");
   Authors: 2727 Nuno Mendes");
-           Tiago Azevedo");
-           Francisco Pereira");
-           Rosario Silva");
+           21138 Rosario Silva");
+           21153 Tiago Azevedo");
+           21156 Francisco Pereira");
 
 */
 
@@ -23,9 +23,6 @@ IPAddress ip;
 
 char ssid[] = "smartenergy";   // your network SSID (name)
 char pass[] = "20222023lesi";  // your network password
-
-//char ssid[] = "digitalchip";   // your network SSID (name)
-//char pass[] = "A253311201";  // your network password
 
 int status = WL_IDLE_STATUS;
 int reqCount = 0;  // number of requests received
@@ -128,10 +125,9 @@ void setup() {
   pinMode(LEDWIFIOFF, OUTPUT);
   pinMode(LDR, INPUT);
   pinMode(PIR, INPUT);
-  analogWrite(LED, 0); // Desliga os LEDs
+  analogWrite(LED, 0);    // Desliga os LEDs
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, MAXLED);
-
 
   // initialize serial for debugging
   Serial.begin(9600);
@@ -224,8 +220,8 @@ void outputs() {
       timer = timer - (millis() - timer2);
 
       // Ajusta o valor da iluminacao conforme o novo valor que devera ser guardado em velLEDnew
-      if (valLED < valLEDnew) valLED=valLED+valINCREMENT;
-      if (valLED > valLEDnew) valLED=valLED-valINCREMENT;
+      if (valLED < valLEDnew) valLED=valLED + valINCREMENT;
+      if (valLED > valLEDnew) valLED=valLED - valINCREMENT;
 
     } else {                      // desliga os LEDs
       timer = 0;
@@ -244,31 +240,23 @@ void outputs() {
     timer = 0;
   }
 
-  Serial.print("\nLight actual value: ");
-  Serial.print(valLED);
-  Serial.print("| Light next value: ");
-  Serial.print(valLEDnew);
-  Serial.print("| Light state: ");
-  Serial.print(stateLED);
-  Serial.print("| LDR value: ");
-  Serial.print(valLDR);
-  Serial.print("| LDR %: ");
-  Serial.print(valLDRnew);
-  Serial.print("| PIR value: ");
-  Serial.print(valPIR);
-  Serial.print("| PIR state: ");
-  Serial.print(statePIR);
-  Serial.print("| Timer: ");
-  Serial.print(timer);
+  Serial.print("\nLight actual value: "); Serial.print(valLED);
+  Serial.print("| Light next value: "); Serial.print(valLEDnew);
+  Serial.print("| Light state: "); Serial.print(stateLED);
+  Serial.print("| LDR value: "); Serial.print(valLDR);
+  Serial.print("| LDR %: "); Serial.print(valLDRnew);
+  Serial.print("| PIR value: "); Serial.print(valPIR);
+  Serial.print("| PIR state: "); Serial.print(statePIR);
+  Serial.print("| Timer: "); Serial.print(timer);
   delay(100);
 
-  timer2 = millis();
+  timer2 = millis();    // regista o tempo atual
 }
 
 void loop() {
   // funcao para fazer a leitura de todos os inputs (sensores)
-  inputs();
-  outputs();
+  inputs();   // leitura de sensores
+  outputs();  // comandos para os atuadores
 
   // listen for incoming clients
   WiFiEspClient client = server.available();
@@ -307,18 +295,16 @@ void loop() {
           client.print(ip);
           client.print("<br>\r\n");
           client.print("<h2>Status</h2>\r\n");
-          client.print("Light value: "); client.print(valLED); client.print("<br>\r\n");
-          client.print("Light state: "); client.print(stateLED); client.print("<br>\r\n");
-          client.print("LDR value: "); client.print(valLDR); client.print("<br>\r\n");
-          client.print("LDR %: "); client.print(valLDRnew); client.print("<br>\r\n");
-          client.print("PIR value: "); client.print(valPIR); client.print("<br>\r\n");
-          client.print("PIR state: "); client.print(statePIR); client.print("<br>\r\n");
-          client.print("Timer: "); client.print(timer); client.print("<br>\r\n");
+          client.print("Light value: ");  client.print(valLED); client.print("<br>\r\n");
+          client.print("Light state: ");  client.print(stateLED); client.print("<br>\r\n");
+          client.print("LDR value: ");    client.print(valLDR); client.print("<br>\r\n");
+          client.print("LDR %: ");        client.print(valLDRnew); client.print("<br>\r\n");
+          client.print("PIR value: ");    client.print(valPIR); client.print("<br>\r\n");
+          client.print("PIR state: ");    client.print(statePIR); client.print("<br>\r\n");
+          client.print("Timer: ");        client.print(timer); client.print("<br>\r\n");
           client.print("<br>\r\n");
-          client.print("Requests received: ");
-          client.print(++reqCount);
+          client.print("Requests received: "); client.print(++reqCount);
           client.print("<br>\r\n");
-
 
           client.print("</html>\r\n");
           break;
@@ -349,8 +335,7 @@ void printWifiStatus() {
 
   // print your WiFi shield's IP address
   ip = WiFi.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
+  Serial.print("IP Address: "); Serial.println(ip);
   WiFi.macAddress(mac);
   Serial.print("MAC: ");
   Serial.print(mac[5],HEX);  Serial.print(":");
@@ -359,7 +344,6 @@ void printWifiStatus() {
   Serial.print(mac[2],HEX);  Serial.print(":");  
   Serial.print(mac[1],HEX);  Serial.print(":");  
   Serial.println(mac[0],HEX);
-
 
   // print where to go in the browser
   Serial.println();
