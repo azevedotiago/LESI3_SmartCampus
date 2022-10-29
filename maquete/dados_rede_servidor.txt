@@ -19,7 +19,7 @@ ssh access:
 	
 	user: smart
 	password: energy
-mysql:
+mariadb (mysql):
 	database: smartenergy
 	user: root
 	password: smartenergy
