@@ -14,9 +14,11 @@ mac address: 00:1f:1f:a2:1c:aa
 ip: 10.10.10.2
 mac address: 
 ssh access:
+	user: root
+	password: smartenergy
+	
 	user: smart
 	password: energy
-
 mysql:
 	database: smartenergy
 	user:
