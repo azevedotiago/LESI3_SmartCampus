@@ -23,10 +23,9 @@ mariadb (mysql):
 	database: smartenergy
 	user: root
 	password: smartenergy ? / empty
-pacotes instalados:
+pacotes instalados com base em https://www.cloudbooklet.com/how-to-install-lamp-apache-mysql-php-on-debian-11/
 	apache2
 	php version 8.1
-	mariadb-server version 15.1
 
 
 
