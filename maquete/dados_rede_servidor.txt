@@ -23,7 +23,10 @@ mariadb (mysql):
 	database: smartenergy
 	user: root
 	password: smartenergy ? / empty
-
+pacotes instalados:
+	apache2
+	php version 8.1
+	mariadb-server version 15.1
 
 
 
