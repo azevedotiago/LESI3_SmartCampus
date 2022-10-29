@@ -22,7 +22,7 @@ ssh access:
 mariadb (mysql):
 	database: smartenergy
 	user: root
-	password: smartenergy
+	password: smartenergy ? / empty
 
 
 
