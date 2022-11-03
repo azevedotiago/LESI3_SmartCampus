@@ -1,0 +1,51 @@
+[03-Nov-22 19:26:45] Open DHCP Server Version 1.82 Windows Build 1055 Starting...
+[03-Nov-22 19:26:46] Logging: Normal
+[03-Nov-22 19:26:46] exe file: C:\OpenDHCPServer\OpenDHCPServer.exe
+[03-Nov-22 19:26:46] ini file: C:\OpenDHCPServer\OpenDHCPServer.ini
+[03-Nov-22 19:26:46] log file: C:\OpenDHCPServer\log\OpenDHCPServer%Y%m%d.log
+[03-Nov-22 19:26:46] Warning: No IP Address for DHCP Static Host 00:ff:a4:0e:ef:99 specified
+[03-Nov-22 19:26:46] Warning: No IP Address for DHCP Static Host ff:00:27:78:7b:01 specified
+[03-Nov-22 19:26:46] Warning: No IP Address for DHCP Static Host ff:00:27:78:7b:02 specified
+[03-Nov-22 19:26:46] Warning: No IP Address for DHCP Static Host ff:00:27:78:7b:03 specified
+[03-Nov-22 19:26:46] Default Lease: 36000 (sec)
+[03-Nov-22 19:26:46] Server Name: blade
+[03-Nov-22 19:26:46] Detecting Static Interfaces..
+[03-Nov-22 19:26:46] Lease Status URL: http://127.0.0.1:6789
+[03-Nov-22 19:26:46] Listening On: 10.10.10.1
+[03-Nov-22 19:27:23] Network changed, re-detecting Static Interfaces..
+[03-Nov-22 19:27:40] Lease Status URL: http://127.0.0.1:6789
+[03-Nov-22 19:27:40] Listening On: 10.10.10.1
+[03-Nov-22 19:27:40] Network changed, re-detecting Static Interfaces..
+[03-Nov-22 19:27:51] Lease Status URL: http://127.0.0.1:6789
+[03-Nov-22 19:27:51] Listening On: 10.10.10.1
+[03-Nov-22 19:27:54] Host b8:27:eb:ca:94:a4 (raspberrypi) allotted 10.10.10.2 for 36000 seconds
+[03-Nov-22 19:30:36] Open DHCP Server Version 1.82 Windows Build 1055 Starting...
+[03-Nov-22 19:30:36] Logging: Normal
+[03-Nov-22 19:30:36] exe file: C:\OpenDHCPServer\OpenDHCPServer.exe
+[03-Nov-22 19:30:36] ini file: C:\OpenDHCPServer\OpenDHCPServer.ini
+[03-Nov-22 19:30:36] log file: C:\OpenDHCPServer\log\OpenDHCPServer%Y%m%d.log
+[03-Nov-22 19:30:36] Default Lease: 36000 (sec)
+[03-Nov-22 19:30:36] Server Name: blade
+[03-Nov-22 19:30:36] Detecting Static Interfaces..
+[03-Nov-22 19:30:36] Lease Status URL: http://127.0.0.1:6789
+[03-Nov-22 19:30:36] Listening On: 10.10.10.1
+[03-Nov-22 19:30:52] Open DHCP Server Version 1.82 Windows Build 1055 Starting...
+[03-Nov-22 19:30:52] Logging: Normal
+[03-Nov-22 19:30:52] exe file: C:\OpenDHCPServer\OpenDHCPServer.exe
+[03-Nov-22 19:30:52] ini file: C:\OpenDHCPServer\OpenDHCPServer.ini
+[03-Nov-22 19:30:52] log file: C:\OpenDHCPServer\log\OpenDHCPServer%Y%m%d.log
+[03-Nov-22 19:30:52] Default Lease: 36000 (sec)
+[03-Nov-22 19:30:52] Server Name: blade
+[03-Nov-22 19:30:52] Detecting Static Interfaces..
+[03-Nov-22 19:30:52] Lease Status URL: http://127.0.0.1:6789
+[03-Nov-22 19:30:52] Listening On: 10.10.10.1
+[03-Nov-22 19:31:37] Open DHCP Server Version 1.82 Windows Build 1055 Starting...
+[03-Nov-22 19:31:37] Logging: Normal
+[03-Nov-22 19:31:37] exe file: C:\Users\mendes\OneDrive - Instituto Politécnico do Cávado e do Ave\Documents\GitHub\SmartEnergy\LESI3_SmartCampus\projeto\servidor\OpenDHCPServer\OpenDHCPServer.exe
+[03-Nov-22 19:31:37] ini file: C:\Users\mendes\OneDrive - Instituto Politécnico do Cávado e do Ave\Documents\GitHub\SmartEnergy\LESI3_SmartCampus\projeto\servidor\OpenDHCPServer\OpenDHCPServer.ini
+[03-Nov-22 19:31:37] log file: C:\Users\mendes\OneDrive - Instituto Politécnico do Cávado e do Ave\Documents\GitHub\SmartEnergy\LESI3_SmartCampus\projeto\servidor\OpenDHCPServer\log\OpenDHCPServer%Y%m%d.log
+[03-Nov-22 19:31:37] Default Lease: 36000 (sec)
+[03-Nov-22 19:31:37] Server Name: blade
+[03-Nov-22 19:31:37] Detecting Static Interfaces..
+[03-Nov-22 19:31:37] Lease Status URL: http://127.0.0.1:6789
+[03-Nov-22 19:31:38] Listening On: 10.10.10.1
