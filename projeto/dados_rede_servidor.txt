@@ -43,7 +43,8 @@ FLUSH PRIVILEGES;
 
 # base de dados "smartenergy"
 ## tabela devicelog
-
+esta tabela vai ser preenchida com novos registos através do webservice http://10.10.10.2/webservice.php
+este webservice será invocado por cada poste de iluminição quando houver um estado novo
 
 # kit arduino
 https://osoyoo.com/?p=32504
