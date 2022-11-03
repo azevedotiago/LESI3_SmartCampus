@@ -100,3 +100,6 @@
 [03-Nov-22 21:49:09] Network changed, re-detecting Static Interfaces..
 [03-Nov-22 21:49:10] Lease Status URL: http://127.0.0.1:6789
 [03-Nov-22 21:49:10] Listening On: 10.10.10.1
+[03-Nov-22 21:49:30] Host b8:27:eb:ca:94:a4 (raspberrypi) allotted 10.10.10.2 for 36000 seconds
+[03-Nov-22 21:53:03] Network changed, re-detecting Static Interfaces..
+[03-Nov-22 21:53:10] No Static Interface ready, Waiting...
