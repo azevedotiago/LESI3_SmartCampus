@@ -19,14 +19,26 @@ ssh access:
 	
 	user: smart
 	password: energy
+	
 mariadb (mysql):
 	database: smartenergy
-	user: root
-	password: smartenergy ? / empty
+	user: se
+	password: smartenergy
+	
 pacotes instalados com base em https://www.cloudbooklet.com/how-to-install-lamp-apache-mysql-php-on-debian-11/
 	apache2
 	php version 8.1
 
+
+
+#### anotações
+
+# permitir o acesso remoto à base de dados "smartenergy" com o utilizador "se":
+mysql -u root -p
+CREATE DATABASE smartenergy;
+CREATE USER  'se'@'localhost' IDENTIFIED BY 'smartenergy';
+GRANT ALL ON smartenergy.* to 'se'@'%' IDENTIFIED BY 'smartenergy' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 
 
 # kit arduino
