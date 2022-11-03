@@ -95,3 +95,8 @@
 [03-Nov-22 21:41:38] Network changed, re-detecting Static Interfaces..
 [03-Nov-22 21:41:50] Lease Status URL: http://127.0.0.1:6789
 [03-Nov-22 21:41:50] Listening On: 10.10.10.1
+[03-Nov-22 21:47:06] Network changed, re-detecting Static Interfaces..
+[03-Nov-22 21:47:11] No Static Interface ready, Waiting...
+[03-Nov-22 21:49:09] Network changed, re-detecting Static Interfaces..
+[03-Nov-22 21:49:10] Lease Status URL: http://127.0.0.1:6789
+[03-Nov-22 21:49:10] Listening On: 10.10.10.1
