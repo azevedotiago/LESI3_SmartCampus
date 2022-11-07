@@ -236,6 +236,7 @@ void outputs() {
     timer = 0;
   }
 
+  // envia para a consola os dados atuais de input e output
   Serial.print("\nLight actual value: "); Serial.print(valLED);
   Serial.print("| Light next value: "); Serial.print(valLEDnew);
   Serial.print("| Light state: "); Serial.print(stateLED);
