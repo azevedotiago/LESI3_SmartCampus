@@ -63,7 +63,7 @@ if (timer > 0) {              // ajusta o valor da iluminacao conforme a intensi
 }
 
 analogWrite(LED, valLED);
-} else {                        // desliga os LEDs
+} else {                      // desliga os LEDs
 valLED = 0;
 analogWrite(LED, valLED);
 timer = 0;

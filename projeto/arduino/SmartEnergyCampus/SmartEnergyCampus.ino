@@ -194,32 +194,32 @@ void setup() {
 }
 
 void inputs() {
-  valLDR = analogRead(LDR);
-  valPIR = digitalRead(PIR);
-  if (valPIR == HIGH) statePIR = HIGH;
+  valLDR = analogRead(LDR);             // leitura do valor do sensor LDR
+  valPIR = digitalRead(PIR);            // leitura do valor do sensor de movimento PIR
+  if (valPIR == HIGH) statePIR = HIGH;  // estado de detecao de movimento passa a TRUE
 }
 
 void outputs() {
 
-  // LDRmax - sem sol, escuro
-  // LDRmin - muito sol
+  // LDRmax - pouca iluminacao, sem sol, escuro
+  // LDRmin - muita iluminacao, muito sol
   if (valLDR <= LDRmin ) valLDR=LDRmin;
   if (valLDR >= LDRmax) valLDR=LDRmax;
-  valLDRnew = (long) (valLDR * 100 / LDRmax ); // converter para percentagem 0% a 100%
+  valLDRnew = (long) (valLDR * 100 / LDRmax );     // converter para percentagem 0% a 100%
   int valLEDnew =  (int) (255  * valLDRnew / 100); // atribui ao LED o valor de iluminacao ideal de acordo com o sensor de input LDR
 
   if (valLDR >= LDRmed) {
     if (statePIR==HIGH) {   // caso volte a detetar movimento reinicia o timer
-      statePIR = LOW; 
+      statePIR = LOW;       // estado detecao de movimento passa a FALSO
       timer = TIMEmax;      // o tempo de LEDs ligados volta ao maximo
       stateLED = HIGH;      // liga os LEDs
     } 
     
 
-    if (timer > 0) {              // ajusta o valor da iluminacao conforme a intensidade de luz "solar"
-      timer = timer - (millis() - timer2);
+    if (timer > 0) {
+      timer = timer - (millis() - timer2);  // atualiza o tempo restante guardado na variavel timer
 
-      // Ajusta o valor da iluminacao conforme o novo valor que devera ser guardado em velLEDnew
+      // Ajusta o valor da iluminacao conforme a intensidade de luz "solar", o novo valor que esta guardado em valLEDnew
       if (valLED < valLEDnew) valLED=valLED + valINCREMENT;
       if (valLED > valLEDnew) valLED=valLED - valINCREMENT;
 
@@ -233,7 +233,7 @@ void outputs() {
       }
     }
 
-    analogWrite(LED, valLED);
+    analogWrite(LED, valLED);     // atribui a iluminacao atual aos LEDs
   } else {                        // desliga os LEDs
     valLED = 0;
     analogWrite(LED, valLED);
