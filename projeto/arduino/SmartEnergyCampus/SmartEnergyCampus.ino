@@ -206,9 +206,7 @@ void outputs() {
   if (valLDR <= LDRmin ) valLDR=LDRmin;
   if (valLDR >= LDRmax) valLDR=LDRmax;
   valLDRnew = (long) (valLDR * 100 / LDRmax ); // converter para percentagem 0% a 100%
-  int valLEDnew =  (int) (255  * valLDRnew / 100);
-  // if (valLEDnew < 0 ) valLEDnew=0;
-  // if (valLEDnew > 254) valLEDnew=254;
+  int valLEDnew =  (int) (255  * valLDRnew / 100); // atribui ao LED o valor de iluminacao ideal de acordo com o sensor de input LDR
 
   if (valLDR >= LDRmed) {
     if (statePIR==HIGH) {   // caso volte a detetar movimento reinicia o timer
@@ -225,10 +223,10 @@ void outputs() {
       if (valLED < valLEDnew) valLED=valLED + valINCREMENT;
       if (valLED > valLEDnew) valLED=valLED - valINCREMENT;
 
-    } else {                      // desliga os LEDs
+    } else {                      // reduz o valor da iluminacao dos LEDs ao valor mínimo, iluminacao de presenca
       timer = 0;
       stateLED = LOW; 
-      if (valLED > valLEDmin) {
+      if (valLED > valLEDmin) {   // reduz a iluminacao até ser igual ao valor de iluminacao de presenca valLEDmin
         valLED = valLED - valINCREMENT;
       } else {
         valLED = valLEDmin;
@@ -236,7 +234,7 @@ void outputs() {
     }
 
     analogWrite(LED, valLED);
-  } else {
+  } else {                        // desliga os LEDs
     valLED = 0;
     analogWrite(LED, valLED);
     timer = 0;
