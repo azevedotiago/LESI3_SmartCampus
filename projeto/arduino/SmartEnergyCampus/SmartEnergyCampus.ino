@@ -200,7 +200,6 @@ void inputs() {
 }
 
 void outputs() {
-
   // LDRmax - pouca iluminacao, sem sol, escuro
   // LDRmin - muita iluminacao, muito sol
   if (valLDR <= LDRmin ) valLDR=LDRmin;
@@ -215,14 +214,11 @@ void outputs() {
       stateLED = HIGH;      // liga os LEDs
     } 
     
-
     if (timer > 0) {
       timer = timer - (millis() - timer2);  // atualiza o tempo restante guardado na variavel timer
-
       // Ajusta o valor da iluminacao conforme a intensidade de luz "solar", o novo valor que esta guardado em valLEDnew
       if (valLED < valLEDnew) valLED=valLED + valINCREMENT;
       if (valLED > valLEDnew) valLED=valLED - valINCREMENT;
-
     } else {                      // reduz o valor da iluminacao dos LEDs ao valor mínimo, iluminacao de presenca
       timer = 0;
       stateLED = LOW; 
