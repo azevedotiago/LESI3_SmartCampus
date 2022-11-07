@@ -21,7 +21,7 @@ SoftwareSerial softserial(4, 5);  // RX, TX
 byte mac[6];
 IPAddress ip;
 
-char server[] = "10.10.10.2";  // web & database server address
+char serveraddress[] = "10.10.10.2";  // web & database server address
 
 char ssid[] = "smartenergy";   // your network SSID (name)
 char pass[] = "20222023lesi";  // your network password
