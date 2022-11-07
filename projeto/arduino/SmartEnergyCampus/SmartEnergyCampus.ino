@@ -37,7 +37,7 @@ int reqCount = 0;  // number of requests received
 #define MAXLED 24     // LED maximum value during tests
 #define LDRmax 1000   // LDR maximum input
 #define LDRmin 40     // LDR minimum input
-#define LDRmed 600    // 600 para efeitos de testes dentro de casa
+#define LDRmed 240    // 600 para efeitos de testes dentro de casa
 #define TIMEmax 15    // tempo maximo LEDs ligados
 #define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
