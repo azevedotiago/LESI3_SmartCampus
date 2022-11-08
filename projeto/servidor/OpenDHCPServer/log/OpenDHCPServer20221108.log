@@ -20,3 +20,5 @@
 [08-Nov-22 19:07:17] Lease Status URL: http://127.0.0.1:6789
 [08-Nov-22 19:07:17] Listening On: 10.10.10.1
 [08-Nov-22 19:07:18] Host b8:27:eb:ca:94:a4 (raspberrypi) allotted 10.10.10.2 for 36000 seconds
+[08-Nov-22 19:14:22] Network changed, re-detecting Static Interfaces..
+[08-Nov-22 19:14:39] No Static Interface ready, Waiting...
