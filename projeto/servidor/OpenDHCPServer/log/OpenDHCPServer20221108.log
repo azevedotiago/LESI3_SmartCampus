@@ -1,0 +1,22 @@
+[08-Nov-22 18:39:45] Open DHCP Server Version 1.82 Windows Build 1055 Starting...
+[08-Nov-22 18:39:45] Logging: Normal
+[08-Nov-22 18:39:45] exe file: C:\Users\mendes\OneDrive - Instituto Politécnico do Cávado e do Ave\Documents\GitHub\SmartEnergy\LESI3_SmartCampus\projeto\servidor\OpenDHCPServer\OpenDHCPServer.exe
+[08-Nov-22 18:39:45] ini file: C:\Users\mendes\OneDrive - Instituto Politécnico do Cávado e do Ave\Documents\GitHub\SmartEnergy\LESI3_SmartCampus\projeto\servidor\OpenDHCPServer\OpenDHCPServer.ini
+[08-Nov-22 18:39:45] log file: C:\Users\mendes\OneDrive - Instituto Politécnico do Cávado e do Ave\Documents\GitHub\SmartEnergy\LESI3_SmartCampus\projeto\servidor\OpenDHCPServer\log\OpenDHCPServer%Y%m%d.log
+[08-Nov-22 18:39:45] Default Lease: 36000 (sec)
+[08-Nov-22 18:39:45] Server Name: blade
+[08-Nov-22 18:39:45] Detecting Static Interfaces..
+[08-Nov-22 18:39:45] Lease Status URL: http://127.0.0.1:6789
+[08-Nov-22 18:39:45] Listening On: 10.10.10.1
+[08-Nov-22 18:39:59] Host b8:27:eb:ca:94:a4 (raspberrypi) allotted 10.10.10.2 for 36000 seconds
+[08-Nov-22 18:40:52] Network changed, re-detecting Static Interfaces..
+[08-Nov-22 18:40:59] Lease Status URL: http://127.0.0.1:6789
+[08-Nov-22 18:40:59] Listening On: 10.10.10.1
+[08-Nov-22 19:07:00] Network changed, re-detecting Static Interfaces..
+[08-Nov-22 19:07:01] No Static Interface ready, Waiting...
+[08-Nov-22 19:07:10] Network changed, re-detecting Static Interfaces..
+[08-Nov-22 19:07:11] No Static Interface ready, Waiting...
+[08-Nov-22 19:07:16] Network changed, re-detecting Static Interfaces..
+[08-Nov-22 19:07:17] Lease Status URL: http://127.0.0.1:6789
+[08-Nov-22 19:07:17] Listening On: 10.10.10.1
+[08-Nov-22 19:07:18] Host b8:27:eb:ca:94:a4 (raspberrypi) allotted 10.10.10.2 for 36000 seconds
