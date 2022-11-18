@@ -1,3 +1,8 @@
+#include <WiFiEsp.h>
+#include <WiFiEspClient.h>
+#include <WiFiEspServer.h>
+#include <WiFiEspUdp.h>
+
 /*
   
   Project: Smart Energy Campus
@@ -11,7 +16,7 @@
 */
 
 #include "WiFiEsp.h"
-#include <WiFiEspClient.h>
+#include "WiFiEspClient.h"
 
 //#ifndef HAVE_HWSERIAL1
 #include "SoftwareSerial.h"
@@ -59,11 +64,12 @@ WiFiEspServer server(80);
 void info() {
   // informacao inicial no arranque do sistema
   Serial.println("\n\n\n\n");
-  Serial.println("\nSmart Energy Campus version 0.2 @ IPCA 2022/2023\n");
+  Serial.println("Smart Energy Campus version 0.2 @ IPCA 2022/2023\n");
   Serial.println(" 2727 Nuno Mendes");
   Serial.println("21138 Rosario Silva");
   Serial.println("21153 Tiago Azevedo");
   Serial.println("21156 Francisco Pereira");
+  delay(1000);
 }
 
 void test() {
@@ -371,12 +377,12 @@ void sendDataToServer() {
     s1 += String(mac[1],HEX); s1 += ":";
     s1 += String(mac[0],HEX);
     s1 += "&ipaddress=";  s1 += ip;
-    s1 += "&valled=";     s1 += String(valLED);
-    s1 += "&stateled=";   s1 += String(stateLED);
-    s1 += "&valldr=";     s1 += String(valLDR);
-    s1 += "&valldrnew=";  s1 += String(valLDRnew);
-    s1 += "&valpir=";     s1 += String(valPIR);
-    s1 += "&statepir=";   s1 += String(statePIR);
+    s1 += "&valled=";     s1 += valLED;
+    s1 += "&stateled=";   s1 += stateLED;
+    s1 += "&valldr=";     s1 += valLDR;
+    s1 += "&valldrnew=";  s1 += valLDRnew;
+    s1 += "&valpir=";     s1 += valPIR;
+    s1 += "&statepir=";   s1 += statePIR;
     s1 += " HTTP/1.1";
     Serial.println((s1));
     client.println((s1));
