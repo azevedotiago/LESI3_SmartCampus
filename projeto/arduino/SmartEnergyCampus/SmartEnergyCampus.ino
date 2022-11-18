@@ -385,8 +385,8 @@ void sendDataToServer() {
     s2 += "&statepir=";   s2 += statePIR;
     s2 += " HTTP/1.1";
     s1 += s2;
-    Serial.println((s1 + s2));
-    client.println((s1 + s2));
+    Serial.println((s1));
+    client.println((s1));
     client.println(F("Host: 10.10.10.2"));
     client.println("Connection: close");
     client.println();
