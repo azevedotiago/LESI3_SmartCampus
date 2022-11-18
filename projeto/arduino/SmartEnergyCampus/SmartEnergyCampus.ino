@@ -45,11 +45,12 @@ int reqCount = 0;  // number of requests received
 #define MAXLED 24     // LED maximum value during tests
 #define LDRmax 1000   // LDR maximum input
 #define LDRmin 40     // LDR minimum input
-#define LDRmed 200    // 600 para efeitos de testes dentro de casa
+#define LDRmed 400    // 600 para efeitos de testes dentro de casa, 400 no IPCA
 #define TIMEmax 15    // tempo maximo LEDs ligados
 #define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
+int counter = 0;
 int valLED = 0;       // valor inicial
 int stateLED = LOW;   // valor inicial do estado dos LEDs desligados
 int valLDR = 0;       // valor inicial
@@ -150,7 +151,7 @@ void setup() {
   info();
 
   // Testando os componentes externos
-  test();
+  //test();
 
   // initialize serial for ESP module
   analogWrite(LEDWIFIOFF, MAXLED);
@@ -212,7 +213,6 @@ void inputs() {
 }
 
 void outputs() {
-  long counter = 1;
   // LDRmax - pouca iluminacao, sem sol, escuro
   // LDRmin - muita iluminacao, muito sol
   if (valLDR <= LDRmin ) valLDR=LDRmin;
@@ -251,7 +251,7 @@ void outputs() {
     valLED = 0;                   // atribui a iluminacao a zero...
     analogWrite(LED, valLED);     // ...e desliga os LEDs
     timer = 0;
-    sendDataToServer();
+    //sendDataToServer();
   }
 
   // envia para a consola os dados atuais de input e output
@@ -263,23 +263,25 @@ void outputs() {
   Serial.print("| PIR value: "); Serial.print(valPIR);
   Serial.print("| PIR state: "); Serial.print(statePIR);
   Serial.print("| Timer: "); Serial.print(timer);
+  Serial.print("| Counter: "); Serial.print(counter);
   delay(100);
 
   timer2 = millis();    // regista o tempo atual
-  
-  if ((counter % 10000) == 0) {
-       sendDataToServer();
-       counter=1;
-  } 
-  ++counter;
+
+
 }
 
 void loop() {
   // funcao para fazer a leitura de todos os inputs (sensores)
   inputs();   // leitura de sensores
   outputs();  // comandos para os atuadores
+  if (counter > 200) {
+       sendDataToServer();
+       counter = 0;
+  } 
+  ++counter;
 
-/*
+/* */
   // listen for incoming clients
   WiFiEspClient client = server.available();
   if (client) {
@@ -346,7 +348,7 @@ void loop() {
     // close the connection:
     client.stop();
     Serial.println("Client disconnected");
-  } */
+  } /* */
 }
 
 
@@ -398,9 +400,9 @@ void sendDataToServer() {
   s1 += s2;
   Serial.println((s1));
   // if there's a successful connection
-  if (client.connect(serveraddress, 80)) {
+  if (client.connect("10.10.10.2", 80)) {
 
-    client.println((s1));
+    client.println( (s1));
     client.println(F("Host: 10.10.10.2"));
     client.println("Connection: close");
     client.println();
