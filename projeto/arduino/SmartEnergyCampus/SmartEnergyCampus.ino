@@ -45,7 +45,7 @@ int reqCount = 0;  // number of requests received
 #define MAXLED 24     // LED maximum value during tests
 #define LDRmax 1000   // LDR maximum input
 #define LDRmin 40     // LDR minimum input
-#define LDRmed 240    // 600 para efeitos de testes dentro de casa
+#define LDRmed 200    // 600 para efeitos de testes dentro de casa
 #define TIMEmax 15    // tempo maximo LEDs ligados
 #define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
@@ -218,11 +218,12 @@ void outputs() {
   int valLEDnew =  (int) (255  * valLDRnew / 100); // atribui ao LED o valor de iluminacao ideal de acordo com o sensor de input LDR
 
   if (valLDR >= LDRmed) {
+    
     if (statePIR==HIGH) {   // caso volte a detetar movimento reinicia o timer
-      statePIR = LOW;       // estado detecao de movimento passa a FALSO
       timer = TIMEmax;      // o tempo de LEDs ligados volta ao maximo
       stateLED = HIGH;      // liga os LEDs
       sendDataToServer();
+      statePIR = LOW;       // estado detecao de movimento passa a FALSO
     } 
     
     if (timer > 0) {
@@ -245,6 +246,7 @@ void outputs() {
     valLED = 0;                   // atribui a iluminacao a zero...
     analogWrite(LED, valLED);     // ...e desliga os LEDs
     timer = 0;
+    sendDataToServer();
   }
 
   // envia para a consola os dados atuais de input e output
@@ -266,6 +268,7 @@ void loop() {
   inputs();   // leitura de sensores
   outputs();  // comandos para os atuadores
 
+/*
   // listen for incoming clients
   WiFiEspClient client = server.available();
   if (client) {
@@ -332,7 +335,7 @@ void loop() {
     // close the connection:
     client.stop();
     Serial.println("Client disconnected");
-  }
+  } */
 }
 
 
@@ -369,14 +372,13 @@ void sendDataToServer() {
   // if there's a successful connection
   if (client.connect(serveraddress, 80)) {
     String s1 = "GET /webservices.php?macaddress=";
-    //s1 += HexString2ASCIIString(String(mac[0],HEX)); s1 += ":";
     s1 += String(mac[5],HEX); s1 += ":";
     s1 += String(mac[4],HEX); s1 += ":";
     s1 += String(mac[3],HEX); s1 += ":";
     s1 += String(mac[2],HEX); s1 += ":";
     s1 += String(mac[1],HEX); s1 += ":";
     s1 += String(mac[0],HEX);
-    s1 += "&ipaddress=";       s1 += ip;
+    //s1 += "&ipaddress=";       s1 += ip;
     String s2 = "&valled=";     s2 += valLED;
     s2 += "&stateled=";   s2 += stateLED;
     s2 += "&valldr=";     s2 += valLDR;
