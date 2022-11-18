@@ -81,6 +81,7 @@ void test() {
   Serial.print("\n Bright up ");
   for(int i=0; i<=255; i++) {
     if ((i % 2) == 0) Serial.print("+");
+    ++i;
     analogWrite(LED, i);
     delay(10);
   }
@@ -88,13 +89,14 @@ void test() {
   Serial.print("\n Bright down ");
   for(int i=255; i>=0; i--){
     if ((i % 2) == 0) Serial.print("-");
+    --i;
     analogWrite(LED, i);
     delay(10);
   }
   analogWrite(LED, 0);    // desliga os LEDs
 
   Serial.print("\n\n- Light Sensor LDR... "); 
-  for(int i=0; i<=255; i++) {
+  for(int i=0; i<=127; i++) {
     if ((i % 30) == 0) Serial.print("\n");
     valLDR = analogRead(LDR);
     Serial.print(" ");
@@ -105,7 +107,7 @@ void test() {
 
 
   Serial.print("\n\n- Motion Sensor PIR... "); 
-  for(int i=0; i<=255; i++) {
+  for(int i=0; i<=127; i++) {
     if ((i % 60) == 0) Serial.print("\n");
     valPIR = digitalRead(PIR);
     Serial.print(" ");
@@ -226,6 +228,7 @@ void outputs() {
       statePIR = LOW;       // estado detecao de movimento passa a FALSO
     } 
     
+    if (timer > TIMEmax) timer = TIMEmax;
     if (timer > 0) {
       timer = timer - (millis() - timer2);  // atualiza o tempo restante guardado na variavel timer
       // Ajusta o valor da iluminacao conforme a intensidade de luz "solar", o novo valor que esta guardado em valLEDnew
