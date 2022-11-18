@@ -63,7 +63,7 @@ void info() {
   Serial.println(" 2727 Nuno Mendes");
   Serial.println("21138 Rosario Silva");
   Serial.println("21153 Tiago Azevedo");
-  Serial.println("21156 Francisco Pereira\n");
+  Serial.println("21156 Francisco Pereira");
 }
 
 void test() {
