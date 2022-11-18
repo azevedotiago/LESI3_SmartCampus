@@ -246,6 +246,7 @@ void outputs() {
 
     analogWrite(LED, valLED);     // atribui a iluminacao atual aos LEDs
   } else {                        // desliga os LEDs
+    stateLED = LOW; 
     valLED = 0;                   // atribui a iluminacao a zero...
     analogWrite(LED, valLED);     // ...e desliga os LEDs
     timer = 0;
