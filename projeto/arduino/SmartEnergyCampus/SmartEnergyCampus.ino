@@ -11,7 +11,7 @@
 */
 
 #include "WiFiEsp.h"
-
+#include <WiFiEspClient.h>
 
 //#ifndef HAVE_HWSERIAL1
 #include "SoftwareSerial.h"
@@ -25,6 +25,9 @@ char serveraddress[] = "10.10.10.2";  // web & database server address
 
 char ssid[] = "smartenergy";   // your network SSID (name)
 char pass[] = "20222023lesi";  // your network password
+
+// Initialize the Ethernet client object
+WiFiEspClient client;
 
 int status = WL_IDLE_STATUS;
 int reqCount = 0;  // number of requests received
@@ -55,11 +58,12 @@ WiFiEspServer server(80);
 
 void info() {
   // informacao inicial no arranque do sistema
-  Serial.println("\n\nSmart Energy Campus version 0.1 @ IPCA 2022/2023\n");
-  Serial.println("\n 2727 Nuno Mendes");
-  Serial.println("\n21138 Rosario Silva");
-  Serial.println("\n21153 Tiago Azevedo");
-  Serial.println("\n21156 Francisco Pereira\n");
+  Serial.println("\n\n\n\n");
+  Serial.println("\nSmart Energy Campus version 0.2 @ IPCA 2022/2023\n");
+  Serial.println(" 2727 Nuno Mendes");
+  Serial.println("21138 Rosario Silva");
+  Serial.println("21153 Tiago Azevedo");
+  Serial.println("21156 Francisco Pereira\n");
 }
 
 void test() {
@@ -212,6 +216,7 @@ void outputs() {
       statePIR = LOW;       // estado detecao de movimento passa a FALSO
       timer = TIMEmax;      // o tempo de LEDs ligados volta ao maximo
       stateLED = HIGH;      // liga os LEDs
+      sendDataToServer();
     } 
     
     if (timer > 0) {
@@ -351,5 +356,37 @@ void printWifiStatus() {
 
 void sendDataToServer() {
 
-  //serveraddress[]
+  Serial.println("\n\nSending data to server\n");  // close any connection before send a new request
+  // this will free the socket on the WiFi shield
+  client.stop();
+
+  // if there's a successful connection
+  if (client.connect(serveraddress, 80)) {
+    String s1 = "GET /webservices.php?macaddress=";
+    //s1 += HexString2ASCIIString(String(mac[0],HEX)); s1 += ":";
+    s1 += String(mac[5],HEX); s1 += ":";
+    s1 += String(mac[4],HEX); s1 += ":";
+    s1 += String(mac[3],HEX); s1 += ":";
+    s1 += String(mac[2],HEX); s1 += ":";
+    s1 += String(mac[1],HEX); s1 += ":";
+    s1 += String(mac[0],HEX);
+    s1 += "&ipaddress=";  s1 += ip;
+    s1 += "&valled=";     s1 += String(valLED);
+    s1 += "&stateled=";   s1 += String(stateLED);
+    s1 += "&valldr=";     s1 += String(valLDR);
+    s1 += "&valldrnew=";  s1 += String(valLDRnew);
+    s1 += "&valpir=";     s1 += String(valPIR);
+    s1 += "&statepir=";   s1 += String(statePIR);
+    s1 += " HTTP/1.1";
+    Serial.println((s1));
+    client.println((s1));
+    client.println(F("Host: 10.10.10.2"));
+    client.println("Connection: close");
+    client.println();
+    // note the time that the connection was made
+  }
+  else {
+    // if you couldn't make a connection
+    Serial.println(F("Connection failed"));
+  }
 }
