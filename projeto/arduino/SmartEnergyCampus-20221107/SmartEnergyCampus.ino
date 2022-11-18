@@ -348,8 +348,3 @@ void printWifiStatus() {
   Serial.println(ip);
   Serial.println();
 }
-
-void sendDataToServer() {
-
-  //serveraddress[]
-}
