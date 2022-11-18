@@ -1,0 +1,4 @@
+invocacao do webservices.php
+
+http://10.10.10.2/webservices.php?macaddress=00:00:b3:02:d3:00&ipaddress=10.10.10.100&valled=200&stateled=1&valldr=543&valldrnew=50&valpir=30&statepir=0
+
