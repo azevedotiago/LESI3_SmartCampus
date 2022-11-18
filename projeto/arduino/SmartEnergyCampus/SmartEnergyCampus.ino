@@ -212,6 +212,7 @@ void inputs() {
 }
 
 void outputs() {
+  long counter = 1;
   // LDRmax - pouca iluminacao, sem sol, escuro
   // LDRmin - muita iluminacao, muito sol
   if (valLDR <= LDRmin ) valLDR=LDRmin;
@@ -265,6 +266,12 @@ void outputs() {
   delay(100);
 
   timer2 = millis();    // regista o tempo atual
+  
+  if ((counter % 10000) == 0) {
+       sendDataToServer();
+       counter=1;
+  } 
+  ++counter;
 }
 
 void loop() {
@@ -372,26 +379,27 @@ void sendDataToServer() {
   Serial.println("\n\nSending data to server\n");  // close any connection before send a new request
   // this will free the socket on the WiFi shield
   client.stop();
-
+  String s1 = "GET /webservices.php?macaddress=";
+  s1 += String(mac[5],HEX); s1 += ":";
+  s1 += String(mac[4],HEX); s1 += ":";
+  s1 += String(mac[3],HEX); s1 += ":";
+  s1 += String(mac[2],HEX); s1 += ":";
+  s1 += String(mac[1],HEX); s1 += ":";
+  s1 += String(mac[0],HEX);
+  s1 += "&ipaddress=";       //s1 += String(ip);
+  s1 += String(ip[0])+String(".")+String(ip[1]) +String(".")+String(ip[2])+String(".")+String(ip[3]);
+  String s2 = "&valled=";     s2 += valLED;
+  s2 += "&stateled=";   s2 += stateLED;
+  s2 += "&valldr=";     s2 += valLDR;
+  s2 += "&valldrnew=";  s2 += valLDRnew;
+  s2 += "&valpir=";     s2 += valPIR;
+  s2 += "&statepir=";   s2 += statePIR;
+  s2 += " HTTP/1.1";
+  s1 += s2;
+  Serial.println((s1));
   // if there's a successful connection
   if (client.connect(serveraddress, 80)) {
-    String s1 = "GET /webservices.php?macaddress=";
-    s1 += String(mac[5],HEX); s1 += ":";
-    s1 += String(mac[4],HEX); s1 += ":";
-    s1 += String(mac[3],HEX); s1 += ":";
-    s1 += String(mac[2],HEX); s1 += ":";
-    s1 += String(mac[1],HEX); s1 += ":";
-    s1 += String(mac[0],HEX);
-    //s1 += "&ipaddress=";       s1 += ip;
-    String s2 = "&valled=";     s2 += valLED;
-    s2 += "&stateled=";   s2 += stateLED;
-    s2 += "&valldr=";     s2 += valLDR;
-    s2 += "&valldrnew=";  s2 += valLDRnew;
-    s2 += "&valpir=";     s2 += valPIR;
-    s2 += "&statepir=";   s2 += statePIR;
-    s2 += " HTTP/1.1";
-    s1 += s2;
-    Serial.println((s1));
+
     client.println((s1));
     client.println(F("Host: 10.10.10.2"));
     client.println("Connection: close");
