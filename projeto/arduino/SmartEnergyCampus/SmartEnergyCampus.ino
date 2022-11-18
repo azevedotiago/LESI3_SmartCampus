@@ -281,7 +281,8 @@ void loop() {
   } 
   ++counter;
 
-/* */
+/* inicio: serviço http do proprio poste de iluminacao*/
+/*
   // listen for incoming clients
   WiFiEspClient client = server.available();
   if (client) {
@@ -348,7 +349,8 @@ void loop() {
     // close the connection:
     client.stop();
     Serial.println("Client disconnected");
-  } /* */
+  }  */
+  /* fim: serviço http do proprio poste de iluminacao*/
 }
 
 
