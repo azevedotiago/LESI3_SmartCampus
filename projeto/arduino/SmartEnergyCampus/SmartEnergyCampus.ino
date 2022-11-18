@@ -80,7 +80,7 @@ void test() {
   // aumentar o brilho
   Serial.print("\n Bright up ");
   for(int i=0; i<=255; i++) {
-    if ((i % 2) == 0) Serial.print("+");
+    //if ((i % 2) == 0) Serial.print("+");
     ++i;
     analogWrite(LED, i);
     delay(10);
@@ -88,7 +88,7 @@ void test() {
   // reduzir o brilho
   Serial.print("\n Bright down ");
   for(int i=255; i>=0; i--){
-    if ((i % 2) == 0) Serial.print("-");
+    //if ((i % 2) == 0) Serial.print("-");
     --i;
     analogWrite(LED, i);
     delay(10);
