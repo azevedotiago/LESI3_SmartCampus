@@ -209,7 +209,10 @@ void setup() {
 void inputs() {
   valLDR = analogRead(LDR);             // leitura do valor do sensor LDR
   valPIR = digitalRead(PIR);            // leitura do valor do sensor de movimento PIR
-  if (valPIR == HIGH) statePIR = HIGH;  // estado de detecao de movimento passa a TRUE
+  if (valPIR == HIGH) {
+    statePIR = HIGH;  // estado de detecao de movimento passa a TRUE
+    sendDataToServer();
+  }
 }
 
 void outputs() {
