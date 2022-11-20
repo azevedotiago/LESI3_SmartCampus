@@ -45,7 +45,7 @@ int reqCount = 0;  // number of requests received
 #define MAXLED 24     // LED maximum value during tests
 #define LDRmax 1000   // LDR maximum input
 #define LDRmin 40     // LDR minimum input
-#define LDRmed 400    // 600 para efeitos de testes dentro de casa, 400 no IPCA
+#define LDRmed 600    // 600 para efeitos de testes dentro de casa, 400 no IPCA
 #define TIMEmax 15    // tempo maximo LEDs ligados
 #define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
@@ -65,7 +65,7 @@ WiFiEspServer server(80);
 void info() {
   // informacao inicial no arranque do sistema
   Serial.println("\n\n\n\n");
-  Serial.println("Smart Energy Campus version 0.2 @ IPCA 2022/2023\n");
+  Serial.println("Smart Energy Campus version 0.3 @ IPCA 2022/2023\n");
   Serial.println(" 2727 Nuno Mendes");
   Serial.println("21138 Rosario Silva");
   Serial.println("21153 Tiago Azevedo");
@@ -267,7 +267,9 @@ void outputs() {
   delay(100);
 
   timer2 = millis();    // regista o tempo atual
-
+  if (statePIR == HIGH && stateLED == LOW) {
+    statePIR = LOW;
+  }
 
 }
 
@@ -379,7 +381,8 @@ void printWifiStatus() {
 }
 
 void sendDataToServer() {
-
+  analogWrite(LEDWIFION, 0);
+  analogWrite(LEDWIFIOFF, 0);
   Serial.println("\n\nSending data to server\n");  // close any connection before send a new request
   // this will free the socket on the WiFi shield
   client.stop();
@@ -403,15 +406,28 @@ void sendDataToServer() {
   Serial.println((s1));
   // if there's a successful connection
   if (client.connect("10.10.10.2", 80)) {
-
+    // pisca led VERDE para sinalizar comunicacao com o servidor com sucesso
+    analogWrite(LEDWIFION, MAXLED); delay(100);
     client.println( (s1));
+    analogWrite(LEDWIFION,0); delay(100);
     client.println(F("Host: 10.10.10.2"));
+    analogWrite(LEDWIFION,MAXLED); delay(100);
     client.println("Connection: close");
+    analogWrite(LEDWIFION,0); delay(100);
     client.println();
+    analogWrite(LEDWIFION,MAXLED); delay(100);
     // note the time that the connection was made
   }
   else {
     // if you couldn't make a connection
+    // picas led VERMELHO para sinalizar erro de comunicacao com o servidor
     Serial.println(F("Connection failed"));
+    analogWrite(LEDWIFIOFF, MAXLED); delay(100);
+    analogWrite(LEDWIFIOFF, 0); delay(100);
+    analogWrite(LEDWIFIOFF, MAXLED); delay(100);
+    analogWrite(LEDWIFIOFF, 0); delay(100);
   }
+  analogWrite(LEDWIFION,MAXLED);
+  analogWrite(LEDWIFIOFF, 0);
+
 }
