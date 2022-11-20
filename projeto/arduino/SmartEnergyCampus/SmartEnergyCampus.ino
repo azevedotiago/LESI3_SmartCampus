@@ -240,7 +240,7 @@ void outputs() {
       if (valLED > valLEDnew) valLED=valLED - valINCREMENT;
     } else {                      // reduz o valor da iluminacao dos LEDs ao valor mínimo, iluminacao de presenca
       timer = 0;
-      stateLED = LOW; 
+      stateLED = HIGH; 
       if (valLED > valLEDmin) {   // reduz a iluminacao até ser igual ao valor de iluminacao de presenca valLEDmin
         valLED = valLED - valINCREMENT;
       } else {
