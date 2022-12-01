@@ -1,0 +1,9 @@
+--> Ficheiro: Alproject.ipymb
+
+--> CSP folgado dura mais tempo
+--> Schedules making problem
+--> Timeslots = dias
+
+--> Criar programa para nos orientar
+--> Documentar muito bem
+--> Criar um NoteBook com tudo muito específico e bem retratado
