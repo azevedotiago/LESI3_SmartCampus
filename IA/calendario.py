@@ -2,87 +2,130 @@
 import sys
 sys.path.insert(0, sys.path[0]+'\\repo\\aima-python')
 
+from csp import *
 
-from agents import *
-from notebook import psource
+import math
+import warnings
+warnings.filterwarnings("ignore")
 
-
-class Food(Thing):
-    pass
-
-class Water(Thing):
-    pass
-
-def program(percepts):
-    '''Returns an action based on the dog's percepts'''
-    for p in percepts:
-        if isinstance(p, Food):
-            return 'eat'
-        elif isinstance(p, Water):
-            return 'drink'
-    return 'move down'
-
-class Park2D(GraphicEnvironment):
-    def percept(self, agent):
-        '''return a list of things that are in our agent's location'''
-        things = self.list_things_at(agent.location)
-        return things
-    
-    def execute_action(self, agent, action):
-        '''changes the state of the environment based on what the agent does.'''
-        if action == "move down":
-            print('{} decided to {} at location: {}'.format(str(agent)[1:-1], action, agent.location))
-            agent.movedown()
-        elif action == "eat":
-            items = self.list_things_at(agent.location, tclass=Food)
-            if len(items) != 0:
-                if agent.eat(items[0]): #Have the dog eat the first item
-                    print('{} ate {} at location: {}'
-                          .format(str(agent)[1:-1], str(items[0])[1:-1], agent.location))
-                    self.delete_thing(items[0]) #Delete it from the Park after.
-        elif action == "drink":
-            items = self.list_things_at(agent.location, tclass=Water)
-            if len(items) != 0:
-                if agent.drink(items[0]): #Have the dog drink the first item
-                    print('{} drank {} at location: {}'
-                          .format(str(agent)[1:-1], str(items[0])[1:-1], agent.location))
-                    self.delete_thing(items[0]) #Delete it from the Park after.
-                    
-    def is_done(self):
-        '''By default, we're done when we can't find a live agent, 
-        but to prevent killing our cute dog, we will stop before itself - when there is no more food or water'''
-        no_edibles = not any(isinstance(thing, Food) or isinstance(thing, Water) for thing in self.things)
-        dead_agents = not any(agent.is_alive() for agent in self.agents)
-        return dead_agents or no_edibles
-
-class BlindDog(Agent):
-    location = [0,1] # change location to a 2d value
-    direction = Direction("down") # variable to store the direction our dog is facing
-    
-    def movedown(self):
-        self.location[1] += 1
         
-    def eat(self, thing):
-        '''returns True upon success or False otherwise'''
-        if isinstance(thing, Food):
-            return True
-        return False
-    
-    def drink(self, thing):
-        ''' returns True upon success or False otherwise'''
-        if isinstance(thing, Water):
-            return True
-        return False
-    
+dominio = {
+    'name1': set(['lesson1']), 'dia1' : set(range(2,6+1)), 'dur1' : set(range(1,2+1)), 'hora1' : set(range(8,17+1)), 'tipo1' : set(['online','presencial']),
+    'name2': set(['lesson2']), 'dia2' : set(range(2,6+1)), 'dur2' : set(range(1,2+1)), 'hora2' : set(range(8,17+1)), 'tipo2' : set(['online','presencial']),
+    'name3': set(['lesson3']), 'dia3' : set(range(2,6+1)), 'dur3' : set(range(1,2+1)), 'hora3' : set(range(8,17+1)), 'tipo3' : set(['online','presencial']),
+    #'name4': set(['lesson4']), 'dia4' : set(range(2,6+1)), 'dur4' : set(range(1,2+1)), 'hora4' : set(range(8,17+1)), 'tipo4' : set(['online','presencial']),
+    #'name5': set(['lesson5']), 'dia5' : set(range(2,6+1)), 'dur5' : set(range(1,2+1)), 'hora5' : set(range(8,17+1)), 'tipo5' : set(['online','presencial']),
+    #'name6': set(['lesson6']), 'dia6' : set(range(2,6+1)), 'dur6' : set(range(1,2+1)), 'hora6' : set(range(8,17+1)), 'tipo6' : set(['online','presencial']),
+    #'name7': set(['lesson7']), 'dia7' : set(range(2,6+1)), 'dur7' : set(range(1,2+1)), 'hora7' : set(range(8,17+1)), 'tipo7' : set(['online','presencial']),
+    #'name8': set(['lesson8']), 'dia8' : set(range(2,6+1)), 'dur8' : set(range(1,2+1)), 'hora8' : set(range(8,17+1)), 'tipo8' : set(['online','presencial']),
+    #'name9': set(['lesson9']), 'dia9' : set(range(2,6+1)), 'dur9' : set(range(1,2+1)), 'hora9' : set(range(8,17+1)), 'tipo9' : set(['online','presencial']),
+    #'name10': set(['lesson10']), 'dia10' : set(range(2,6+1)), 'dur10' : set(range(1,2+1)), 'hora10' : set(range(8,17+1)), 'tipo10' : set(['online','presencial']),
+}        
 
-park = Park2D(5,20, color={'BlindDog': (200,0,0), 'Water': (0, 200, 200), 'Food': (230, 115, 40)}) # park width is set to 5, and height to 20
-dog = BlindDog(program)
-dogfood = Food()
-water = Water()
-park.add_thing(dog, [0,1])
-park.add_thing(dogfood, [0,5])
-park.add_thing(water, [0,7])
-morewater = Water()
-park.add_thing(morewater, [0,15])
-print("BlindDog starts at (1,1) facing downwards, lets see if he can find any food!")
-park.run(20)
+class lesson:
+    
+    def __init__(self, name ,dia, dur, hora, tipo):
+        self.name = name
+        self.dia = dia
+        self.dur = dur
+        self.hora = hora
+        self.tipo = tipo
+
+    @staticmethod
+    def cond1_all_lessons_friday_durantion2hours(l):
+        for x  in l:
+            if x.dia == 4 and x.dur != 2:
+                return False
+        return True
+    
+    @staticmethod
+    def cond2_one_or_two_are_online(l):
+        online = 0
+        for x  in l:
+            if x.tipo == 'online':
+                online = online + 1
+        if online > 0 and online <= 2:
+            return True
+        return False
+    
+    @staticmethod
+    def cond3_class_should_not_have_more_3_lessons_day(l):
+        lessons_per_day = [0,0,0,0,0]
+        for x  in l:
+            lessons_per_day[x.dia-2] = lessons_per_day[x.dia-2] + 1
+        
+        for ld in lessons_per_day:
+            if ld > 3:
+                return False
+        return True
+    
+    @staticmethod
+    def cond4_online_lessons_cannot_be_booked_immediately(l):
+        return True
+    
+    @staticmethod
+    def cond5_only_2_lessons_per_half_day(l):
+        lessons_per_morning = [0,0,0,0,0]
+        lessons_per_afternoon = [0,0,0,0,0]
+        for x  in l:
+            if x.hora <= 13:
+                lessons_per_morning[x.dia-2] = lessons_per_morning[x.dia-2] + 1
+            else:
+                lessons_per_afternoon[x.dia-2] = lessons_per_afternoon[x.dia-2] + 1
+
+        for ld in lessons_per_morning:
+            if ld > 2:
+                return False
+        
+        for ld in lessons_per_afternoon:
+            if ld > 2:
+                return False
+            
+        return True
+    
+    @staticmethod
+    def cond6_two_classes_specific_classRoom(l):
+        return True
+    
+    @staticmethod
+    def cond(l):
+        if lesson.cond1_all_lessons_friday_durantion2hours(l) == False:
+            return False
+        if lesson.cond2_one_or_two_are_online(l) == False:
+            return False
+        if lesson.cond3_class_should_not_have_more_3_lessons_day(l) == False:
+            return False
+        if lesson.cond4_online_lessons_cannot_be_booked_immediately(l) == False:
+            return False
+        if lesson.cond5_only_2_lessons_per_half_day(l) == False:
+            return False
+        if lesson.cond6_two_classes_specific_classRoom(l) == False:
+            return False
+        return True
+        
+    
+def teste_condicoes(*values):
+    i = 0
+    lessons = []
+    while i < len(values):
+        lessons.append(lesson(values[i], values[i+1], values[i+2], values[i+3], values[i+4]))
+        i += 5   
+        
+    #print(values)
+    
+    return lesson.cond(lessons)
+
+# constraints
+restricoes = [
+              Constraint(tuple(dominio.keys()), teste_condicoes),
+
+              ]
+
+# days_too_short
+days_too_short = NaryCSP(dominio, restricoes)
+print(days_too_short.variables)
+
+# Result
+k = ac_solver(days_too_short, arc_heuristic=sat_up)
+
+print(k)
