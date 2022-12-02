@@ -10,9 +10,12 @@ warnings.filterwarnings("ignore")
 
         
 dominio = {
-    'name1': set(['lesson1']), 'dia1' : set(range(2,6+1)), 'dur1' : set(range(1,2+1)), 'hora1' : set(range(8,17+1)), 'tipo1' : set(['online','presencial']),
-    'name2': set(['lesson2']), 'dia2' : set(range(2,6+1)), 'dur2' : set(range(1,2+1)), 'hora2' : set(range(8,17+1)), 'tipo2' : set(['online','presencial']),
-    'name3': set(['lesson3']), 'dia3' : set(range(2,6+1)), 'dur3' : set(range(1,2+1)), 'hora3' : set(range(8,17+1)), 'tipo3' : set(['online','presencial']),
+    #'name': set(['portugues']), 'dia':set(range(2,6+1)), 'duracao':set(range(1,2+1)), 'hora':set(range(8,17+1)), 'tipo':set(['online', 'presencial']), 
+    #'name': set(['matematica']), 'dia':set(range(2,6+1)), 'duracao':set(range(1,2+1)), 'hora':set(range(8,17+1)), 'tipo':set(['online', 'presencial']),
+    #'name': set(['ingles']), 'dia':set(range(2,6+1)), 'duracao':set(range(1,2+1)), 'hora':set(range(8,17+1)), 'tipo':set(['online', 'presencial'])
+    'name1': set(['Portugues']), 'dia1' : set(range(2,6+1)), 'dur1' : set(range(1,2+1)), 'hora1' : set(range(8,17+1)), 'tipo1' : set(['online','presencial']),
+    'name2': set(['Matematica']), 'dia2' : set(range(2,6+1)), 'dur2' : set(range(1,2+1)), 'hora2' : set(range(8,17+1)), 'tipo2' : set(['online','presencial']),
+    'name3': set(['Ingles']), 'dia3' : set(range(2,6+1)), 'dur3' : set(range(1,2+1)), 'hora3' : set(range(8,17+1)), 'tipo3' : set(['online','presencial']),
     #'name4': set(['lesson4']), 'dia4' : set(range(2,6+1)), 'dur4' : set(range(1,2+1)), 'hora4' : set(range(8,17+1)), 'tipo4' : set(['online','presencial']),
     #'name5': set(['lesson5']), 'dia5' : set(range(2,6+1)), 'dur5' : set(range(1,2+1)), 'hora5' : set(range(8,17+1)), 'tipo5' : set(['online','presencial']),
     #'name6': set(['lesson6']), 'dia6' : set(range(2,6+1)), 'dur6' : set(range(1,2+1)), 'hora6' : set(range(8,17+1)), 'tipo6' : set(['online','presencial']),
