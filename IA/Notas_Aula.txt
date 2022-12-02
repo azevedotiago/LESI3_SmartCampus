@@ -7,3 +7,8 @@
 --> Criar programa para nos orientar
 --> Documentar muito bem
 --> Criar um NoteBook com tudo muito específico e bem retratado
+
+o prof não pode dar mais de 3 aulas por dia
+restringuir o número de salas conforme a disciplina
+
+implementar funções no notebook (também)
