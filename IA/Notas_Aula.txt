@@ -12,3 +12,21 @@ o prof não pode dar mais de 3 aulas por dia
 restringuir o número de salas conforme a disciplina
 
 implementar funções no notebook (também)
+
+Restrições já feitas em python:
+- cada turma possuiu 2 a 4 aulas na mesma sala
+	-ou tem 2 ou tem 3 ou tem 4
+- apenas 2 aulas podem ser de manhã
+	- ou tem 1 ou 2
+- apenas 2 aulas podem ser de tarde
+	- ou tem 1 ou 2
+- têm de ter 10 aulas por semana
+- 1 ou 2 aulas são online
+	- ou tem 1 ou 2
+- online não podem ser marcadas imediatamente após uma aula presencial, no entanto podes fazer:
+	- 1 aula online de manhã e 1 aula presencial de tarde ou vice-versa.
+	- 2 aulas online no mesmo dia e pode ser em qualquer dos horários
+	- 1 aula online e 1 aula presencial de manhã ou de tarde
+- cada turma não pode ter mais de 3 aulas por dia
+	-2 manhã e 1 tarde ou vice versa 
+- 
