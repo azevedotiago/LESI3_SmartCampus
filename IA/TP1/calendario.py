@@ -131,4 +131,11 @@ print(days_too_short.variables)
 # Result
 k = ac_solver(days_too_short, arc_heuristic=sat_up)
 
-print(k)
+for h in range(1, 6):
+        print('Solucao', h, end=' ')
+        for (var, val) in k.items():
+            if val == h:
+                print(var, end=' ')
+        print()
+
+#print(k)

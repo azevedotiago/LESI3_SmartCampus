@@ -10,15 +10,16 @@ warnings.filterwarnings("ignore")
 
 Disciplinas = 'Portugues Ingles Matematica Historia Informatica'.split()
 Dias = 'Segunda Terca Quarta Quinta Sexta'.split()
-Horas = '8 10 12 14 16'.split()
+Horas = 'H8 H10 H12 H14 H16'.split()
 Tipo = 'Online Presencial'.split()
-variaveis = set(Disciplinas + Dias + Horas + Tipo)
+Turma = 'T1 T2 T3 T4 T5'.split()
+variaveis = set(Disciplinas + Dias + Horas + Tipo + Turma)
 
 dominio = {}
 for var in variaveis:
     dominio[var] = set(range(1,6))
-dominio['Portugues'] = {1}
-dominio['Quarta'] = {3}
+#dominio['Portugues'] = {1}
+#dominio['Quarta'] = {3}
 
 class lesson:
     
@@ -27,6 +28,7 @@ class lesson:
         self.Dias = Dias
         self.Horas = Horas
         self.Tipo = Tipo
+        self.Turma = Turma
 
     @staticmethod
     def cond1_all_lessons_friday_durantion2hours(l):
