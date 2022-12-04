@@ -10,9 +10,6 @@ warnings.filterwarnings("ignore")
 
         
 dominio = {
-    #'name': set(['portugues']), 'dia':set(range(2,6+1)), 'duracao':set(range(1,2+1)), 'hora':set(range(8,17+1)), 'tipo':set(['online', 'presencial']), 
-    #'name': set(['matematica']), 'dia':set(range(2,6+1)), 'duracao':set(range(1,2+1)), 'hora':set(range(8,17+1)), 'tipo':set(['online', 'presencial']),
-    #'name': set(['ingles']), 'dia':set(range(2,6+1)), 'duracao':set(range(1,2+1)), 'hora':set(range(8,17+1)), 'tipo':set(['online', 'presencial'])
     'name1': set(['Portugues']), 'dia1' : set(range(2,6+1)), 'dur1' : set(range(1,2+1)), 'hora1' : set(range(8,17+1)), 'tipo1' : set(['online','presencial']),
     'name2': set(['Matematica']), 'dia2' : set(range(2,6+1)), 'dur2' : set(range(1,2+1)), 'hora2' : set(range(8,17+1)), 'tipo2' : set(['online','presencial']),
     'name3': set(['Ingles']), 'dia3' : set(range(2,6+1)), 'dur3' : set(range(1,2+1)), 'hora3' : set(range(8,17+1)), 'tipo3' : set(['online','presencial']),
@@ -130,12 +127,4 @@ print(days_too_short.variables)
 
 # Result
 k = ac_solver(days_too_short, arc_heuristic=sat_up)
-
-for h in range(1, 6):
-        print('Solucao', h, end=' ')
-        for (var, val) in k.items():
-            if val == h:
-                print(var, end=' ')
-        print()
-
-#print(k)
+print(k)

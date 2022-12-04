@@ -8,17 +8,17 @@ import math
 import warnings
 warnings.filterwarnings("ignore")
 
-Disciplinas = 'Portugues Ingles Matematica Historia Informatica Ciencias Direito Fiscalidade Redes Fisica'.split()
-Dias = 'Segunda Terca Quarta Quinta Sexta Segunda Terca Quarta Quinta Sexta'.split()
-Horas = 'H8 H10 H12 H14 H16 H8 H10 H12 H14 H16'.split()
+Disciplinas = 'Portugues Ingles Matematica Historia Informatica'.split()
+Dias = 'Segunda Terca Quarta Quinta Sexta'.split()
+Horas = 'H8 H10 H12 H14 H16'.split()
 Tipo = 'Online Presencial'.split()
-Turma = 'T1 T2 T3 T4 T5 T6 T7 T8 T9'.split()
+Turma = 'T1 T2 T3 T4 T5'.split()
 Sala = 'S1 S2 S3 S4 S5'.split()
 variaveis = list(Disciplinas + Dias + Horas + Tipo + Turma + Sala)
 
 dominio = {}
 for var in variaveis:
-    dominio[var] = list(range(1,11))
+    dominio[var] = list(range(1,6))
 #dominio['Portugues'] = {1}
 #dominio['Quarta'] = {3}
 
@@ -43,11 +43,9 @@ print(days_too_short.variables)
 k = ac_solver(days_too_short, arc_heuristic=sat_up)
 
 #Print result
-for h in range(1,11):
+for h in range(1,6):
     print('Solucao', h, end=' ')
-    for (var,val) in h.items():
+    for (var,val) in k.items():
         if val == h:
             print(var, end=' ')
     print()
-
-#print(k)
