@@ -1,0 +1,32 @@
+// Grupo 6
+// link para o projeto no tinkercad
+// https://www.tinkercad.com/things/gYzQdh3YRGT-sizzling-lahdi-elzing/editel?sharecode=8Jl1Vc4DQTPHz3sf_DB0E0_WBVgnaB9VDqyKWh_gluk
+
+#include <Servo.h>
+
+Servo myservoLeft;
+Servo myservoRight;
+
+int angle = 0;
+
+void setup()
+{
+	myservoLeft.attach(9);
+  	myservoRight.attach(10);
+}
+
+void loop()
+{
+	for(angle = 90; angle < 180; angle += 1)
+    {
+    	myservoLeft.write(angle);
+      	myservoRight.write(180-angle);
+      	delay(50);
+    }  
+  	
+  	for(angle = 180; angle >= 90; angle -=1)
+    {
+    	myservoLeft.write(angle);
+      	myservoRight.write(180-angle);
+    }  
+}

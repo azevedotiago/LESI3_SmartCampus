@@ -1,0 +1,60 @@
+// Grupo 6
+// link para o projeto no tinkercad
+// https://www.tinkercad.com/things/ieHyS6q3AEJ-sizzling-maimu/editel?sharecode=kbNHpDQYx6Vme04ogv_4np6pFZPDAoNvD3VWxHu-C9I
+
+#include <Servo.h>
+Servo servo;
+
+int powerControl = 8;
+int servoPin = 10;
+
+void setup(){
+  Serial.begin(9600);
+  pinMode(powerControl, OUTPUT);
+  Serial.println("Transistor base set to pin "+String(powerControl,DEC));
+  pinMode(servoPin,OUTPUT);
+  Serial.println("Servo signal set to pin "+ String(servoPin,DEC));
+}
+
+void loop() {
+  servo.attach(servoPin);
+  Serial.println("Servo attached to "+String(servoPin,DEC));
+  digitalWrite(powerControl, HIGH);
+  Serial.println("Servo Power is on");
+  
+  for(int servoPosition=0; servoPosition < 181; servoPosition +=5) {
+    servo.write(servoPosition);
+    Serial.println("Position: "+ String(servoPosition,DEC));
+    delay(15);
+  }
+ 
+  delay(500);
+  
+  digitalWrite(powerControl, LOW);
+  Serial.println("Servo power is OFF");
+  servo.detach();
+  Serial.println("Servo detached");
+  
+  delay(3000);
+  
+  servo.attach(servoPin);
+  Serial.println("Servo attached to "+String(servoPin,DEC));
+  digitalWrite(powerControl, HIGH);
+  Serial.println("Servo power is ON");
+  
+  for (int servoPosition = 180; servoPosition >= 0; servoPosition -= 5) {
+    servo.write(servoPosition);
+    Serial.println("Position: "+String(servoPosition,DEC));
+    delay(15);
+  }
+
+  delay(500);
+  
+  digitalWrite(powerControl, LOW);
+  Serial.println("Servo power is OFF");
+  servo.detach();
+  Serial.println("Servo detached");
+  
+  Serial.println("Waiting for 2 seconds...");
+  delay(2000);
+}
