@@ -414,7 +414,7 @@ void sendDataToServer() {
   }
   else {
     // if you couldn't make a connection
-    // picas led VERMELHO para sinalizar erro de comunicacao com o servidor
+    // pisca led VERMELHO para sinalizar erro de comunicacao com o servidor
     Serial.println(F("Connection failed"));
     analogWrite(LEDWIFIOFF, MAXLED); delay(100);
     analogWrite(LEDWIFIOFF, 0); delay(100);
