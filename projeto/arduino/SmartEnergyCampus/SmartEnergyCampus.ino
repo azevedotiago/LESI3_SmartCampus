@@ -1,10 +1,4 @@
-#include <WiFiEsp.h>
-#include <WiFiEspClient.h>
-#include <WiFiEspServer.h>
-#include <WiFiEspUdp.h>
-
 /*
-  
   Project: Smart Energy Campus
   Year: 2022 / 2023
         LESI @ IPCA
@@ -12,14 +6,16 @@
            21138 Rosario Silva
            21153 Tiago Azevedo
            21156 Francisco Pereira
-
 */
 
-#include "WiFiEsp.h"
+#include <WiFiEsp.h>
+#include <WiFiEspClient.h>
+#include <WiFiEspServer.h>
+#include <WiFiEspUdp.h>  // ????
 #include "WiFiEspClient.h"
+#include "SoftwareSerial.h"
 
 //#ifndef HAVE_HWSERIAL1
-#include "SoftwareSerial.h"
 SoftwareSerial softserial(4, 5);  // RX, TX
 //#endif
 // network info variables
@@ -27,37 +23,35 @@ byte mac[6];
 IPAddress ip;
 
 char serveraddress[] = "10.10.10.2";  // web & database server address
-
-char ssid[] = "smartenergy";   // your network SSID (name)
-char pass[] = "20222023lesi";  // your network password
+char ssid[] = "smartenergy";          // your network SSID (name)
+char pass[] = "20222023lesi";         // your network password
 
 // Initialize the Ethernet client object
 WiFiEspClient client;
-
 int status = WL_IDLE_STATUS;
-int reqCount = 0;  // number of requests received
+int reqCount = 0;      // number of requests received
 
-#define LED 6         // pino de output dos LEDs, porta PWM
-#define LDR 0         // pino de input do sensor de luz
-#define PIR 3         // pino de input do sensor de movimento
-#define LEDWIFION 10  // wireless conetado e a funcionar
-#define LEDWIFIOFF 11 // wireless nao conetado
-#define MAXLED 24     // LED maximum value during tests
-#define LDRmax 1000   // LDR maximum input
-#define LDRmin 40     // LDR minimum input
-#define LDRmed 600    // 600 para efeitos de testes dentro de casa, 400 no IPCA
-#define TIMEmax 15    // tempo maximo LEDs ligados
-#define valLEDmin 2   // valor dos LEDs quando ligados mas sem movimentom, em standby 
+#define LED 6          // pino de output dos LEDs, porta PWM
+#define LDR 0          // pino de input do sensor de luz
+#define PIR 3          // pino de input do sensor de movimento
+#define LEDWIFION 10   // wireless conetado e a funcionar
+#define LEDWIFIOFF 11  // wireless nao conetado
+#define MAXLED 24      // LED maximum value during tests
+#define LDRmax 1000    // LDR maximum input
+#define LDRmin 40      // LDR minimum input
+#define LDRmed 600     // 600 para efeitos de testes dentro de casa, 400 no IPCA
+#define TIMEmax 15     // tempo maximo LEDs ligados
+#define valLEDmin 2    // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
 int counter = 0;
-int valLED = 0;       // valor inicial
-int stateLED = LOW;   // valor inicial do estado dos LEDs desligados
-int valLDR = 0;       // valor inicial
-long valLDRnew = 0;   // valor incicial
-int valPIR = 0;       // valor inicial
-int statePIR = LOW;   // sem deteção de movimento
-uint32_t timer = 0;   // temporizador para o tempo dos LEDs ligados 
+int valLED = 0;        // valor inicial
+int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
+int valLDR = 0;        // valor inicial
+long valLDRnew = 0;    // valor incicial
+int valPIR = 0;        // valor inicial
+int statePIR = LOW;    // sem deteção de movimento
+uint32_t timer = 0;    // temporizador para o tempo dos LEDs ligados 
 uint32_t timer2 = 0;
 
 WiFiEspServer server(80);
@@ -106,7 +100,6 @@ void test() {
   }
   valLDR = 0;
 
-
   Serial.print("\n\n- Motion Sensor PIR... "); 
   for(int i=0; i<=127; i++) {
     if ((i % 60) == 0) Serial.print("\n");
@@ -129,10 +122,8 @@ void test() {
   }
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, 0);
-
   Serial.println("\n");
 }
-
 
 void setup() {
   pinMode(LED, OUTPUT);
@@ -207,10 +198,10 @@ void setup() {
 }
 
 void inputs() {
-  valLDR = analogRead(LDR);             // leitura do valor do sensor LDR
-  valPIR = digitalRead(PIR);            // leitura do valor do sensor de movimento PIR
+  valLDR = analogRead(LDR);     // leitura do valor do sensor LDR
+  valPIR = digitalRead(PIR);    // leitura do valor do sensor de movimento PIR
   if (valPIR == HIGH) {
-    statePIR = HIGH;  // estado de detecao de movimento passa a TRUE
+    statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
     sendDataToServer();
   }
 }
@@ -396,14 +387,14 @@ void sendDataToServer() {
   s1 += String(mac[2],HEX); s1 += ":";
   s1 += String(mac[1],HEX); s1 += ":";
   s1 += String(mac[0],HEX);
-  s1 += "&ipaddress=";       //s1 += String(ip);
-  s1 += String(ip[0])+String(".")+String(ip[1]) +String(".")+String(ip[2])+String(".")+String(ip[3]);
-  String s2 = "&valled=";     s2 += valLED;
-  s2 += "&stateled=";   s2 += stateLED;
-  s2 += "&valldr=";     s2 += valLDR;
-  s2 += "&valldrnew=";  s2 += valLDRnew;
-  s2 += "&valpir=";     s2 += valPIR;
-  s2 += "&statepir=";   s2 += statePIR;
+  s1 += "&ipaddress=";
+  s1 += String(ip[0])+String(".")+String(ip[1]) +String(".")+String(ip[2])+String(".")+String(ip[3]); // endereço IP atual
+  String s2 = "&valled="; s2 += valLED;
+  s2 += "&stateled=";     s2 += stateLED;
+  s2 += "&valldr=";       s2 += valLDR;
+  s2 += "&valldrnew=";    s2 += valLDRnew;
+  s2 += "&valpir=";       s2 += valPIR;
+  s2 += "&statepir=";     s2 += statePIR;
   s2 += " HTTP/1.1";
   s1 += s2;
   Serial.println((s1));
