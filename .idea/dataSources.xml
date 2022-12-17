@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="DiagramaUseCaseAtualizado.vpp" uuid="0d859455-2213-40a2-a0ce-ee3d1c5892d2">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\franc\OneDrive - Instituto Politécnico do Cávado e do Ave\Ambiente de Trabalho\LESI3_SmartCampus\PA\Diagramas_Mockups\DiagramaUseCaseAtualizado.vpp.bak_000f</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

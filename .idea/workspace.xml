@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ca4a3d3-c07a-4d95-bb82-0f8d240960cb" name="Changes" comment="" />
+    <list default="true" id="9ca4a3d3-c07a-4d95-bb82-0f8d240960cb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PA/Diagramas_Mockups/DiagramaUseCaseAtualizado.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/PA/Diagramas_Mockups/DiagramaUseCaseAtualizado.vpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,8 +35,13 @@
       <option name="presentableId" value="Default" />
       <updated>1670177705626</updated>
       <workItem from="1670177707076" duration="2000" />
+      <workItem from="1671233796485" duration="44000" />
+      <workItem from="1671272606522" duration="9000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
