@@ -11,21 +11,26 @@
 #include <WiFiEsp.h>
 #include <WiFiEspClient.h>
 #include <WiFiEspServer.h>
+#include <WiFiEspUdp.h>  // ????
+#include "WiFiEspClient.h"
 #include "SoftwareSerial.h"
 #include "TimerOne.h"
 
+//#ifndef HAVE_HWSERIAL1
 SoftwareSerial softserial(4, 5);  // RX, TX
+//#endif
+// network info variables
 byte mac[6];
 IPAddress ip;
 
-char serveraddress[] = "10.10.10.2";  // endereco do servidor web e base de dados
-char ssid[] = "smartenergy";          // nome de rede sem fios (SSID)
-char pass[] = "20222023lesi";         // senha da rede sem fios
+char serveraddress[] = "10.10.10.2";  // web & database server address
+char ssid[] = "smartenergy";          // your network SSID (name)
+char pass[] = "20222023lesi";         // your network password
 
-// Inicializa o cliente de rede
+// Initialize the Ethernet client object
 WiFiEspClient client;
 int status = WL_IDLE_STATUS;
-int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
+int reqCount = 0;      // number of requests received
 
 #define LED 6          // pino de output dos LEDs, porta PWM
 #define LDR 0          // pino de input do sensor de luz
@@ -40,7 +45,7 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define valLEDmin 2    // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
-int periodo = 20;      // tempo em segundos em que sao enviados periodicamente dados para o servidor
+int periodo = 20;     // tempo em segundo em que sao enviados periodicamente dados para o servidor
 int counter = 0;
 int valLED = 0;        // valor inicial
 int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
@@ -104,6 +109,7 @@ void test() {
     Serial.print(" ");
     Serial.print(valPIR);
     delay(10);
+    //if (i == 255) i=0;
   }
   valPIR = LOW;
 
@@ -127,16 +133,17 @@ void setup() {
   pinMode(LEDWIFIOFF, OUTPUT);
   pinMode(LDR, INPUT);
   pinMode(PIR, INPUT);
-  analogWrite(LED, 0);    // Desliga os LEDs
-  analogWrite(LEDWIFION, 0);
-  analogWrite(LEDWIFIOFF, MAXLED);
 
   // inicializacao do Interrupt atraves de um Timer
   Timer1.initialize(2500);
   Timer1.setPeriod(1000000);            // definido para periodos de 1 segundo, tentamos com 120s (120.000.000) mas o codigo nao corre corretamente
   Timer1.attachInterrupt(testCounter);  // funcao que invoca quando e' atingido o periodo
 
-  // inicializa a consola serie para depuracao (debug)
+  analogWrite(LED, 0);    // Desliga os LEDs
+  analogWrite(LEDWIFION, 0);
+  analogWrite(LEDWIFIOFF, MAXLED);
+
+  // initialize serial for debugging
   Serial.begin(9600);
 
   // Info do projeto
@@ -145,25 +152,25 @@ void setup() {
   // Testando os componentes externos
   //test();
 
-  // incializacao serie para o modulo ESP
+  // initialize serial for ESP module
   analogWrite(LEDWIFIOFF, MAXLED);
   Serial.println("\n[Network connection]");
   softserial.begin(115200);
   softserial.write("AT+CIOBAUD=9600\r\n");
   softserial.write("AT+RST\r\n");
   softserial.begin(9600);
-  // inicializa o modulo ESP
+  // initialize ESP module
   WiFi.init(&softserial);
 
-  // verifica a presença do shield WiFi
+  // check for the presence of the shield
   if (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi shield not present");
-    // nao continua
+    // don't continue
     while (true)
       ;
   }
 
-  // tentiva de conetar a rede sem fios
+  // attempt to connect to WiFi network
   while (status != WL_CONNECTED) {
     analogWrite(LED, 255);
     analogWrite(LEDWIFION, MAXLED);
@@ -182,20 +189,20 @@ void setup() {
     analogWrite(LEDWIFIOFF, MAXLED);
     delay(100);
 
-    Serial.print("Tentando conetar a rede com SSID: ");
+    Serial.print("Attempting to connect to WPA SSID: ");
     Serial.println(ssid);
-    // Conetar a rede sem fios com WPA/WPA2
+    // Connect to WPA/WPA2 network
     status = WiFi.begin(ssid, pass);
     analogWrite(LED, 0);
   }
 
-  Serial.println("Esta ligado a rede sem fios");
+  Serial.println("You're connected to the network");
   printWifiStatus();
   analogWrite(LEDWIFION, MAXLED);
   analogWrite(LEDWIFIOFF, 0);
 
   // start the web server on port 80
-  //server.begin();
+  server.begin();
 }
 
 void inputs() {
@@ -272,6 +279,7 @@ void loop() {
   // funcao para fazer a leitura de todos os inputs (sensores)
   inputs();   // leitura de sensores
   outputs();  // comandos para os atuadores
+
 
 /* inicio: serviço http do proprio poste de iluminacao*/
 /*
@@ -373,7 +381,7 @@ void printWifiStatus() {
 void sendDataToServer() {
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, 0);
-  Serial.println("\nEnviado dados para o servidor\n");
+  Serial.println("\n\nSending data to server\n"); 
   // termina todas as ligacoes e efetua um novo pedido
   // liberta o socket do shield WiFi
   client.stop();
@@ -395,13 +403,12 @@ void sendDataToServer() {
   s2 += " HTTP/1.1";
   s1 += s2;
   Serial.println((s1));
-  /*
   // verifica se existe conetividade com o servidor
   if (client.connect("10.10.10.2", 80)) {
     // a ligacao com o servidor foi efetuada
     // pisca led VERDE para sinalizar comunicacao com o servidor com sucesso
     analogWrite(LEDWIFION, MAXLED); delay(100);
-    client.println( (s1));
+    client.println((s1));
     analogWrite(LEDWIFION,0); delay(100);
     client.println(F("Host: 10.10.10.2"));
     analogWrite(LEDWIFION,MAXLED); delay(100);
@@ -413,7 +420,7 @@ void sendDataToServer() {
   else {
     // se a ligacao com o servidor nao for efetuada
     // pisca led VERMELHO para sinalizar erro de comunicacao com o servidor
-    Serial.println(F("A ligacao falhou!"));
+    Serial.println(F("Connection failed"));
     analogWrite(LEDWIFIOFF, MAXLED); delay(100);
     analogWrite(LEDWIFIOFF, 0); delay(100);
     analogWrite(LEDWIFIOFF, MAXLED); delay(100);
@@ -421,15 +428,12 @@ void sendDataToServer() {
   }
   analogWrite(LEDWIFION,MAXLED);
   analogWrite(LEDWIFIOFF, 0);
-  */
-  client.stop(); 
 }
 
 void testCounter(){
   if (counter >= periodo) {
-       counter = 0;
-       Serial.println("\n\nInterrupt Timer1 ativado!");
        sendDataToServer();
+       counter = 0;
   } 
   ++counter;
 }
