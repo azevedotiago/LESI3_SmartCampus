@@ -14,6 +14,7 @@
 #include <WiFiEspUdp.h>  // ????
 #include "WiFiEspClient.h"
 #include "SoftwareSerial.h"
+#include "TimerOne.h"
 
 //#ifndef HAVE_HWSERIAL1
 SoftwareSerial softserial(4, 5);  // RX, TX
@@ -44,6 +45,7 @@ int reqCount = 0;      // number of requests received
 #define valLEDmin 2    // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
+int periodo = 20;     // tempo em segundo em que sao enviados periodicamente dados para o servidor
 int counter = 0;
 int valLED = 0;        // valor inicial
 int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
@@ -131,6 +133,12 @@ void setup() {
   pinMode(LEDWIFIOFF, OUTPUT);
   pinMode(LDR, INPUT);
   pinMode(PIR, INPUT);
+
+  // inicializacao do Interrupt atraves de um Timer
+  Timer1.initialize(250);
+  Timer1.setPeriod(1000000);            // definido para periodos de 1 segundo, tentamos com 120s (120.000.000) mas o codigo nao corre corretamente
+  Timer1.attachInterrupt(testCounter);  // funcao que invoca quando e' atingido o periodo
+
   analogWrite(LED, 0);    // Desliga os LEDs
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, MAXLED);
@@ -271,11 +279,7 @@ void loop() {
   // funcao para fazer a leitura de todos os inputs (sensores)
   inputs();   // leitura de sensores
   outputs();  // comandos para os atuadores
-  if (counter > 200) {
-       sendDataToServer();
-       counter = 0;
-  } 
-  ++counter;
+
 
 /* inicio: serviço http do proprio poste de iluminacao*/
 /*
@@ -374,6 +378,14 @@ void printWifiStatus() {
   Serial.println();
 }
 
+void testCounter(){
+  if (counter >= periodo) {
+       sendDataToServer();
+       counter = 0;
+  } 
+  ++counter;
+}
+
 void sendDataToServer() {
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, 0);
@@ -398,8 +410,9 @@ void sendDataToServer() {
   s2 += " HTTP/1.1";
   s1 += s2;
   Serial.println((s1));
-  // if there's a successful connection
+  // verifica se existe conetividade com o servidor
   if (client.connect("10.10.10.2", 80)) {
+    // a ligacao com o servidor foi efetuada
     // pisca led VERDE para sinalizar comunicacao com o servidor com sucesso
     analogWrite(LEDWIFION, MAXLED); delay(100);
     client.println( (s1));
@@ -410,10 +423,9 @@ void sendDataToServer() {
     analogWrite(LEDWIFION,0); delay(100);
     client.println();
     analogWrite(LEDWIFION,MAXLED); delay(100);
-    // note the time that the connection was made
   }
   else {
-    // if you couldn't make a connection
+    // se a ligacao com o servidor nao for efetuada
     // pisca led VERMELHO para sinalizar erro de comunicacao com o servidor
     Serial.println(F("Connection failed"));
     analogWrite(LEDWIFIOFF, MAXLED); delay(100);
@@ -423,5 +435,4 @@ void sendDataToServer() {
   }
   analogWrite(LEDWIFION,MAXLED);
   analogWrite(LEDWIFIOFF, 0);
-
 }
