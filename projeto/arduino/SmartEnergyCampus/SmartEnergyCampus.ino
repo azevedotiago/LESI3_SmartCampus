@@ -30,7 +30,7 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define LED 6          // pino de output dos LEDs, porta PWM
 #define LDR 0          // pino de input do sensor de luz
 #define PIR 3          // pino de input do sensor de movimento
-#define LEDWIFION 10   // wireless conetado e a funcionar
+#define LEDWIFION 10    // wireless conetado e a funcionar
 #define LEDWIFIOFF 11  // wireless nao conetado
 #define MAXLED 24      // LED maximum value during tests
 #define LDRmax 1000    // LDR maximum input
@@ -41,7 +41,7 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
 int counter = 0;
-int periodo = 20;     // tempo em segundo em que sao enviados periodicamente dados para o servidor
+int periodo = 120;     // tempo em segundo em que sao enviados periodicamente dados para o servidor
 int valLED = 0;        // valor inicial
 int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
 int valLDR = 0;        // valor inicial
@@ -62,7 +62,7 @@ void info() {
   Serial.println("21138 Rosario Silva");
   Serial.println("21153 Tiago Azevedo");
   Serial.println("21156 Francisco Pereira");
-  delay(750);
+  //delay(750);
 }
 
 void test() {
@@ -133,9 +133,9 @@ void setup() {
   analogWrite(LEDWIFIOFF, MAXLED);
 
   // inicializacao do Interrupt atraves de um Timer
-  Timer1.initialize(1000000);
-  Timer1.setPeriod(1000000);            // definido para periodos de 100 segundos
-  Timer1.attachInterrupt(periodic,1000000);     // funcao que invoca quando e' atingido o periodo
+  Timer1.initialize(500000);
+  Timer1.setPeriod(1000000);            // definido para periodos de 1 segundo
+  Timer1.attachInterrupt(periodic);     // funcao que invoca quando e' atingido o periodo
 
   // inicializa a consola serie para depuracao (debug)
   Serial.begin(9600);
@@ -272,6 +272,10 @@ void loop() {
   // funcao para fazer a leitura de todos os inputs (sensores)
   inputs();   // leitura de sensores
   outputs();  // comandos para os atuadores
+  if (sendData == HIGH) {
+    sendDataToServer();
+    sendData=LOW;
+  }
 
 /* inicio: serviço http do proprio poste de iluminacao*/
 /*
@@ -369,10 +373,6 @@ void printWifiStatus() {
 }
 
 void sendDataToServer() { // funcao que faz o envio dos dados atuais para o servidor
-
-if (sendData == LOW) {    // nao deixa executar o envio de dados mais que uma vez em simultaneo
-  sendData=HIGH;
-
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, 0);
   Serial.println("\n\nEnviado dados para o servidor");
@@ -426,13 +426,11 @@ if (sendData == LOW) {    // nao deixa executar o envio de dados mais que uma ve
   analogWrite(LEDWIFION,MAXLED);
   analogWrite(LEDWIFIOFF, 0);
   client.stop(); 
-  sendData=LOW;
-  }
 }
 
 void periodic() {
   if (counter >= periodo) {
-       sendDataToServer();
+       sendData=HIGH;
        counter = 0;
   } else {
   ++counter;
