@@ -41,7 +41,7 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
 int counter = 0;
-int periodo = 20;     // tempo em segundos em que sao enviados periodicamente dados para o servidor
+int periodo = 120;     // tempo em segundos em que sao enviados periodicamente dados para o servidor
 int valLED = 0;        // valor inicial
 int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
 int valLDR = 0;        // valor inicial
