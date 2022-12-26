@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./IA_Projeto02_G4/repo/aima-python"
+    ]
+}
