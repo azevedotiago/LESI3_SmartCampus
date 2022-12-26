@@ -18,7 +18,7 @@ SoftwareSerial softserial(4, 5);  // RX, TX
 byte mac[6];
 IPAddress ip;
 
-char serveraddress[] = "10.10.10.2";  // endereco do servidor web e base de dados
+//char serveraddress[] = "10.10.10.2";  // endereco do servidor web e base de dados
 char ssid[] = "smartenergy";          // nome de rede sem fios (SSID)
 char pass[] = "20222023lesi";         // senha da rede sem fios
 
@@ -40,8 +40,8 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define valLEDmin 2    // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
-int periodo = 20;      // tempo em segundos em que sao enviados periodicamente dados para o servidor
 int counter = 0;
+int periodo = 20;     // tempo em segundo em que sao enviados periodicamente dados para o servidor
 int valLED = 0;        // valor inicial
 int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
 int valLDR = 0;        // valor inicial
@@ -50,6 +50,7 @@ int valPIR = 0;        // valor inicial
 int statePIR = LOW;    // sem deteção de movimento
 uint32_t timer = 0;    // temporizador para o tempo dos LEDs ligados 
 uint32_t timer2 = 0;
+int sendData = 0;      // estado do envio de dados para o servidor
 
 //WiFiEspServer server(80);
 
@@ -61,7 +62,7 @@ void info() {
   Serial.println("21138 Rosario Silva");
   Serial.println("21153 Tiago Azevedo");
   Serial.println("21156 Francisco Pereira");
-  delay(1000);
+  delay(750);
 }
 
 void test() {
@@ -133,8 +134,8 @@ void setup() {
 
   // inicializacao do Interrupt atraves de um Timer
   Timer1.initialize(1000000);
-  //Timer1.setPeriod(1000000);            // definido para periodos de 1 segundo, tentamos com 120s (120.000.000) mas o codigo nao corre corretamente
-  Timer1.attachInterrupt(periodic);     // funcao que invoca quando e' atingido o periodo
+  Timer1.setPeriod(1000000);            // definido para periodos de 100 segundos
+  Timer1.attachInterrupt(periodic,1000000);     // funcao que invoca quando e' atingido o periodo
 
   // inicializa a consola serie para depuracao (debug)
   Serial.begin(9600);
@@ -168,19 +169,19 @@ void setup() {
     analogWrite(LED, 255);
     analogWrite(LEDWIFION, MAXLED);
     analogWrite(LEDWIFIOFF, 0);
-    delay(100);
+    delay(75);
     analogWrite(LED, 64);
     analogWrite(LEDWIFION, 0);
     analogWrite(LEDWIFIOFF, MAXLED);
-    delay(100);
+    delay(75);
     analogWrite(LED, 255);
     analogWrite(LEDWIFION, MAXLED);
     analogWrite(LEDWIFIOFF, 0);
-    delay(100);
+    delay(75);
     analogWrite(LED, 64);
     analogWrite(LEDWIFION, 0);
     analogWrite(LEDWIFIOFF, MAXLED);
-    delay(100);
+    delay(75);
 
     Serial.print("Tentando conetar a rede com SSID: ");
     Serial.println(ssid);
@@ -259,13 +260,12 @@ void outputs() {
   Serial.print("| PIR state: "); Serial.print(statePIR);
   Serial.print("| Timer: "); Serial.print(timer);
   Serial.print("| Counter: "); Serial.print(counter);
-  delay(100);
+  delay(75);
 
   timer2 = millis();    // regista o tempo atual
   if (statePIR == HIGH && stateLED == LOW) {
     statePIR = LOW;
   }
-
 }
 
 void loop() {
@@ -345,7 +345,6 @@ void loop() {
   /* fim: serviço http do proprio poste de iluminacao*/
 }
 
-
 void printWifiStatus() {
   // escreve na consola o SSID da rede sem fios a qual esta ligado
   Serial.print("SSID: ");
@@ -353,9 +352,9 @@ void printWifiStatus() {
 
   // escreve na consola o endereco IP do shield WiFi
   ip = WiFi.localIP();
-  Serial.print("IP Address: "); Serial.println(ip);
+  Serial.print("IP Address : "); Serial.println(ip);
   WiFi.macAddress(mac);
-  Serial.print("MAC: ");
+  Serial.print("MAC Address: ");
   Serial.print(mac[5],HEX);  Serial.print(":");
   Serial.print(mac[4],HEX);  Serial.print(":");  
   Serial.print(mac[3],HEX);  Serial.print(":");  
@@ -369,14 +368,16 @@ void printWifiStatus() {
   Serial.println(ip);
 }
 
-void sendDataToServer() {
-  //analogWrite(LEDWIFION, 0);
-  //analogWrite(LEDWIFIOFF, 0);
-  Serial.println("\nEnviado dados para o servidor\n");
-  // termina todas as ligacoes e efetua um novo pedido
-  // liberta o socket do shield WiFi
-  client.stop();
+void sendDataToServer() { // funcao que faz o envio dos dados atuais para o servidor
 
+if (sendData == LOW) {    // nao deixa executar o envio de dados mais que uma vez em simultaneo
+  sendData=HIGH;
+
+  analogWrite(LEDWIFION, 0);
+  analogWrite(LEDWIFIOFF, 0);
+  Serial.println("\n\nEnviado dados para o servidor");
+
+  client.stop(); // termina todas as ligacoes e efetua um novo pedido e liberta o socket do shield WiFi
 
   // verifica se existe conetividade com o servidor
   if (client.connect("10.10.10.2", 80)) {
@@ -421,18 +422,19 @@ void sendDataToServer() {
     analogWrite(LEDWIFIOFF, MAXLED); delay(100);
     analogWrite(LEDWIFIOFF, 0); delay(100);
   }
+
   analogWrite(LEDWIFION,MAXLED);
   analogWrite(LEDWIFIOFF, 0);
   client.stop(); 
+  sendData=LOW;
+  }
 }
 
-void periodic(){
-  ++counter;
+void periodic() {
   if (counter >= periodo) {
-      counter = 0;
-      Serial.println("\n\nInterrupt Timer1 ativado!");
-      sendDataToServer();
-      delay(1000);
-  } 
-  
+       sendDataToServer();
+       counter = 0;
+  } else {
+  ++counter;
+  }
 }
