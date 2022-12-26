@@ -355,11 +355,11 @@ void loop() {
 
 
 void printWifiStatus() {
-  // print the SSID of the network you're attached to
+  // escreve na consola o SSID da rede sem fios a qual esta ligado
   Serial.print("SSID: ");
   Serial.println(WiFi.SSID());
 
-  // print your WiFi shield's IP address
+  // escreve na consola o endereco IP do shield WiFi
   ip = WiFi.localIP();
   Serial.print("IP Address: "); Serial.println(ip);
   WiFi.macAddress(mac);
@@ -371,26 +371,19 @@ void printWifiStatus() {
   Serial.print(mac[1],HEX);  Serial.print(":");  
   Serial.println(mac[0],HEX);
 
-  // print where to go in the browser
+  // escreve na consola o link para abrir a partir de um navegador/browser
   Serial.println();
-  Serial.print("To see this page in action, open a browser to http://");
+  Serial.print("Para acesso direto ao poste abrir num browser o endereco http://");
   Serial.println(ip);
   Serial.println();
-}
-
-void testCounter(){
-  if (counter >= periodo) {
-       sendDataToServer();
-       counter = 0;
-  } 
-  ++counter;
 }
 
 void sendDataToServer() {
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, 0);
-  Serial.println("\n\nSending data to server\n");  // close any connection before send a new request
-  // this will free the socket on the WiFi shield
+  Serial.println("\n\nSending data to server\n"); 
+  // termina todas as ligacoes e efetua um novo pedido
+  // liberta o socket do shield WiFi
   client.stop();
   String s1 = "GET /webservices.php?macaddress=";
   s1 += String(mac[5],HEX); s1 += ":";
@@ -435,4 +428,12 @@ void sendDataToServer() {
   }
   analogWrite(LEDWIFION,MAXLED);
   analogWrite(LEDWIFIOFF, 0);
+}
+
+void testCounter(){
+  if (counter >= periodo) {
+       sendDataToServer();
+       counter = 0;
+  } 
+  ++counter;
 }
