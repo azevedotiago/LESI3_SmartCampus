@@ -10,7 +10,7 @@
 
 #include <WiFiEsp.h>
 #include <WiFiEspClient.h>
-#include <WiFiEspServer.h>
+//#include <WiFiEspServer.h>
 #include "SoftwareSerial.h"
 #include "TimerOne.h"
 
@@ -51,7 +51,7 @@ int statePIR = LOW;    // sem deteção de movimento
 uint32_t timer = 0;    // temporizador para o tempo dos LEDs ligados 
 uint32_t timer2 = 0;
 
-WiFiEspServer server(80);
+//WiFiEspServer server(80);
 
 void info() {
   // informacao inicial no arranque do sistema
@@ -132,9 +132,9 @@ void setup() {
   analogWrite(LEDWIFIOFF, MAXLED);
 
   // inicializacao do Interrupt atraves de um Timer
-  Timer1.initialize(2500);
-  Timer1.setPeriod(1000000);            // definido para periodos de 1 segundo, tentamos com 120s (120.000.000) mas o codigo nao corre corretamente
-  Timer1.attachInterrupt(testCounter);  // funcao que invoca quando e' atingido o periodo
+  Timer1.initialize(1000000);
+  //Timer1.setPeriod(1000000);            // definido para periodos de 1 segundo, tentamos com 120s (120.000.000) mas o codigo nao corre corretamente
+  Timer1.attachInterrupt(periodic);     // funcao que invoca quando e' atingido o periodo
 
   // inicializa a consola serie para depuracao (debug)
   Serial.begin(9600);
@@ -367,41 +367,43 @@ void printWifiStatus() {
   Serial.println();
   Serial.print("Para acesso direto ao poste abrir num browser o endereco http://");
   Serial.println(ip);
-  Serial.println();
 }
 
 void sendDataToServer() {
-  analogWrite(LEDWIFION, 0);
-  analogWrite(LEDWIFIOFF, 0);
+  //analogWrite(LEDWIFION, 0);
+  //analogWrite(LEDWIFIOFF, 0);
   Serial.println("\nEnviado dados para o servidor\n");
   // termina todas as ligacoes e efetua um novo pedido
   // liberta o socket do shield WiFi
   client.stop();
-  String s1 = "GET /webservices.php?macaddress=";
-  s1 += String(mac[5],HEX); s1 += ":";
-  s1 += String(mac[4],HEX); s1 += ":";
-  s1 += String(mac[3],HEX); s1 += ":";
-  s1 += String(mac[2],HEX); s1 += ":";
-  s1 += String(mac[1],HEX); s1 += ":";
-  s1 += String(mac[0],HEX);
-  s1 += "&ipaddress=";
-  s1 += String(ip[0])+String(".")+String(ip[1]) +String(".")+String(ip[2])+String(".")+String(ip[3]); // endereço IP atual
-  String s2 = "&valled="; s2 += valLED;
-  s2 += "&stateled=";     s2 += stateLED;
-  s2 += "&valldr=";       s2 += valLDR;
-  s2 += "&valldrnew=";    s2 += valLDRnew;
-  s2 += "&valpir=";       s2 += valPIR;
-  s2 += "&statepir=";     s2 += statePIR;
-  s2 += " HTTP/1.1";
-  s1 += s2;
-  Serial.println((s1));
-  /*
+
+
   // verifica se existe conetividade com o servidor
   if (client.connect("10.10.10.2", 80)) {
     // a ligacao com o servidor foi efetuada
     // pisca led VERDE para sinalizar comunicacao com o servidor com sucesso
+
+    String s1 = "GET /webservices.php?macaddress=";
+    s1 += String(mac[5],HEX); s1 += ":";
+    s1 += String(mac[4],HEX); s1 += ":";
+    s1 += String(mac[3],HEX); s1 += ":";
+    s1 += String(mac[2],HEX); s1 += ":";
+    s1 += String(mac[1],HEX); s1 += ":";
+    s1 += String(mac[0],HEX);
+    s1 += "&ipaddress=";
+    s1 += String(ip[0])+String(".")+String(ip[1]) +String(".")+String(ip[2])+String(".")+String(ip[3]); // endereço IP atual
+    String s2 = "&valled="; s2 += valLED;
+    s2 += "&stateled=";     s2 += stateLED;
+    s2 += "&valldr=";       s2 += valLDR;
+    s2 += "&valldrnew=";    s2 += valLDRnew;
+    s2 += "&valpir=";       s2 += valPIR;
+    s2 += "&statepir=";     s2 += statePIR;
+    s2 += " HTTP/1.1";
+    s1 += s2;
+    Serial.println((s1));
+    
     analogWrite(LEDWIFION, MAXLED); delay(100);
-    client.println( (s1));
+    client.println((s1));
     analogWrite(LEDWIFION,0); delay(100);
     client.println(F("Host: 10.10.10.2"));
     analogWrite(LEDWIFION,MAXLED); delay(100);
@@ -421,15 +423,16 @@ void sendDataToServer() {
   }
   analogWrite(LEDWIFION,MAXLED);
   analogWrite(LEDWIFIOFF, 0);
-  */
   client.stop(); 
 }
 
-void testCounter(){
-  if (counter >= periodo) {
-       counter = 0;
-       Serial.println("\n\nInterrupt Timer1 ativado!");
-       sendDataToServer();
-  } 
+void periodic(){
   ++counter;
+  if (counter >= periodo) {
+      counter = 0;
+      Serial.println("\n\nInterrupt Timer1 ativado!");
+      sendDataToServer();
+      delay(1000);
+  } 
+  
 }
