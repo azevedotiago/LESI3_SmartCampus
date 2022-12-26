@@ -41,7 +41,7 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
 int counter = 0;
-int periodo = 120;     // tempo em segundo em que sao enviados periodicamente dados para o servidor
+int periodo = 20;     // tempo em segundos em que sao enviados periodicamente dados para o servidor
 int valLED = 0;        // valor inicial
 int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
 int valLDR = 0;        // valor inicial
@@ -375,7 +375,7 @@ void printWifiStatus() {
 void sendDataToServer() { // funcao que faz o envio dos dados atuais para o servidor
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, 0);
-  Serial.println("\n\nEnviado dados para o servidor");
+  Serial.println("\nEnviado dados para o servidor");
 
   client.stop(); // termina todas as ligacoes e efetua um novo pedido e liberta o socket do shield WiFi
 
@@ -430,6 +430,9 @@ void sendDataToServer() { // funcao que faz o envio dos dados atuais para o serv
 
 void periodic() {
   if (counter >= periodo) {
+       Serial.print("\nInterrupt timer1 a cada ");
+       Serial.print(periodo);
+       Serial.print(" segundos ATIVADO!");
        sendData=HIGH;
        counter = 0;
   } else {
