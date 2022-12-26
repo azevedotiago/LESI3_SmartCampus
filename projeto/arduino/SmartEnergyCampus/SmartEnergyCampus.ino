@@ -59,7 +59,7 @@ WiFiEspServer server(80);
 void info() {
   // informacao inicial no arranque do sistema
   Serial.println("\n\n\n\n");
-  Serial.println("Smart Energy Campus version 0.3 @ IPCA 2022/2023\n");
+  Serial.println("Smart Energy Campus version 0.4 @ IPCA 2022/2023\n");
   Serial.println(" 2727 Nuno Mendes");
   Serial.println("21138 Rosario Silva");
   Serial.println("21153 Tiago Azevedo");
