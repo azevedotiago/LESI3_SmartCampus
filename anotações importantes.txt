@@ -1,9 +1,9 @@
 no codigo do arduino:
 
 a) colocar interrupt associado ao sensor PIR para enviar os dados para o servidor
-b) de 120 em 120s o "interrupt" enviar o estado atual do sistema para o servidor
+FEITO b) de 120 em 120s o "interrupt" enviar o estado atual do sistema para o servidor 
 c) colocar o codigo de acesso ao poste a funcionar, através de um botão que ao clicar ativa um interrupt e a codigo fica disponivel
-d) fazer capturas de ecrã do acesso http aos postes de iluminação
+d) fazer capturas de ecrã do acesso http aos postes de iluminação, está na versao v0.1
 
 na maquete:
 a) referir que o sensor pir em futuras trabalhos será colocado num ponto mais estratégico do poste de forma a que a área de abrangência seja superior e o poste não interfira
