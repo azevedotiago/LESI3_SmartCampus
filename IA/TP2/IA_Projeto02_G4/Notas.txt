@@ -1,0 +1,5 @@
+Problemas a tratar:
+- Universidade com relação entre qualidade e preço
+- Ordenar universidade por menos custos
+- agrupar as universidades por não vale a pena o preço/rank com talvez sim ou não com +preço/+rank
+- 
