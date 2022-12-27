@@ -30,14 +30,14 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define LED 6          // pino de output dos LEDs, porta PWM
 #define LDR 0          // pino de input do sensor de luz
 #define PIR 3          // pino de input do sensor de movimento
-#define interruptPin 3
-#define LEDWIFION 10    // wireless conetado e a funcionar
+#define interruptPin 3 // pino de input do sensor de movimento para a funcao de interrupt via detecao de movimento
+#define LEDWIFION 10   // wireless conetado e a funcionar
 #define LEDWIFIOFF 11  // wireless nao conetado
 #define MAXLED 24      // LED maximum value during tests
 #define LDRmax 1000    // LDR maximum input
 #define LDRmin 40      // LDR minimum input
 #define LDRmed 600     // 600 para efeitos de testes dentro de casa, 400 no IPCA
-#define TIMEmax 15     // tempo maximo LEDs ligados
+#define TIMEmax 20     // tempo maximo em segundos para os LEDs ligados
 #define valLEDmin 2    // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
@@ -206,11 +206,12 @@ void setup() {
 
 void inputs() {
   valLDR = analogRead(LDR);     // leitura do valor do sensor LDR
-  valPIR = digitalRead(PIR);    // leitura do valor do sensor de movimento PIR
+
   /*
   // Este bloco de codigo foi substituido pelo interrupt via detecao de movimento, funcao detectionPIR()
+  valPIR = digitalRead(PIR);    // leitura do valor do sensor de movimento PIR
   if (valPIR == HIGH) {
-    tatePIR = HIGH;            // estado de detecao de movimento passa a TRUE
+    statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
     sendDataToServer();
   }
   */
@@ -375,9 +376,9 @@ void printWifiStatus() {
   Serial.println(mac[0],HEX);
 
   // escreve na consola o link para abrir a partir de um navegador/browser
-  Serial.println();
-  Serial.print("Para acesso direto ao poste abrir num browser o endereco http://");
+  Serial.print("\nPara acesso direto ao poste abrir num browser o endereco http://");
   Serial.println(ip);
+  delay(1000);
 }
 
 void sendDataToServer() { // funcao que faz o envio dos dados atuais para o servidor
@@ -452,6 +453,6 @@ void detectionPIR() {
   if (statePIR == LOW) {
     Serial.print("\nInterrupt via detecao de movimento ATIVADO!");
     statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
-    sendData = HIGH;              // estado de envio de dados para o servidor passa a TRUE
+    sendData = HIGH;            // estado de envio de dados para o servidor passa a TRUE
   }
 }
