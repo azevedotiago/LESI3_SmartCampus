@@ -441,7 +441,7 @@ void periodic() {
        Serial.print("\nInterrupt via timer1 a cada ");
        Serial.print(periodo);
        Serial.print(" segundos ATIVADO!");
-       sendData=HIGH;         // estado de envio de dados para o servidor passa a TRUE
+       sendData= HIGH;         // estado de envio de dados para o servidor passa a TRUE
        counter = 0;
   } else {
   ++counter;
@@ -449,7 +449,9 @@ void periodic() {
 }
 
 void detectionPIR() {
-  Serial.print("\nInterrupt via detecao de movimento ATIVADO!");
-  statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
-  sendData=HIGH;              // estado de envio de dados para o servidor passa a TRUE
+  if (statePIR == LOW) {
+    Serial.print("\nInterrupt via detecao de movimento ATIVADO!");
+    statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
+    sendData = HIGH;              // estado de envio de dados para o servidor passa a TRUE
+  }
 }
