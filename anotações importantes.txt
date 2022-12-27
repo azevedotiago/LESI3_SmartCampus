@@ -6,4 +6,5 @@ c) colocar o codigo de acesso ao poste a funcionar, através de um botão que ao
 FEITO d) fazer capturas de ecrã do acesso http aos postes de iluminação, está na versao v0.1
 
 na maquete:
-a) referir que o sensor pir em futuras trabalhos será colocado num ponto mais estratégico do poste de forma a que a área de abrangência seja superior e o poste não interfira
+a) referir que o sensor pir em futuras trabalhos será colocado num ponto mais estratégico do poste
+de forma a que a área de abrangência seja superior e o poste não interfira, colocar as fotos que se encontram em "projeto\maquete\sensorPIR"
