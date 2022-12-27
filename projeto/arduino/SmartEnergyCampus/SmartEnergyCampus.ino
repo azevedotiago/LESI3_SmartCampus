@@ -2,7 +2,7 @@
   Project: Smart Energy Campus
   Year: 2022 / 2023
         LESI @ IPCA
-  Authors: 2727 Nuno Mendes
+  Authors:  2727 Nuno Mendes
            21138 Rosario Silva
            21153 Tiago Azevedo
            21156 Francisco Pereira
