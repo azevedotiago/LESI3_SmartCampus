@@ -30,6 +30,7 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define LED 6          // pino de output dos LEDs, porta PWM
 #define LDR 0          // pino de input do sensor de luz
 #define PIR 3          // pino de input do sensor de movimento
+#define interruptPin 3
 #define LEDWIFION 10    // wireless conetado e a funcionar
 #define LEDWIFIOFF 11  // wireless nao conetado
 #define MAXLED 24      // LED maximum value during tests
@@ -57,7 +58,7 @@ int sendData = 0;      // estado do envio de dados para o servidor
 void info() {
   // informacao inicial no arranque do sistema
   Serial.println("\n\n\n\n");
-  Serial.println("Smart Energy Campus version 0.4 @ IPCA 2022/2023\n");
+  Serial.println("Smart Energy Campus version 0.5 @ IPCA 2022/2023\n");
   Serial.println(" 2727 Nuno Mendes");
   Serial.println("21138 Rosario Silva");
   Serial.println("21153 Tiago Azevedo");
@@ -128,10 +129,13 @@ void setup() {
   pinMode(LEDWIFIOFF, OUTPUT);
   pinMode(LDR, INPUT);
   pinMode(PIR, INPUT);
+  pinMode(interruptPin, INPUT_PULLUP);
   analogWrite(LED, 0);    // Desliga os LEDs
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, MAXLED);
 
+  attachInterrupt(digitalPinToInterrupt(interruptPin), detectionPIR, CHANGE);
+  
   // inicializacao do Interrupt atraves de um Timer
   Timer1.initialize(500000);
   Timer1.setPeriod(1000000);            // definido para periodos de 1 segundo
@@ -203,8 +207,8 @@ void inputs() {
   valLDR = analogRead(LDR);     // leitura do valor do sensor LDR
   valPIR = digitalRead(PIR);    // leitura do valor do sensor de movimento PIR
   if (valPIR == HIGH) {
-    statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
-    sendDataToServer();
+    //statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
+    //sendDataToServer();
   }
 }
 
@@ -438,4 +442,10 @@ void periodic() {
   } else {
   ++counter;
   }
+}
+
+void detectionPIR() {
+  Serial.print("\nInterrupt via detecao de movimento ATIVADO!");
+  statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
+  sendData=HIGH;
 }
