@@ -68,7 +68,7 @@ void info() {
 
 void test() {
   Serial.println("\n[Testing]");
-  delay(1000);
+  delay(500);
 
   Serial.print("\n- Ilumination...");
   // aumentar o brilho
@@ -134,6 +134,7 @@ void setup() {
   analogWrite(LEDWIFION, 0);
   analogWrite(LEDWIFIOFF, MAXLED);
 
+  // inicializacao do Interrupt atraves da detecao de movimento com o sensor PIR
   attachInterrupt(digitalPinToInterrupt(interruptPin), detectionPIR, CHANGE);
   
   // inicializacao do Interrupt atraves de um Timer
@@ -199,17 +200,20 @@ void setup() {
   analogWrite(LEDWIFION, MAXLED);
   analogWrite(LEDWIFIOFF, 0);
 
-  // start the web server on port 80
+  // inicia o servidor web do poste na porta 80
   //server.begin();
 }
 
 void inputs() {
   valLDR = analogRead(LDR);     // leitura do valor do sensor LDR
   valPIR = digitalRead(PIR);    // leitura do valor do sensor de movimento PIR
+  /*
+  // Este bloco de codigo foi substituido pelo interrupt via detecao de movimento, funcao detectionPIR()
   if (valPIR == HIGH) {
-    //statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
-    //sendDataToServer();
+    tatePIR = HIGH;            // estado de detecao de movimento passa a TRUE
+    sendDataToServer();
   }
+  */
 }
 
 void outputs() {
@@ -276,7 +280,7 @@ void loop() {
   // funcao para fazer a leitura de todos os inputs (sensores)
   inputs();   // leitura de sensores
   outputs();  // comandos para os atuadores
-  if (sendData == HIGH) {
+  if (sendData == HIGH) {     // caso TRUE invoca a funcao para o envio de dados para o servidor
     sendDataToServer();
     sendData=LOW;
   }
@@ -434,10 +438,10 @@ void sendDataToServer() { // funcao que faz o envio dos dados atuais para o serv
 
 void periodic() {
   if (counter >= periodo) {
-       Serial.print("\nInterrupt timer1 a cada ");
+       Serial.print("\nInterrupt via timer1 a cada ");
        Serial.print(periodo);
        Serial.print(" segundos ATIVADO!");
-       sendData=HIGH;
+       sendData=HIGH;         // estado de envio de dados para o servidor passa a TRUE
        counter = 0;
   } else {
   ++counter;
@@ -447,5 +451,5 @@ void periodic() {
 void detectionPIR() {
   Serial.print("\nInterrupt via detecao de movimento ATIVADO!");
   statePIR = HIGH;            // estado de detecao de movimento passa a TRUE
-  sendData=HIGH;
+  sendData=HIGH;              // estado de envio de dados para o servidor passa a TRUE
 }
