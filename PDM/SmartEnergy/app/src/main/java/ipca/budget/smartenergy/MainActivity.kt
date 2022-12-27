@@ -16,6 +16,9 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
+    var loginmethod = "login"
+    var server = "10.10.10.2"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
@@ -39,12 +42,18 @@ class MainActivity : AppCompatActivity() {
 
         // set on-click listener
         btn_submit.setOnClickListener {
-            val user_name = et_user_name.text;
+            val username = et_user_name.text;
             val password = et_password.text;
             Toast.makeText(this@MainActivity, user_name, Toast.LENGTH_LONG).show()
 
-            // your code to validate the user_name and password combination
-            // and verify the same
+            // codigo para verificar a combinacao username e password
+            var username = username_Et.text.toString()
+            var password = password_Et.text.toString()
+            var URL_ROOT = "http://"+server+":80/login.php?method=" + loginmethod + "&username=" + username + "&password=" + password
+            println("username: " + username)
+            println("password: " + password)
+            println("url     : " + URL_ROOT)
+
 
         }
     }
