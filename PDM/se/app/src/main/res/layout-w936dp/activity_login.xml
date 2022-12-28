@@ -87,5 +87,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="126dp"
+            android:layout_height="95dp"
+            app:srcCompat="@drawable/logo"
+            tools:layout_editor_absoluteX="707dp"
+            tools:layout_editor_absoluteY="-2dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
