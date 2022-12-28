@@ -13,7 +13,8 @@ import java.net.ResponseCache
  */
 class LoginDataSource {
     val loginmethod = "login"
-    val server = "10.10.10.2"
+    //val server = "10.10.10.2"
+    val server = "192.168.1.40" // home office tests
     private val client = OkHttpClient()
 
     fun login(username: String, password: String): Result<LoggedInUser> {
@@ -27,12 +28,12 @@ class LoginDataSource {
             println("### url      : " + url)
 
             println("### result  : fetching...")
-            val request = okhttp3.Request.Builder().url(url).build()
+            val request = Request.Builder().url(url).build()
             println("### val request... " + request.toString())
 
 
             println("### 1 client.newCall...")
-            client.newCall(request).execute().use { response : okhttp3.Response ->
+            client.newCall(request).execute().use { response : Response ->
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
 
                 //for ((name, value) in response.headers) {
