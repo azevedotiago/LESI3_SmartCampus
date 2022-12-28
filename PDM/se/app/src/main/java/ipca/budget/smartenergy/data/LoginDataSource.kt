@@ -1,5 +1,6 @@
 package ipca.budget.smartenergy.data
 
+import android.util.Log
 import ipca.budget.smartenergy.data.model.LoggedInUser
 import java.io.IOException
 import okhttp3.OkHttpClient
@@ -25,6 +26,7 @@ class LoginDataSource {
             val request = Request.Builder().url(url).build()
             println("### val request... " + request.toString())
             println("### client.newCall...")
+            Log.d(TAG,"######### Teste")
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
                 for ((name, value) in response.headers) {
@@ -46,6 +48,10 @@ class LoginDataSource {
 
     fun logout() {
         // TODO: revoke authentication
+    }
+
+    companion object {
+        private const val TAG ="############ Mensagens..."
     }
 }
 
