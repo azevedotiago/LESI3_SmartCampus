@@ -1,7 +1,7 @@
 # Ponto de Acesso TP Link
 essid: smartenergy
 password: 20222023lesi
-ip: 10.10.10.1/24
+ip: 10.10.10.1/24 (testes em casa 192.168.1.40)
 user: admin
 password: admin
 dhcp server: 10.10.10.100 a 10.10.10.199
