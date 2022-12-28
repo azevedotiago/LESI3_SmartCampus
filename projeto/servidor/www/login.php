@@ -1,4 +1,14 @@
-<?php  
+<?php
+/*
+  Project: Smart Energy Campus
+  Year   : 2022 / 2023
+           LESI @ IPCA
+  Authors:  2727 Nuno Mendes
+           21138 Rosario Silva
+           21153 Tiago Azevedo
+           21156 Francisco Pereira
+*/
+
 date_default_timezone_set("Europe/Lisbon");
 include 'config.php';
 $output = array();
@@ -16,7 +26,7 @@ if($_GET['method']=="login"){
 		if ($mysqli === false) {
 			die("ERROR: Could not connect. ".$mysqli->connect_error);
 		} else {
-			echo "<br>sql connection sucessfull<br>";
+			//echo "<br>sql connection sucessfull<br>";
 		}
 		
 		// query a base de dados se existe o username com a password
