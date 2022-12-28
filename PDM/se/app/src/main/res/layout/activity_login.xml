@@ -30,7 +30,7 @@
         android:id="@+id/username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="256dp"
         android:hint="@string/prompt_username"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
@@ -83,10 +83,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="125dp"
-        android:layout_height="74dp"
+        android:layout_width="216dp"
+        android:layout_height="116dp"
+        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintVertical_bias="0.29000002"
         app:srcCompat="@drawable/logo"
-        tools:layout_editor_absoluteX="241dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteX="77dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
