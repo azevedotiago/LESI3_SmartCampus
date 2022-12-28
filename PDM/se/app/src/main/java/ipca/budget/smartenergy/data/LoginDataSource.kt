@@ -4,17 +4,15 @@ import ipca.budget.smartenergy.data.model.LoggedInUser
 import java.io.IOException
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
-import java.net.ResponseCache
-
+import org.json.JSONObject
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 class LoginDataSource {
     val loginmethod = "login"
-    //val server = "10.10.10.2"
-    val server = "192.168.1.40" // home office tests
+    //val server = "10.10.10.2"  // raspberry pi - real test
+    val server = "192.168.1.40"  // home office tests
     private val client = OkHttpClient()
 
     fun login(username: String, password: String): Result<LoggedInUser> {
@@ -22,36 +20,32 @@ class LoginDataSource {
             // TODO: handle loggedInUser authentication
             println("###########################################")
             println("### LOGIN")
-            println("### username : " + username)
-            println("### password : " + password)
             var url = "http://" + server + ":80/login.php?method=" + loginmethod + "&username=" + username + "&password=" + password
-            println("### url      : " + url)
 
-            println("### result  : fetching...")
             val request = Request.Builder().url(url).build()
             println("### val request... " + request.toString())
-
-
-            println("### 1 client.newCall...")
-            client.newCall(request).execute().use { response : Response ->
+            println("### client.newCall...")
+            client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                //for ((name, value) in response.headers) {
-                //    println("$name: $value")
-                //}
-
-                //println(response.body!!.string())
+                for ((name, value) in response.headers) {
+                    println("$name: $value")
+                }
+                println(response.body!!.string())
                 println("### response")
             }
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-            println("### fakeUser")
-            return Result.Success(fakeUser)
+
+            val idUser = 1
+            val loggedUser = LoggedInUser("1", "Test")
+            println("### user logged in : "+ idUser + " " + username)
+            return Result.Success(loggedUser)
         } catch (e: Throwable) {
-            println("### login: error 1: " + e.message)
+            println("### login error : " + e.message)
             return Result.Error(IOException("Error logging in", e))
         }
     }
+
     fun logout() {
         // TODO: revoke authentication
     }
 }
+
