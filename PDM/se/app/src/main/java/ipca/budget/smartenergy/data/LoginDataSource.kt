@@ -20,28 +20,28 @@ class LoginDataSource {
         try {
             // TODO: handle loggedInUser authentication
             println("###########################################")
-            println("### LOGIN")
+            println("#### LOGIN")
             var url = "http://" + server + ":80/login.php?method=" + loginmethod + "&username=" + username + "&password=" + password
 
             val request = Request.Builder().url(url).build()
-            println("### val request... " + request.toString())
-            println("### client.newCall...")
-            Log.v(TAG,"######### Teste")
+            println("#### val request... " + request.toString())
+            println("#### client.newCall...")
+            Log.v(TAG,"#### Teste")
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
                 for ((name, value) in response.headers) {
                     println("$name: $value")
                 }
                 println(response.body!!.string())
-                println("### response")
+                println("#### response")
             }
 
             val idUser = 1
             val loggedUser = LoggedInUser("1", "Test")
-            println("### user logged in : "+ idUser + " " + username)
+            println("#### user logged in : "+ idUser + " " + username)
             return Result.Success(loggedUser)
         } catch (e: Throwable) {
-            println("### login error : " + e.message)
+            println("#### login error : " + e.message)
             return Result.Error(IOException("Error logging in", e))
         }
     }

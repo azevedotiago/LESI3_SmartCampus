@@ -6,13 +6,13 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="SERIAL_NUMBER" />
-            <value value="5203ca1765ed343b" />
+            <type value="VIRTUAL_DEVICE_PATH" />
+            <value value="C:\Users\utilizador\.android\avd\Android_10_API_29.avd" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-12-28T15:45:04.792727500Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-12-28T15:48:59.456724100Z" />
     <targetsSelectedWithDialog>
       <Target>
         <type value="QUICK_BOOT_TARGET" />
