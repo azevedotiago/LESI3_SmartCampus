@@ -41,7 +41,7 @@ int reqCount = 0;      // Em modo servidor web: numero de pedidos recebidos
 #define valLEDmin 2    // valor dos LEDs quando ligados mas sem movimentom, em standby 
 #define valINCREMENT 4 // valor de incremento / decremento na suavizacao de alteracao do valor da iluminacao
 
-int counter = 0;
+int counter = 0;	   // armazena a quantidade de segundos passados para o interrupt atraves do timer
 int periodo = 120;     // tempo em segundos em que sao enviados periodicamente dados para o servidor
 int valLED = 0;        // valor inicial
 int stateLED = LOW;    // valor inicial do estado dos LEDs desligados
@@ -288,29 +288,28 @@ void loop() {
 
 /* inicio: serviço http do proprio poste de iluminacao*/
 /*
-  // listen for incoming clients
+  // fica a espera de ligacoes de clientes
   WiFiEspClient client = server.available();
   if (client) {
-    Serial.println("New client");
-    // an http request ends with a blank line
+    Serial.println("Nova ligacao http");
+    // um pedido http termina com uma linha em branco
     boolean currentLineIsBlank = true;
     while (client.connected()) {
       if (client.available()) {
         char c = client.read();
         Serial.write(c);
-        // if you've gotten to the end of the line (received a newline
-        // character) and the line is blank, the http request has ended,
-        // so you can send a reply
+		// se chegou ao fim da linha (recebeu um caracter de nova linha) e a linha está em branco,
+		// o pedido http terminou, entao ja se pode enviar uma resposta
         if (c == '\n' && currentLineIsBlank) {
-          Serial.println("Sending response");
+          Serial.println("Enviado resposta http");
 
-          // send a standard http response header
-          // use \r\n instead of many println statements to speedup data send
+          // envia um cabeçalho de resposta http padrão
+          // use \r\n em vez de muitas instruções println para acelerar o envio de dados
           client.print(
             "HTTP/1.1 200 OK\r\n"
             "Content-Type: text/html\r\n"
-            "Connection: close\r\n"  // the connection will be closed after completion of the response
-            "Refresh: 5\r\n"        // refresh the page automatically every 5 sec
+            "Connection: close\r\n"  // a ligacao será fechada após a conclusão da resposta
+            "Refresh: 5\r\n"         // recarrega a pagina automaticamente a cada 5 segundos
             "\r\n");
           client.print("<!DOCTYPE HTML>\r\n");
           client.print("<html>\r\n");
@@ -340,20 +339,20 @@ void loop() {
           break;
         }
         if (c == '\n') {
-          // you're starting a new line
+          // Iniciando uma nova linha
           currentLineIsBlank = true;
         } else if (c != '\r') {
-          // you've gotten a character on the current line
+          // Obteve um caracter na linha atual
           currentLineIsBlank = false;
         }
       }
     }
-    // give the web browser time to receive the data
+    // Dando tempo ao navegador da web para receber os dados
     delay(10);
 
-    // close the connection:
+    // Terminar a ligacao
     client.stop();
-    Serial.println("Client disconnected");
+    Serial.println("Cliente desconetado");
   }  */
   /* fim: serviço http do proprio poste de iluminacao*/
 }
