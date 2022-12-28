@@ -26,7 +26,7 @@ class LoginDataSource {
             val request = Request.Builder().url(url).build()
             println("### val request... " + request.toString())
             println("### client.newCall...")
-            Log.d(TAG,"######### Teste")
+            Log.v(TAG,"######### Teste")
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
                 for ((name, value) in response.headers) {
