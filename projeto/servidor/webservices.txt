@@ -23,18 +23,20 @@ exemplo:
 http://10.10.10.2/login.php?method=login&username=nuno&password=123
 
 # engine.php
-
 method		: select, insert, update, delete
 object		: users, devices, logs, devicestatus
 
-user: idusers, username, password, name, permissions_idpermissions
-
-device: iddevices, macaddress, coordinatex, coordinatey
-
-logs: idlogs, datetime, ipaddress, valled, stateled, valldr, valldrnew, valpir, statepir, devices_iddevices
+user		: idusers
+			NA/: username, password, name, permissions_idpermissions
+device		: iddevices
+			NA/: macaddress, coordinatex, coordinatey
+logs		: idlogs
+			NA/: datetime, ipaddress, valled, stateled, valldr, valldrnew, valpir, statepir, devices_iddevices
+devicestatus: devices_iddevices
 
 
 exemplo:
+
 listar todos os utilizadores: http://10.10.10.2/engine.php?method=select&object=users
 listar o utilizador com id 2:
 http://10.10.10.2/engine.php?method=select&object=users&idusers=2
