@@ -25,20 +25,21 @@ if ($mysqli === false) {
   //echo "<br>sql connection sucessfull<br>";
 }
 
-if($_GET['method']=="select"){
-  if($_GET['object']=="users"){
-    
-    // query a base de dados se existe o username com a password
+//------------------------------------------------
+if($_GET['method']=="select"){                                                            // method: select
+//------------------------------------------------
+  if($_GET['object']=="users"){                                                           // object: users
     $sql = "select * from users";
+    if($_GET['idusers']!="") { 
+      $sql = $sql . ' where idusers="'.$_GET["idusers"].'"';
+    }
     $result = $mysqli->query($sql);
-    
     if($result->num_rows > 0){
       echo '{"status":"ok","totalResults":"'.$result->num_rows.'","'.$_GET['object'].'":[';
       for ($i=0;$i<mysqli_num_rows($result);$i++) {
         echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
       }
       echo ']}';
-
     }else{
       $output['response'] = "false";
       $output['userid'] = "no_record_found";
@@ -49,20 +50,42 @@ if($_GET['method']=="select"){
       echo json_encode($output);
     }
   }
-
-  if($_GET['object']=="devices"){
-    
-    // query a base de dados se existe o username com a password
+//------------------------------------------------
+  if($_GET['object']=="devices"){                                                           // object: devices
     $sql = "select * from devices";
+    if($_GET['iddevices']!="") { 
+      $sql = $sql . ' where iddevices="'.$_GET["iddevices"].'"';
+    }
     $result = $mysqli->query($sql);
-    
     if($result->num_rows > 0){
       echo '{"status":"ok","totalResults":"'.$result->num_rows.'","'.$_GET['object'].'":[';
       for ($i=0;$i<mysqli_num_rows($result);$i++) {
         echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
       }
       echo ']}';
-
+    }else{
+      $output['response'] = "false";
+      $output['iddevices'] = "no_record_found";
+      $output['macaddress'] = "no_record_found";
+      $output['coordinatex'] = "no_record_found";
+      $output['coordinatey'] = "no_record_found";
+      echo json_encode($output);
+    }
+  }
+  //------------------------------------------------
+  if($_GET['object']=="logs"){                                                           // object: logs
+    $sql = "select * from logs";
+    if($_GET['devices_iddevices']!="") { 
+      $sql = $sql . ' where devices_iddevices="'.$_GET["devices_iddevices"].'"';
+    }
+    $sql = $sql. ' order by datetime desc limit 100';
+    $result = $mysqli->query($sql);
+    if($result->num_rows > 0){
+      echo '{"status":"ok","totalResults":"'.$result->num_rows.'","'.$_GET['object'].'":[';
+      for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+      }
+      echo ']}';
     }else{
       $output['response'] = "false";
       $output['iddevices'] = "no_record_found";

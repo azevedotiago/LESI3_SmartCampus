@@ -25,10 +25,25 @@ http://10.10.10.2/login.php?method=login&username=nuno&password=123
 # engine.php
 
 method		: select, insert, update, delete
-object		: user, device, logs
+object		: users, devices, logs
 
-user: idusers, datetime, username, password, name, permissions_idpermissions
+user: idusers, username, password, name, permissions_idpermissions
 
-device: iddevices, datetime, macaddress, coordinatex, coordinatey
+device: iddevices, macaddress, coordinatex, coordinatey
 
 logs: idlogs, datetime, ipaddress, valled, stateled, valldr, valldrnew, valpir, statepir, devices_iddevices
+
+
+exemplo:
+listar todos os utilizadores: http://10.10.10.2/engine.php?method=select&object=users
+listar o utilizador com id 2:
+http://10.10.10.2/engine.php?method=select&object=users&idusers=2
+
+listar todos os devices: http://10.10.10.2/engine.php?method=select&object=devices
+listar o utilizador com id 17:
+http://10.10.10.2/engine.php?method=select&object=devices&iddevices=17
+
+
+listar ultimos 100 logs: http://10.10.10.2/engine.php?method=select&object=devices
+listar os ultimos 100 logs do device com id 16:
+http://10.10.10.2/engine.php?method=select&object=logs&devices_iddevices=16
