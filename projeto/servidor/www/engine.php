@@ -95,4 +95,29 @@ if($_GET['method']=="select"){                                                  
       echo json_encode($output);
     }
   }
+    //------------------------------------------------
+  if($_GET['object']=="devicestatus"){                                                           // object: logs
+    $sql = "select * from logs";
+    $sql = "SELECT * FROM (select * from smartenergy.logs";
+    if($_GET['devices_iddevices']!="") { 
+      $sql = $sql . ' where devices_iddevices="'.$_GET["devices_iddevices"].'"';
+    }
+    $sql = $sql. '  order by idlogs desc) as tmp_table group by devices_iddevices;';
+    $result = $mysqli->query($sql);
+    if($result->num_rows > 0){
+      echo '{"status":"ok","totalResults":"'.$result->num_rows.'","'.$_GET['object'].'":[';
+      for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+      }
+      echo ']}';
+    }else{
+      $output['response'] = "false";
+      $output['iddevices'] = "no_record_found";
+      $output['macaddress'] = "no_record_found";
+      $output['coordinatex'] = "no_record_found";
+      $output['coordinatey'] = "no_record_found";
+      echo json_encode($output);
+    }
+  }
+
 }

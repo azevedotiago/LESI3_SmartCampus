@@ -25,7 +25,7 @@ http://10.10.10.2/login.php?method=login&username=nuno&password=123
 # engine.php
 
 method		: select, insert, update, delete
-object		: users, devices, logs
+object		: users, devices, logs, devicestatus
 
 user: idusers, username, password, name, permissions_idpermissions
 
@@ -43,7 +43,11 @@ listar todos os devices: http://10.10.10.2/engine.php?method=select&object=devic
 listar o utilizador com id 17:
 http://10.10.10.2/engine.php?method=select&object=devices&iddevices=17
 
-
 listar ultimos 100 logs: http://10.10.10.2/engine.php?method=select&object=devices
 listar os ultimos 100 logs do device com id 16:
 http://10.10.10.2/engine.php?method=select&object=logs&devices_iddevices=16
+
+listar o estado atual de todos devices: 
+http://10.10.10.2/engine.php?method=select&object=devicestatus
+listar o estado atual do device com id 11: 
+http://10.10.10.2/engine.php?method=select&object=devicestatus&devices_iddevices=11
