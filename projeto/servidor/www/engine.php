@@ -65,18 +65,17 @@ if($_GET['method']=="select"){                                                  
         echo ",";
 
         // status: online / offline
-        $k= json_decode($res, true);
-        $l = $k["iddevices"];
-        echo "-".$k["iddevices"]."-".$k."-";
-        var_dump($k);
-        $sql2 = 'select if(timediff(now(),logs.datetime)<"'.$onlineTime.'","online","offline") as status FROM smartenergy.devices left join logs on devices.iddevices=devices_iddevices where devices_iddevices = "'.$l.'" order by logs.datetime desc limit 1';
+        $value=strstr($res,':');
+        $value=strstr($value,'datetime',true);
+        $value=ltrim($value, ':"');
+        $value=substr($value, 0,-3);
+        $sql2 = 'select if(timediff(now(),logs.datetime)<"'.$onlineTime.'","online","offline") as status FROM smartenergy.devices left join logs on devices.iddevices=devices_iddevices where devices_iddevices = "'.$value.'" order by logs.datetime desc limit 1';
         //echo $sql2;
         $result2 = $mysqli->query($sql2);
         for ($j=0;$j<mysqli_num_rows($result2);$j++) {
           $res2 = ($j>0?',':'').json_encode(mysqli_fetch_object($result2));
           echo ltrim($res2, '{');
         }
-        //mysqli_close($result2);
       }
       echo ']}';
     }else{
