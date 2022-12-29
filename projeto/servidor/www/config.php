@@ -14,11 +14,14 @@ flush();
 $pasta="/var/www/html/";   // localizacao do site;
 
 // Configuração do servidor mysql
-$bd_server = "10.10.10.2";    // Nome ou IP do servidor
+$bd_server = "localhost";       // Nome ou IP do servidor
 $bd ="smartenergy";              // Nome da Base de Dados
 
 // mysql read & write perms
-$bd_user = "se";                              // Username
+$bd_user = "se";                 // Username
 $bd_passwd = "smartenergy";      // Palavra Passe
+
+// tempos
+$onlineTime = "60:05:00";		// tempo para considerar um poste de iluminacao online (HH:MM:SS)
 ?>
 
