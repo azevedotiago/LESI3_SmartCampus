@@ -33,6 +33,7 @@ device		: iddevices
 logs		: idlogs
 			NA/: datetime, ipaddress, valled, stateled, valldr, valldrnew, valpir, statepir, devices_iddevices
 devicestatus: devices_iddevices, status
+
 {"status":"ok","totalResults":"1","devicestatus":[{"idlogs":"217227","datetime":"2022-12-27 10:46:26","ipaddress":"10.10.10.103","valled":"0","stateled":"0","valldr":"472","valldrnew":"47","valpir":"0","statepir":"0","devices_iddevices":"11","status":"online"}]}
 
 

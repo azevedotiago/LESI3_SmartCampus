@@ -22,6 +22,6 @@ $bd_user = "se";                 // Username
 $bd_passwd = "smartenergy";      // Palavra Passe
 
 // tempos
-$onlineTime = "60:05:00";		// tempo para considerar um poste de iluminacao online (HH:MM:SS)
+$onlineTime = "00:05:00";		// tempo para considerar um poste de iluminacao online (HH:MM:SS)
 ?>
 
