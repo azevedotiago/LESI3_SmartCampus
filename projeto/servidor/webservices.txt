@@ -1,0 +1,34 @@
+# webservices.php
+
+macaddress	: endereço mac do poste de iluminacao
+ipaddress	: endereço IP atual do poste de iluminacao
+valled		: valor de iluminação
+stateled	: 0 - iluminação desligada, 1 - ligada
+valldr		: valor do sensor LDR (quantidade de iluminação ambiente)
+valldrnew	: valor do sensor LDR em percentagem
+valpir		: valor do sensor PIR (deteção de movimento)
+statepir	: 0 - sem movimento, 1 - movimento detetado
+
+exemplo:
+http://10.10.10.2/webservices.php?macaddress=00:00:b3:02:d3:00&ipaddress=10.10.10.100&valled=200&stateled=1&valldr=543&valldrnew=50&valpir=30&statepir=0
+
+
+# login.php
+
+method		: login - efetuar a autenticação
+username	: nome do utilizador
+password	: senha do utilizador
+
+exemplo:
+http://10.10.10.2/login.php?method=login&username=nuno&password=123
+
+# engine.php
+
+method		: select, insert, update, delete
+object		: user, device, logs
+
+user: idusers, datetime, username, password, name, permissions_idpermissions
+
+device: iddevices, datetime, macaddress, coordinatex, coordinatey
+
+logs: idlogs, datetime, ipaddress, valled, stateled, valldr, valldrnew, valpir, statepir, devices_iddevices
