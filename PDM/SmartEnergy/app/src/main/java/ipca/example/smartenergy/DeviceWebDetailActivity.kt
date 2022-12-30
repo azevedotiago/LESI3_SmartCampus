@@ -41,7 +41,7 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textViewDeviceID).text          =  device?.iddevices
         findViewById<TextView>(R.id.textViewDeviceMacAddress).text  =  device?.macaddress
         findViewById<TextView>(R.id.textViewDeviceDetail).text      =  device?.detail
-        findViewById<TextView>(R.id.textViewDeviceCoord).text       =  device?.coordinatex+", "+device?.coordinatey
+        findViewById<TextView>(R.id.textViewDeviceCoord).text       =  device?.coordinatex+","+device?.coordinatey
         findViewById<TextView>(R.id.textViewDeviceLogsStatus).text  =  device?.status
         if (device?.status=="offline") {
             // cor do texto vermelho para o estado offline
