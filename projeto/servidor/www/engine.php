@@ -72,6 +72,7 @@ if($_GET['method']=="select"){                                                  
         $sql2 = 'select if(timediff(now(),logs.datetime)<"'.$onlineTime.'","online","offline") as status FROM smartenergy.devices left join logs on devices.iddevices=devices_iddevices where devices_iddevices = "'.$value.'" order by logs.datetime desc limit 1';
         //echo $sql2;
         $result2 = $mysqli->query($sql2);
+        if (mysqli_num_rows($result2)==0) echo '"status":"offline"}';
         for ($j=0;$j<mysqli_num_rows($result2);$j++) {
           $res2 = ($j>0?',':'').json_encode(mysqli_fetch_object($result2));
           echo ltrim($res2, '{');
