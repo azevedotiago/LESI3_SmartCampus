@@ -28,7 +28,7 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_device_web_detail)
         device = Device.fromJSON(JSONObject(intent.getStringExtra(MainActivity.EXTRA_ARTICLE).toString()))
         println("#### DeviceWebDetailActivity | device: "+device?.iddevices)
-        title = device?.iddevices + " - " + device?.detail + " ("+ device?.macaddress + ")"
+        title = "Poste de iluminação com ID "+ device?.iddevices
         println("#### DeviceWebDetailActivity | title: $title")
 /*
         Backend.fetchDeviceLog(lifecycleScope, "select","devicestatus",device?.iddevices.toString()){
