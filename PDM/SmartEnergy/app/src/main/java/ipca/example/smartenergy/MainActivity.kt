@@ -15,12 +15,8 @@ import androidx.lifecycle.lifecycleScope
 
 
 class MainActivity : AppCompatActivity() {
-
-    //https://newsapi.org/v2/top-headlines?country=pt&apiKey=1765f87e4ebc40229e80fd0f75b6416c
-
     // model
     var devices      = arrayListOf<Device>()
-
     val adapter     = DevicesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
