@@ -47,7 +47,7 @@ object Backend {
         }
     }
 
-    fun fetchDeviceLog(scope: CoroutineScope, method: String, `object`: String, `params`: String,  callback: (ArrayList<Device>)->Unit )   {
+    fun fetchDeviceLog(scope: CoroutineScope, method: String, `object`: String, `params`: String,  callback: (ArrayList<DeviceLog>)->Unit )   {
         scope.launch (Dispatchers.IO) {
             val request = Request.Builder()
                 .url("http://$server/engine.php?method=$method&object=$`object`&devices_iddevices=$`params`")
@@ -61,15 +61,15 @@ object Backend {
 
                 val jsonObject = JSONObject(result)
                 if (jsonObject.getString("status") == "ok"){
-                    val devices = arrayListOf<Device>()
-                    val devicesJSONArray = jsonObject.getJSONArray("devices")
-                    for( index in 0 until devicesJSONArray.length()){
-                        val deviceJSONObject = devicesJSONArray.getJSONObject(index)
-                        val device = Device.fromJSON(deviceJSONObject)
-                        devices.add(device)
+                    val devicesLog = arrayListOf<DeviceLog>()
+                    val devicesLogJSONArray = jsonObject.getJSONArray("devicestatus")
+                    for( index in 0 until devicesLogJSONArray.length()){
+                        val deviceLogJSONObject = devicesLogJSONArray.getJSONObject(index)
+                        val deviceLog = DeviceLog.fromJSON(deviceLogJSONObject)
+                        devicesLog.add(deviceLog)
                     }
                     scope.launch (Dispatchers.Main){
-                        callback(devices)
+                        callback(devicesLog)
                     }
                 }
             }
