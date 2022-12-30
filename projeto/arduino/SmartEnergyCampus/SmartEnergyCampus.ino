@@ -353,7 +353,7 @@ void loop() {
     // Terminar a ligacao
     client.stop();
     Serial.println("Cliente desconetado");
-  }  */
+  } */ 
   /* fim: serviço http do proprio poste de iluminacao*/
 }
 

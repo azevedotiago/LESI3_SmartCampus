@@ -1,0 +1,4 @@
+[submodule "ISI/isi_tp2"]
+	path = ISI/isi_tp2
+	url = https://github.com/Franciscopereira2001/isi_tp2.git
+	branch = master
