@@ -1,0 +1,78 @@
+backendType: SECOND_GEN
+connectionName: smartenergy-backend:europe-west2:myinstance
+createTime: '2022-12-20T07:14:48.909Z'
+databaseInstalledVersion: POSTGRES_13_7
+databaseVersion: POSTGRES_13
+etag: e80fcf9ea963429170943aa29d9b598fb8e79f99b1c7cda6ee0d9944e5ab863c
+gceZone: europe-west2-c
+instanceType: CLOUD_SQL_INSTANCE
+ipAddresses:
+- ipAddress: 34.105.128.242
+  type: PRIMARY
+- ipAddress: 35.197.236.33
+  type: OUTGOING
+kind: sql#instance
+maintenanceVersion: POSTGRES_13_7.R20220710.01_16
+name: myinstance
+project: smartenergy-backend
+region: europe-west2
+selfLink: https://sqladmin.googleapis.com/sql/v1beta4/projects/smartenergy-backend/instances/myinstance
+serverCaCert:
+  cert: |-
+    -----BEGIN CERTIFICATE-----
+    MIIDfzCCAmegAwIBAgIBADANBgkqhkiG9w0BAQsFADB3MS0wKwYDVQQuEyQxZTYy
+    YzM0OS00NzY1LTRmYTAtYWJiZi01ZjI2MGFjMWZkY2QxIzAhBgNVBAMTGkdvb2ds
+    ZSBDbG91ZCBTUUwgU2VydmVyIENBMRQwEgYDVQQKEwtHb29nbGUsIEluYzELMAkG
+    A1UEBhMCVVMwHhcNMjIxMjIwMDcxNTU0WhcNMzIxMjE3MDcxNjU0WjB3MS0wKwYD
+    VQQuEyQxZTYyYzM0OS00NzY1LTRmYTAtYWJiZi01ZjI2MGFjMWZkY2QxIzAhBgNV
+    BAMTGkdvb2dsZSBDbG91ZCBTUUwgU2VydmVyIENBMRQwEgYDVQQKEwtHb29nbGUs
+    IEluYzELMAkGA1UEBhMCVVMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
+    AQCeSmkt7O3927chPrx9BvRu5QnNEonKdSQyZPeyR25/CaYLRj/5BJch+mBy0sif
+    iC19jMnX/UDd6HpNUDc/T2FrxntYdcUxD9KUwG1WamKrDjPFATrQVM99G9ryf5vf
+    k9gBwyeiPGC2+Fyj9pvArrR9sn0/k+7V0SxyppPlS3fb9m8hbJUN49Wrp07ZcrPl
+    Rgx3DgIZoYx2NCD7z93ecG5aI+PDiIdcEbMjKB1BevX01gsspnHSTK16TCzNAJhp
+    uZpgPgnvN4K9IMTosdmM1INKRHP/cOIbAPaRjShJEbJhwlBskTDjRdST5AWydnqS
+    n0P8OznHWV4voipfXPWm+6PxAgMBAAGjFjAUMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+    DQYJKoZIhvcNAQELBQADggEBAGconmBBECFdg+Qc4F09ycJHpEEQW4IjUa2knMmQ
+    CV5rIIHgUuOjVOUBFlpQymPIaxpkAZhTVLdWrmF0KbMe93uMz9s3iJ1Ol9Yb1JMo
+    JpIRjYYQWGoZkZD7kLFKhVpxpofU+tuB9IUNvkDgJxlblPjIqSSDJO6iLIWXSuZ1
+    8eQ72uUdp59uNJYCZTr1rkIjDdk8wjS4quAeAMaFC8WfmhP4r1J1lsERO4FXK0AE
+    UF2NaujogBskGVc+TfVtoz/xGm/PGABIbfL7BVz5Im7KIl2RLrJrbzd1a/tSZ59C
+    XP8iWxoQHxDhl2o5NKUUwZaXAfPwkFRmiEA/ZwaDFj7jcuI=
+    -----END CERTIFICATE-----
+  certSerialNumber: '0'
+  commonName: C=US,O=Google\, Inc,CN=Google Cloud SQL Server CA,dnQualifier=1e62c349-4765-4fa0-abbf-5f260ac1fdcd
+  createTime: '2022-12-20T07:15:54.920Z'
+  expirationTime: '2032-12-17T07:16:54.920Z'
+  instance: myinstance
+  kind: sql#sslCert
+  sha1Fingerprint: 7189939c26274753f4eb69bdd7d17c32c19a35ee
+serviceAccountEmailAddress: p723565089735-ndbzbj@gcp-sa-cloud-sql.iam.gserviceaccount.com
+settings:
+  activationPolicy: ALWAYS
+  availabilityType: ZONAL
+  backupConfiguration:
+    backupRetentionSettings:
+      retainedBackups: 7
+      retentionUnit: COUNT
+    enabled: false
+    kind: sql#backupConfiguration
+    startTime: 04:00
+    transactionLogRetentionDays: 7
+  connectorEnforcement: NOT_REQUIRED
+  dataDiskSizeGb: '10'
+  dataDiskType: PD_SSD
+  deletionProtectionEnabled: false
+  ipConfiguration:
+    ipv4Enabled: true
+  kind: sql#settings
+  locationPreference:
+    kind: sql#locationPreference
+    zone: europe-west2-c
+  pricingPlan: PER_USE
+  replicationType: SYNCHRONOUS
+  settingsVersion: '1'
+  storageAutoResize: true
+  storageAutoResizeLimit: '0'
+  tier: db-f1-micro
+state: RUNNABLE
