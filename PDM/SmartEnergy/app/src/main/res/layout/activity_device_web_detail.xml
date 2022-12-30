@@ -289,9 +289,10 @@
         android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="Detalhes"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeviceLogsStatus"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDeviceLogsStatus" />
 </androidx.constraintlayout.widget.ConstraintLayout>

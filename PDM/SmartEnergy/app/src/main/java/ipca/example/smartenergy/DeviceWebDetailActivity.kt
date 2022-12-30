@@ -30,14 +30,16 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         println("#### DeviceWebDetailActivity | device: "+device?.iddevices)
         title = "Poste de iluminação com ID "+ device?.iddevices
         println("#### DeviceWebDetailActivity | title: $title")
-/*
+
+        /*
         Backend.fetchDeviceLog(lifecycleScope, "select","devicestatus",device?.iddevices.toString()){
             println("#### DeviceWebDetailActivity | Backend.fetchDeviceLog ")
             devicesLog = it
             adapterLog.notifyDataSetChanged()
         }
-*/
+        */
 
+        // dados relativos ao Device
         findViewById<TextView>(R.id.textViewDeviceID).text          =  device?.iddevices
         findViewById<TextView>(R.id.textViewDeviceMacAddress).text  =  device?.macaddress
         findViewById<TextView>(R.id.textViewDeviceDetail).text      =  device?.detail
@@ -50,6 +52,9 @@ class DeviceWebDetailActivity : AppCompatActivity() {
             // cor do texto verde para o estado online
             findViewById<TextView>(R.id.textViewDeviceLogsStatus).setTextColor(Color.parseColor("#228B22"));
         }
+
+        // dados relativos ao DeviceLog
+
 
         println("#### DeviceWebDetailActivity | textView")
         println("#### -> " + findViewById<TextView>(R.id.textViewDeviceID).text)
