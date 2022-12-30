@@ -21,6 +21,10 @@ password	: senha do utilizador
 
 exemplo:
 http://10.10.10.2/login.php?method=login&username=nuno&password=123
+{"response":"false","userid":"no_record_found","name":"no_record_found","username":"no_record_found"}
+
+http://10.10.10.2/login.php?method=login&username=nuno&password=123456
+{"response":"true","userid":"1","name":"Nuno Mendes","username":"nuno"}
 
 # engine.php
 method		: select, insert, update, delete

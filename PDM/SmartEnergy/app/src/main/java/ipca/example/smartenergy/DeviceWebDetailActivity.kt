@@ -28,16 +28,13 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_device_web_detail)
         device = Device.fromJSON(JSONObject(intent.getStringExtra(MainActivity.EXTRA_ARTICLE).toString()))
         println("#### DeviceWebDetailActivity | device: "+device?.iddevices)
-        title = "Poste de iluminação com ID "+ device?.iddevices
-        println("#### DeviceWebDetailActivity | title: $title")
-
+        title = "Poste de iluminação com n.º "+ device?.iddevices
         /*
         Backend.fetchDeviceLog(lifecycleScope, "select","devicestatus",device?.iddevices.toString()){
             println("#### DeviceWebDetailActivity | Backend.fetchDeviceLog ")
             devicesLog = it
             adapterLog.notifyDataSetChanged()
-        }
-        */
+        }*/
 
         // dados relativos ao Device
         findViewById<TextView>(R.id.textViewDeviceID).text          =  device?.iddevices
@@ -54,11 +51,6 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         }
 
         // dados relativos ao DeviceLog
-
-
-        println("#### DeviceWebDetailActivity | textView")
-        println("#### -> " + findViewById<TextView>(R.id.textViewDeviceID).text)
-
     }
 
     inner class DevicesLogAdapter : BaseAdapter() {

@@ -44,8 +44,9 @@ if($_GET['method']=="login"){
 			$row = $result->fetch_assoc();
 			$output["response"] = trim("true");
 			$output["userid"] = trim($row["idusers"]);
-			$name = str_replace(" ","_",$row['name']);
-			$output["name"] = trim($name);
+			//$name = str_replace(" ","_",$row['name']);
+			//$output["name"] = trim($name);
+			$output["name"] = trim($row['name']);
 			$username = str_replace(" ","_",$row['username']);
 			$output["username"] = trim($username);
 		}else{
