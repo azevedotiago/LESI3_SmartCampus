@@ -27,7 +27,7 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device_web_detail)
         device = Device.fromJSON(JSONObject(intent.getStringExtra(MainActivity.EXTRA_ARTICLE).toString()))
-        println("#### DeviceWebDetailActivity | device: "+device?.iddevices)
+        //println("#### DeviceWebDetailActivity | device: "+device?.iddevices)
         title = "Poste de iluminação com n.º "+ device?.iddevices
         /*
         Backend.fetchDeviceLog(lifecycleScope, "select","devicestatus",device?.iddevices.toString()){

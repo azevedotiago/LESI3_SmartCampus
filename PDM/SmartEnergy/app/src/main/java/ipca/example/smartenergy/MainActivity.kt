@@ -3,14 +3,15 @@ package ipca.example.smartenergy
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 
 
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     // model
     var devices     = arrayListOf<Device>()
     val adapter     = DevicesAdapter()
+    var delay       = 15000
+    private var handler: Handler = Handler()
+    private var runnable: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,28 @@ class MainActivity : AppCompatActivity() {
 
         val listViewDevice = findViewById<ListView>(R.id.listViewDevices)
         listViewDevice.adapter = adapter
+    }
+
+    override fun onResume() {       // de 15 em 15 segundos faz um refresh da view atual, atualiza os dados dos DEVICES
+        handler.postDelayed(Runnable {
+            runnable?.let {
+                handler.postDelayed(it, delay.toLong())
+                Backend.fetchDevices(lifecycleScope, "select","devicesstatus"){
+                    devices = it
+                    adapter.notifyDataSetChanged()
+                }
+            }
+            Toast.makeText(
+                this@MainActivity, "Refreshing devices every 15 seconds",
+                Toast.LENGTH_SHORT
+            ).show()
+        }.also { runnable = it }, delay.toLong())
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        runnable?.let { handler.removeCallbacks(it) } //stop handler when activity not visible super.onPause();
     }
 
 
@@ -123,6 +149,7 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     companion object {
         const val TAG = "MainActivity"
