@@ -29,7 +29,7 @@ object Backend {
 
                 val result =  response.body!!.string()
                 Log.d(MainActivity.TAG, result)
-                println("#### fetchDevices...")
+                //println("#### fetchDevices...")
                 val jsonObject = JSONObject(result)
                 //println("#### fetchDevices...| jsonObject "+ jsonObject.toString())
                 if (jsonObject.getString("status") == "ok"){
