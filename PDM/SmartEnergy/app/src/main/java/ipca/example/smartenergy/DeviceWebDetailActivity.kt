@@ -50,7 +50,25 @@ class DeviceWebDetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewDeviceLogsStatus).setTextColor(Color.parseColor("#228B22"));
         }
 
-        // dados relativos ao DeviceLog
+        // dados relativos ao Logs do Device
+        findViewById<TextView>(R.id.textViewDeviceLogsID).text          = device?.idlogs
+        findViewById<TextView>(R.id.textViewDeviceLogsDateTime).text    = device?.datetime
+        findViewById<TextView>(R.id.textViewDeviceLogsIpAddress).text   = device?.ipaddress
+        findViewById<TextView>(R.id.textViewDeviceLogsValLed).text      = device?.valled
+        if (device?.stateled == "0")
+            findViewById<TextView>(R.id.textViewDeviceLogsStateLed).text    = "off"
+        else
+            findViewById<TextView>(R.id.textViewDeviceLogsStateLed).text    = "on"
+        findViewById<TextView>(R.id.textViewDeviceLogsValLdr).text      = device?.valldr
+        findViewById<TextView>(R.id.textViewDeviceLogsValLdrNew).text   = device?.valldrnew+" %"
+        if (device?.valpir == "0")
+            findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "no"
+        else
+            findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "yes"
+        if (device?.statepir == "0")
+            findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "disable"
+        else
+            findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "enable"
     }
 
     inner class DevicesLogAdapter : BaseAdapter() {
