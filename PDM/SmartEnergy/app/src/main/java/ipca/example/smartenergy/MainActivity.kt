@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import java.time.LocalDateTime
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,16 +21,19 @@ class MainActivity : AppCompatActivity() {
     var devices     = arrayListOf<Device>()
     val adapter     = DevicesAdapter()
     var delay       = 15000
+    var current     = LocalDateTime.now()
     private var handler: Handler = Handler()
     private var runnable: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // remover a barra de título da aplicação
+        /*
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
-        }
+        }*/
+        title = "Devices list | update at $current"
         setContentView(R.layout.activity_main)
 
         Backend.fetchDevices(lifecycleScope, "select","devicesstatus"){
@@ -48,6 +52,8 @@ class MainActivity : AppCompatActivity() {
                 Backend.fetchDevices(lifecycleScope, "select","devicesstatus"){
                     devices = it
                     adapter.notifyDataSetChanged()
+                    this.current = LocalDateTime.now()
+                    title = "Devices list | update at $current"
                 }
             }
             Toast.makeText(
