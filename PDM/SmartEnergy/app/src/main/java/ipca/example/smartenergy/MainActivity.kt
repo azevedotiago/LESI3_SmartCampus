@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }*/
-        title = "Devices list | updated at " + current.format(formatter)
+        title = "Lista de dispositivos | atualizado em " + current.format(formatter)
         setContentView(R.layout.activity_main)
 
         Backend.fetchDevices(lifecycleScope, "select","devicesstatus"){
@@ -56,11 +56,11 @@ class MainActivity : AppCompatActivity() {
                     devices = it
                     adapter.notifyDataSetChanged()
                     this.current = LocalDateTime.now()
-                    title = "Devices list | updated at "+ current.format(formatter)
+                    title = "Lista de dispositivos | atualizado em "+ current.format(formatter)
                 }
             }
             Toast.makeText(
-                this@MainActivity, "Refreshing devices every " + delay / 1000 +" seconds",
+                this@MainActivity, "Atualizando dispositivos a cada " + delay / 1000 +" segundos",
                 Toast.LENGTH_SHORT
             ).show()
         }.also { runnable = it }, delay.toLong())
