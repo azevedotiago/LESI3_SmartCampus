@@ -10,42 +10,56 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.webkit.WebView
+import android.widget.BaseAdapter
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import org.json.JSONObject
 
+class DeviceWebDetailActivity : AppCompatActivity() {
 
-class MainActivity : AppCompatActivity() {
-    // model
-    var devices     = arrayListOf<Device>()
-    val adapter     = DevicesAdapter()
+    var device : Device? = null
+    var devicesLog  = arrayListOf<DeviceLog>()
+    private val adapterLog     = DevicesLogAdapter()
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // remover a barra de título da aplicação
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_device_web_detail)
+        device = Device.fromJSON(JSONObject(intent.getStringExtra(MainActivity.EXTRA_ARTICLE).toString()))
+        println("#### DeviceWebDetailActivity | device: "+device?.iddevices)
+        title = "Poste de iluminação com n.º "+ device?.iddevices
+        /*
+        Backend.fetchDeviceLog(lifecycleScope, "select","devicestatus",device?.iddevices.toString()){
+            println("#### DeviceWebDetailActivity | Backend.fetchDeviceLog ")
+            devicesLog = it
+            adapterLog.notifyDataSetChanged()
+        }*/
 
-        Backend.fetchDevices(lifecycleScope, "select","devicesstatus"){
-            devices = it
-            adapter.notifyDataSetChanged()
+        // dados relativos ao Device
+        findViewById<TextView>(R.id.textViewDeviceID).text          =  device?.iddevices
+        findViewById<TextView>(R.id.textViewDeviceMacAddress).text  =  device?.macaddress
+        findViewById<TextView>(R.id.textViewDeviceDetail).text      =  device?.detail
+        findViewById<TextView>(R.id.textViewDeviceCoord).text       =  device?.coordinatex+","+device?.coordinatey
+        findViewById<TextView>(R.id.textViewDeviceLogsStatus).text  =  device?.status
+        if (device?.status=="offline") {
+            // cor do texto vermelho para o estado offline
+            findViewById<TextView>(R.id.textViewDeviceLogsStatus).setTextColor(Color.parseColor("#E91E63"));
+        } else {
+            // cor do texto verde para o estado online
+            findViewById<TextView>(R.id.textViewDeviceLogsStatus).setTextColor(Color.parseColor("#228B22"));
         }
 
-        val listViewDevice = findViewById<ListView>(R.id.listViewDevices)
-        listViewDevice.adapter = adapter
+        // dados relativos ao DeviceLog
     }
 
-
-
-    inner class DevicesAdapter : BaseAdapter() {
+    inner class DevicesLogAdapter : BaseAdapter() {
         override fun getCount(): Int {
-           return devices.size
+            return devicesLog.size
         }
 
         override fun getItem(positon: Int): Any {
-            return devices[positon]
+            return devicesLog[positon]
         }
 
         override fun getItemId(positon: Int): Long {
@@ -61,18 +75,19 @@ class MainActivity : AppCompatActivity() {
             val textViewDeviceCoord = rowView.findViewById<TextView>(R.id.textViewDeviceCoord)
             val textViewDeviceStatus = rowView.findViewById<TextView>(R.id.textViewDeviceStatus)
 
-            val device = devices[position]
+            val deviceLog = devicesLog[position]
             //println("#### MainActivity | devices[position]: "+position%2)
             if (position % 2 == 0 ) {
                 // nas ROWS pares coloca o fundo a cinza claro
                 rowView.setBackgroundColor(Color.parseColor("#f6f6f6"))
             }
-            textViewDeviceID.text = device.iddevices
-            textViewDeviceMacAddress.text = device.macaddress
-            textViewDeviceDetail.text = device.detail
-            textViewDeviceCoord.text = device.coordinatex+", "+ device.coordinatey
-            textViewDeviceStatus.text = device.status
-            if (device.status=="offline") {
+            /*
+            textViewDeviceID.text = deviceLog.iddevices
+            textViewDeviceMacAddress.text = deviceLog.macaddress
+            textViewDeviceDetail.text = deviceLog.detail
+            textViewDeviceCoord.text = deviceLog.coordinatex+", "+ deviceLog.coordinatey
+            textViewDeviceStatus.text = deviceLog.status*/
+            if (deviceLog.status=="offline") {
                 // cor do texto vermelho para o estado offline
                 textViewDeviceStatus.setTextColor(Color.parseColor("#E91E63"));
             } else {
@@ -93,14 +108,14 @@ class MainActivity : AppCompatActivity() {
 
 
             rowView.setOnClickListener {
-                Log.d(TAG, "device:${device.iddevices}")
+                Log.d(MainActivity.TAG, "device:${device?.iddevices}")
                 //val intent = Intent(this@MainActivity, ArticleDetailActivity::class.java)
                 //intent.putExtra("title", article.title)
                 //intent.putExtra("body",article.content)
                 //startActivity(intent)
                 //println("#### rowView.setOnClickListner | iddevices: " +device.iddevices )
-                val intent = Intent(this@MainActivity, DeviceWebDetailActivity::class.java)
-                intent.putExtra(EXTRA_ARTICLE, device.toJSON().toString())
+                val intent = Intent(this@DeviceWebDetailActivity, DeviceWebDetailActivity::class.java)
+                intent.putExtra(MainActivity.EXTRA_ARTICLE, device?.toJSON().toString())
                 //println("#### rowView.setOnClickListner | intent: "+device.toJSON().toString())
                 startActivity(intent)
             }
@@ -117,16 +132,14 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_share -> {
-                Toast.makeText(this, "SmartEnergy - informações", Toast.LENGTH_LONG).show()
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.putExtra(Intent.EXTRA_TEXT, device?.coordinatey)
+                intent.type = "text/plain"
+                val intentChooser = Intent.createChooser(intent, device?.iddevices)
+                startActivity(intentChooser)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    companion object {
-        const val TAG = "MainActivity"
-        const val EXTRA_ARTICLE = "extra_article"
-    }
-
 }

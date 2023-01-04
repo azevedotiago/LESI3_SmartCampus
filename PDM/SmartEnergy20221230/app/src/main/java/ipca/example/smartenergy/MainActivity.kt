@@ -16,7 +16,7 @@ import androidx.lifecycle.lifecycleScope
 
 class MainActivity : AppCompatActivity() {
     // model
-    var devices     = arrayListOf<Device>()
+    var devices      = arrayListOf<Device>()
     val adapter     = DevicesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_main)
 
-        Backend.fetchDevices(lifecycleScope, "select","devicesstatus"){
+        Backend.fetchDevices(lifecycleScope, "select","devices"){
             devices = it
             adapter.notifyDataSetChanged()
         }

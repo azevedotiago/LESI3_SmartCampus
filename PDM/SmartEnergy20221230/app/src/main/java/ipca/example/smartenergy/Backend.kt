@@ -29,15 +29,11 @@ object Backend {
 
                 val result =  response.body!!.string()
                 Log.d(MainActivity.TAG, result)
-                println("#### fetchDevices...")
+
                 val jsonObject = JSONObject(result)
-                println("#### fetchDevices...| jsonObject "+ jsonObject.toString())
                 if (jsonObject.getString("status") == "ok"){
-                    println("#### fetchDevices...| for... ")
                     val devices = arrayListOf<Device>()
-                    println("#### fetchDevices...| devices "+devices.toString())
-                    val devicesJSONArray = jsonObject.getJSONArray("devicesstatus")  // devices or devicestatus
-                    println("#### fetchDevices...| array "+ devicesJSONArray.toString())
+                    val devicesJSONArray = jsonObject.getJSONArray("devices")
                     for( index in 0 until devicesJSONArray.length()){
                         val deviceJSONObject = devicesJSONArray.getJSONObject(index)
                         val device = Device.fromJSON(deviceJSONObject)
@@ -45,6 +41,35 @@ object Backend {
                     }
                     scope.launch (Dispatchers.Main){
                         callback(devices)
+                    }
+                }
+            }
+        }
+    }
+
+    fun fetchDeviceLog(scope: CoroutineScope, method: String, `object`: String, `params`: String,  callback: (ArrayList<DeviceLog>)->Unit )   {
+        scope.launch (Dispatchers.IO) {
+            val request = Request.Builder()
+                .url("http://$server/engine.php?method=$method&object=$`object`&devices_iddevices=$`params`")
+                .build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val result =  response.body!!.string()
+                Log.d(MainActivity.TAG, result)
+
+                val jsonObject = JSONObject(result)
+                if (jsonObject.getString("status") == "ok"){
+                    val devicesLog = arrayListOf<DeviceLog>()
+                    val devicesLogJSONArray = jsonObject.getJSONArray("devicestatus")
+                    for( index in 0 until devicesLogJSONArray.length()){
+                        val deviceLogJSONObject = devicesLogJSONArray.getJSONObject(index)
+                        val deviceLog = DeviceLog.fromJSON(deviceLogJSONObject)
+                        devicesLog.add(deviceLog)
+                    }
+                    scope.launch (Dispatchers.Main){
+                        callback(devicesLog)
                     }
                 }
             }

@@ -112,7 +112,7 @@ if($_GET['method']=="select"){                                                  
     }
   }
   //------------------------------------------------
-  if($_GET['object']=="devicestatus"){                                                           // object: devicestatus
+  if($_GET['object']=="devicestatus"){                                                           // object: devicestatus, get a device and status
     if($_GET['devices_iddevices']!="") {
       $sql = 'select *, if(timediff(now(),datetime)<"'.$onlineTime.'","online","offline") as status from smartenergy.logs';
       $sql = $sql . ' where devices_iddevices="'.$_GET["devices_iddevices"].'"';
@@ -139,4 +139,45 @@ if($_GET['method']=="select"){                                                  
     }
   }
 
+  //------------------------------------------------
+  if($_GET['object']=="devicesstatus"){                                                           // object: devicesstatus, get all devices and status
+    $sql = "select iddevices, macaddress, detail, coordinatex, coordinatey from devices";
+    if($_GET['iddevices']!="") { 
+      $sql = $sql . ' where iddevices="'.$_GET["iddevices"].'"';
+    }
+    $result = $mysqli->query($sql);
+    if($result->num_rows > 0){
+      echo '{"status":"ok","totalResults":"'.$result->num_rows.'","'.$_GET['object'].'":[';
+      for ($i=0;$i<mysqli_num_rows($result);$i++) {
+        $res = ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+        echo substr($res, 0,-1);
+        echo ",";
+
+        // status: online / offline
+        $value=strstr($res,':');
+        $value=strstr($value,'macaddress',true);
+        $value=ltrim($value, ':"');
+        $value=substr($value, 0,-3);
+        //$sql2 = 'select if(timediff(now(),logs.datetime)<"'.$onlineTime.'","online","offline") as status FROM smartenergy.devices left join logs on devices.iddevices=devices_iddevices where devices_iddevices = "'.$value.'" order by logs.datetime desc limit 1';
+        $sql2 = 'select *, if(timediff(now(),datetime)<"'.$onlineTime.'","online","offline") as status from smartenergy.logs';
+        $sql2 = $sql2 . ' where devices_iddevices="'.$value.'"';
+        $sql2 = $sql2 . ' order by idlogs desc limit 1';
+        //echo $sql2;
+        $result2 = $mysqli->query($sql2);
+        if (mysqli_num_rows($result2)==0) echo '"status":"offline"}';
+        for ($j=0;$j<mysqli_num_rows($result2);$j++) {
+          $res2 = ($j>0?',':'').json_encode(mysqli_fetch_object($result2));
+          echo ltrim($res2, '{');
+        }
+      }
+      echo ']}';
+    }else{
+      $output['response'] = "false";
+      $output['iddevices'] = "no_record_found";
+      $output['macaddress'] = "no_record_found";
+      $output['coordinatex'] = "no_record_found";
+      $output['coordinatey'] = "no_record_found";
+      echo json_encode($output);
+    }
+  }
 }
