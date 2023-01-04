@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import android.widget.Toast
 import org.json.JSONObject
 
 class DeviceWebDetailActivity : AppCompatActivity() {
@@ -41,30 +42,32 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         if (device?.status=="offline") {
             // cor do texto vermelho para o estado offline
             findViewById<TextView>(R.id.textViewDeviceLogsStatus).setTextColor(Color.parseColor("#E91E63"));
+            findViewById<TextView>(R.id.textViewDeviceLogsStatus).text      =  "sem comunicação"
         } else {
             // cor do texto verde para o estado online
             findViewById<TextView>(R.id.textViewDeviceLogsStatus).setTextColor(Color.parseColor("#228B22"));
+            findViewById<TextView>(R.id.textViewDeviceLogsStatus).text      =  "conetado"
         }
 
         // dados relativos ao Logs do Device
-        findViewById<TextView>(R.id.textViewDeviceLogsID).text          = device?.idlogs
-        findViewById<TextView>(R.id.textViewDeviceLogsDateTime).text    = device?.datetime
-        findViewById<TextView>(R.id.textViewDeviceLogsIpAddress).text   = device?.ipaddress
-        findViewById<TextView>(R.id.textViewDeviceLogsValLed).text      = device?.valled
+        findViewById<TextView>(R.id.textViewDeviceLogsID).text              = device?.idlogs
+        findViewById<TextView>(R.id.textViewDeviceLogsDateTime).text        = device?.datetime
+        findViewById<TextView>(R.id.textViewDeviceLogsIpAddress).text       = device?.ipaddress
+        findViewById<TextView>(R.id.textViewDeviceLogsValLed).text          = device?.valled
         if (device?.stateled == "0")
-            findViewById<TextView>(R.id.textViewDeviceLogsStateLed).text    = "off"
+            findViewById<TextView>(R.id.textViewDeviceLogsStateLed).text    = "desligada"
         else
-            findViewById<TextView>(R.id.textViewDeviceLogsStateLed).text    = "on"
-        findViewById<TextView>(R.id.textViewDeviceLogsValLdr).text      = device?.valldr
-        findViewById<TextView>(R.id.textViewDeviceLogsValLdrNew).text   = device?.valldrnew+" %"
+            findViewById<TextView>(R.id.textViewDeviceLogsStateLed).text    = "ligada"
+        findViewById<TextView>(R.id.textViewDeviceLogsValLdr).text          = device?.valldr
+        findViewById<TextView>(R.id.textViewDeviceLogsValLdrNew).text       = device?.valldrnew+" %"
         if (device?.valpir == "0")
-            findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "no"
+            findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "não"
         else
-            findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "yes"
+            findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "sim"
         if (device?.statepir == "0")
-            findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "disable"
+            findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "inativo"
         else
-            findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "enable"
+            findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "ativo"
     }
 
 
@@ -76,11 +79,13 @@ class DeviceWebDetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_share -> {
+                /*
                 val intent = Intent(Intent.ACTION_SEND)
                 intent.putExtra(Intent.EXTRA_TEXT, device?.coordinatey)
                 intent.type = "text/plain"
                 val intentChooser = Intent.createChooser(intent, device?.iddevices)
-                startActivity(intentChooser)
+                startActivity(intentChooser) */
+                Toast.makeText(this, "SmartEnergy - Dados do dispositivo #"+ device?.iddevices, Toast.LENGTH_LONG).show()
                 return true
             }
             else -> super.onOptionsItemSelected(item)

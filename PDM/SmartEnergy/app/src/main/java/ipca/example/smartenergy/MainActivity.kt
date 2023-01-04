@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_share -> {
-                Toast.makeText(this, "SmartEnergy - informações", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "SmartEnergy", Toast.LENGTH_LONG).show()
                 return true
             }
             else -> super.onOptionsItemSelected(item)
