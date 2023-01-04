@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     val adapter     = DevicesAdapter()
     var delay       = 15000
     var current     = LocalDateTime.now()
+    val formatter   = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
     private var handler: Handler = Handler()
     private var runnable: Runnable? = null
 
@@ -33,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }*/
-        title = "Devices list | update at $current"
+        title = "Devices list | updated at " + current.format(formatter)
         setContentView(R.layout.activity_main)
 
         Backend.fetchDevices(lifecycleScope, "select","devicesstatus"){
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                     devices = it
                     adapter.notifyDataSetChanged()
                     this.current = LocalDateTime.now()
-                    title = "Devices list | update at $current"
+                    title = "Devices list | updated at "+ current.format(formatter)
                 }
             }
             Toast.makeText(
