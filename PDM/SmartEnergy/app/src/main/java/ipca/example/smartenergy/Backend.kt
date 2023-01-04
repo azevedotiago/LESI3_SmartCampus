@@ -15,8 +15,8 @@ import java.io.IOException
 object Backend {
 
     private val client = OkHttpClient()
-    //private const val server = "10.10.10.2"   // real tests
-    private const val server = "192.168.1.40"   // home office tests
+    private const val server = "10.10.10.2"   // real tests
+    //private const val server = "192.168.1.40"   // home office tests
 
     fun fetchDevices(scope: CoroutineScope, method: String, `object`: String, callback: (ArrayList<Device>)->Unit )   {
         scope.launch (Dispatchers.IO) {
@@ -29,15 +29,12 @@ object Backend {
 
                 val result =  response.body!!.string()
                 Log.d(MainActivity.TAG, result)
-                println("#### fetchDevices...")
+                //println("#### fetchDevices...")
                 val jsonObject = JSONObject(result)
-                println("#### fetchDevices...| jsonObject "+ jsonObject.toString())
+                //println("#### fetchDevices...| jsonObject "+ jsonObject.toString())
                 if (jsonObject.getString("status") == "ok"){
-                    println("#### fetchDevices...| for... ")
                     val devices = arrayListOf<Device>()
-                    println("#### fetchDevices...| devices "+devices.toString())
                     val devicesJSONArray = jsonObject.getJSONArray("devicesstatus")  // devices or devicestatus
-                    println("#### fetchDevices...| array "+ devicesJSONArray.toString())
                     for( index in 0 until devicesJSONArray.length()){
                         val deviceJSONObject = devicesJSONArray.getJSONObject(index)
                         val device = Device.fromJSON(deviceJSONObject)
