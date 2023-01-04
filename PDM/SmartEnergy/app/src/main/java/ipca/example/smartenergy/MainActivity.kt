@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
     // model
     var devices     = arrayListOf<Device>()
     val adapter     = DevicesAdapter()
-    var delay       = 15000
-    var current     = LocalDateTime.now()
+    var delay       = 15000                             // numero de segundos para fazer o refresh
+    var current     = LocalDateTime.now()               // data hora atual
     val formatter   = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
     private var handler: Handler = Handler()
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             Toast.makeText(
-                this@MainActivity, "Refreshing devices every 15 seconds",
+                this@MainActivity, "Refreshing devices every " + delay / 1000 +" seconds",
                 Toast.LENGTH_SHORT
             ).show()
         }.also { runnable = it }, delay.toLong())
