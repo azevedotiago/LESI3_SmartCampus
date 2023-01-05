@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     // model
     var devices     = arrayListOf<Device>()
     val adapter     = DevicesAdapter()
-    var delay       = 10000                             // numero de segundos * 1000 para fazer o refresh
+    var delay       = 15000                             // numero de segundos * 1000 para fazer o refresh
     var current     = LocalDateTime.now()               // data hora atual
     val formatter   = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
