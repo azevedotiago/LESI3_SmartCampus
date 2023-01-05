@@ -17,7 +17,6 @@ import org.json.JSONObject
 
 class DeviceWebDetailActivity : AppCompatActivity() {
     var device                      : Device? = null
-    var devicesLog                  = arrayListOf<DeviceLog>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +25,6 @@ class DeviceWebDetailActivity : AppCompatActivity() {
         device = Device.fromJSON(JSONObject(intent.getStringExtra(MainActivity.EXTRA_ARTICLE).toString()))
         //println("#### DeviceWebDetailActivity | device: "+device?.iddevices)
         title = "Poste de iluminação com n.º "+ device?.iddevices
-        /*
-        Backend.fetchDeviceLog(lifecycleScope, "select","devicestatus",device?.iddevices.toString()){
-            println("#### DeviceWebDetailActivity | Backend.fetchDeviceLog ")
-            devicesLog = it
-            adapterLog.notifyDataSetChanged()
-        }*/
 
         // dados relativos ao Device
         findViewById<TextView>(R.id.textViewDeviceID).text          =  device?.iddevices
@@ -91,5 +84,4 @@ class DeviceWebDetailActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

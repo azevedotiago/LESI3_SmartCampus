@@ -20,9 +20,7 @@ object Backend {
 
     fun fetchDevices(scope: CoroutineScope, method: String, `object`: String, callback: (ArrayList<Device>)->Unit )   {
         scope.launch (Dispatchers.IO) {
-            val request = Request.Builder()
-                .url("http://$server/engine.php?method=$method&object=$`object`")
-                .build()
+            val request = Request.Builder().url("http://$server/engine.php?method=$method&object=$`object`").build()
 
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
@@ -47,27 +45,4 @@ object Backend {
             }
         }
     }
-
-    fun fetchImage(scope: CoroutineScope,
-                   url: String,
-                   callback: (Bitmap?)->Unit) {
-        scope.launch{
-            withContext(Dispatchers.IO){
-
-                if (url.contains("http")) {
-                    val request = Request.Builder()
-                        .url(url)
-                        .build()
-                    client.newCall(request).execute().use { response ->
-                        val input = response.body!!.byteStream()
-                        val bitmap = BitmapFactory.decodeStream(input)
-                        withContext(Dispatchers.Main) {
-                            callback(bitmap)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 }
