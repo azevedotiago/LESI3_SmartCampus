@@ -1,12 +1,11 @@
 package ipca.example.smartenergy
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.content.Intent
+import android.text.Editable
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -44,5 +43,36 @@ object Backend {
                 }
             }
         }
+    }
+
+    fun login(
+        scope: CoroutineScope,
+        method: String,
+        username: Editable,
+        password: Editable,
+        callback: (Boolean) -> Unit
+    ) :Boolean  {
+        var loginStatus : Boolean = false
+        scope.launch (Dispatchers.IO) {
+            val request = Request.Builder().url("http://$server/login.php?method=$method&username=$username&password=$password").build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val result =  response.body!!.string()
+                Log.d(MainActivity.TAG, result)
+                //println("#### Backend.login...")
+                val jsonObject = JSONObject(result)
+                //println("#### Backend.login...| jsonObject $jsonObject")
+                if (jsonObject.getString("response") == "true"){
+                    loginStatus = true
+                }
+                scope.launch (Dispatchers.Main){
+                    callback(loginStatus)
+                }
+            }
+        }
+        //println("#### Backend.login...| response: $loginStatus")
+        return loginStatus
     }
 }
