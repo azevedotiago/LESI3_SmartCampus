@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     // model
     var devices     = arrayListOf<Device>()
     val adapter     = DevicesAdapter()
-    var delay       = 15000                             // numero de segundos para fazer o refresh
+    var delay       = 10000                             // numero de segundos * 1000 para fazer o refresh
     var current     = LocalDateTime.now()               // data hora atual
     val formatter   = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
@@ -31,11 +31,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // remover a barra de título da aplicação
-        /*
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }*/
+        // try { this.supportActionBar!!.hide() } catch (e: NullPointerException) { }
+
         title = "Lista de dispositivos | atualizado em " + current.format(formatter)
         setContentView(R.layout.activity_main)
 
@@ -43,7 +40,6 @@ class MainActivity : AppCompatActivity() {
             devices = it
             adapter.notifyDataSetChanged()
         }
-
         val listViewDevice = findViewById<ListView>(R.id.listViewDevices)
         listViewDevice.adapter = adapter
     }
@@ -72,8 +68,6 @@ class MainActivity : AppCompatActivity() {
         runnable?.let { handler.removeCallbacks(it) } //stop handler when activity not visible super.onPause();
     }
 
-
-
     inner class DevicesAdapter : BaseAdapter() {
         override fun getCount(): Int {
            return devices.size
@@ -99,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             val device = devices[position]
             //println("#### MainActivity | devices[position]: "+position%2)
             if (position % 2 == 0 ) {
-                // nas ROWS pares coloca o fundo a cinza claro
+                // nas ROWS pares coloca o fundo (background) a cinza claro
                 rowView.setBackgroundColor(Color.parseColor("#f6f6f6"))
             }
             textViewDeviceID.text = device.iddevices
@@ -115,24 +109,8 @@ class MainActivity : AppCompatActivity() {
                 textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"));
             }
 
-
-            //textViewDeviceStatus.textColors = "@android:color/holo_green_dark"
-
-
-            /*
-            device.status?.let {
-                Backend.fetchImage(lifecycleScope, it){ bitmap ->
-                    imageViewDevice.setImageBitmap(bitmap)
-                }
-            }*/
-
-
             rowView.setOnClickListener {
                 Log.d(TAG, "device:${device.iddevices}")
-                //val intent = Intent(this@MainActivity, ArticleDetailActivity::class.java)
-                //intent.putExtra("title", article.title)
-                //intent.putExtra("body",article.content)
-                //startActivity(intent)
                 //println("#### rowView.setOnClickListner | iddevices: " +device.iddevices )
                 val intent = Intent(this@MainActivity, DeviceWebDetailActivity::class.java)
                 intent.putExtra(EXTRA_ARTICLE, device.toJSON().toString())
@@ -141,7 +119,6 @@ class MainActivity : AppCompatActivity() {
             }
             return rowView
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -159,10 +136,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     companion object {
         const val TAG = "MainActivity"
         const val EXTRA_ARTICLE = "extra_article"
     }
-
 }
