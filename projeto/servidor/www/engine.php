@@ -158,7 +158,6 @@ if($_GET['method']=="select"){                                                  
         $value=strstr($value,'macaddress',true);
         $value=ltrim($value, ':"');
         $value=substr($value, 0,-3);
-        //$sql2 = 'select if(timediff(now(),logs.datetime)<"'.$onlineTime.'","online","offline") as status FROM smartenergy.devices left join logs on devices.iddevices=devices_iddevices where devices_iddevices = "'.$value.'" order by logs.datetime desc limit 1';
         $sql2 = 'select *, if(timediff(now(),datetime)<"'.$onlineTime.'","online","offline") as status from smartenergy.logs';
         $sql2 = $sql2 . ' where devices_iddevices="'.$value.'"';
         $sql2 = $sql2 . ' order by idlogs desc limit 1';
@@ -181,3 +180,4 @@ if($_GET['method']=="select"){                                                  
     }
   }
 }
+?>

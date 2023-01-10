@@ -57,3 +57,4 @@ if($_GET['method']=="login"){
 		}
 	echo json_encode($output);
 	}
+?>
