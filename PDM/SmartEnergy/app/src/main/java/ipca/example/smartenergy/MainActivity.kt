@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             if (position % 2 == 0 ) {
                 // nas ROWS pares coloca o fundo (background) a cinza claro
                 rowView.setBackgroundColor(Color.parseColor("#f6f6f6"))
+                textViewDeviceID.setBackgroundColor(Color.parseColor("#f6f6f6"))
             }
             textViewDeviceID.text = device.iddevices
             textViewDeviceMacAddress.text = device.macaddress
@@ -110,6 +111,8 @@ class MainActivity : AppCompatActivity() {
                 // cor do texto verde para o estado online
                 textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"))
                 // textViewDeviceID -> background consoante a leitura da quantidade de luz solar
+                // grandiente entre Amarelo e Preto
+                // Exemplo: muita luz solar: Amarelo, alguma luz solar: Amarelo Escuro, pouca luz solar ou escuro: Preto
                 var cor: Int = 255-(device.valldrnew!!.toInt() * 255 / 90)
                 if (cor > 205) cor = 205; if (cor < 0 ) cor = 0
                 var r  : Int = cor.toInt()  + 50
