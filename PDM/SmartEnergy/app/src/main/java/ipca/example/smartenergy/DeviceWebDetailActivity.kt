@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import org.json.JSONObject
@@ -53,6 +54,8 @@ class DeviceWebDetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewDeviceLogsStateLed).text    = "ligada"
         findViewById<TextView>(R.id.textViewDeviceLogsValLdr).text          = device?.valldr
         findViewById<TextView>(R.id.textViewDeviceLogsValLdrNew).text       = device?.valldrnew+" %"
+        findViewById<ProgressBar>(R.id.progressBarValLed).progress          = device?.valled?.toInt()!!
+        findViewById<ProgressBar>(R.id.progressBarValldr).progress          = device?.valldrnew?.toInt()!!
         if (device?.valpir == "0")
             findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "não"
         else
