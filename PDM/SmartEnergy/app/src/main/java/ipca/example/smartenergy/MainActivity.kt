@@ -111,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                 textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"))
                 // textViewDeviceID -> background consoante a leitura da quantidade de luz solar
                 var cor: Int = 255-(device.valldrnew!!.toInt() * 255 / 100)
+                if (cor > 205) cor = 205
                 var r  : Int = cor.toInt()  + 50
                 var g  : Int = cor.toInt()  + 50
                 var b  : Int = cor/4.toInt()+ 10
