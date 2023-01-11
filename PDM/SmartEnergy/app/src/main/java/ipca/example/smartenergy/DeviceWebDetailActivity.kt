@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ProgressBar
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import org.json.JSONObject
@@ -60,10 +61,14 @@ class DeviceWebDetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "não"
         else
             findViewById<TextView>(R.id.textViewDeviceLogsValPir).text      = "sim"
-        if (device?.statepir == "0")
+        if (device?.statepir == "0") {
             findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "inativo"
-        else
+            findViewById<Switch>(R.id.switchMovimento).isChecked            = false
+        }
+        else {
             findViewById<TextView>(R.id.textViewDeviceLogsStatePir).text    = "ativo"
+            findViewById<Switch>(R.id.switchMovimento).isChecked            = true
+        }
     }
 
 
