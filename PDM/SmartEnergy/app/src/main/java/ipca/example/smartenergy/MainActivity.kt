@@ -3,6 +3,7 @@ package ipca.example.smartenergy
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Color.rgb
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -91,10 +92,11 @@ class MainActivity : AppCompatActivity() {
             val textViewDeviceStatus = rowView.findViewById<TextView>(R.id.textViewDeviceStatus)
 
             val device = devices[position]
-            //println("#### MainActivity | devices[position]: "+position%2)
+            //println("#### MainActivity | devices[position]: "+poition%2)
             if (position % 2 == 0 ) {
                 // nas ROWS pares coloca o fundo (background) a cinza claro
                 rowView.setBackgroundColor(Color.parseColor("#f6f6f6"))
+                textViewDeviceID.setBackgroundColor(Color.parseColor("#f6f6f6"))
             }
             textViewDeviceID.text = device.iddevices
             textViewDeviceMacAddress.text = device.macaddress
@@ -103,11 +105,26 @@ class MainActivity : AppCompatActivity() {
             textViewDeviceStatus.text = device.status
             if (device.status=="offline") {
                 // cor do texto vermelho para o estado offline
-                textViewDeviceStatus.setTextColor(Color.parseColor("#E91E63"));
+                textViewDeviceStatus.setTextColor(Color.parseColor("#E91E63"))
             } else {
                 // cor do texto verde para o estado online
-                textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"));
+                textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"))
+                // textViewDeviceID -> background consoante a leitura da quantidade de luz solar
+                // grandiente entre Amarelo e Preto
+                // Exemplo: muita luz solar: Amarelo, alguma luz solar: Amarelo Escuro, pouca luz solar ou escuro: Preto
+                var cor: Int = 255-(device.valldrnew!!.toInt() * 255 / 90)
+                if (cor > 205) cor = 205; if (cor < 0 ) cor = 0
+                var r  : Int = cor.toInt()  + 50
+                var g  : Int = cor.toInt()  + 50
+                var b  : Int = cor/4.toInt()
+                if (r > 255) r = 255; if (r<0 ) r = 0
+                if (g > 255) g = 255; if (g<0 ) g = 0
+                if (b > 50 ) b = 50 ; if (b<19) b = 19
+                //println("#### MainActivity | iddevices: "+device.iddevices+" | valldrnew: "+device.valldrnew+" | cor: $cor | r,g,b: $r, $g, $b\"")
+                textViewDeviceID.setBackgroundColor(Color.rgb(r,g,b))
             }
+
+
 
             rowView.setOnClickListener {
                 Log.d(TAG, "device:${device.iddevices}")

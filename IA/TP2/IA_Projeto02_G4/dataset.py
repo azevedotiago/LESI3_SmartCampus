@@ -31,7 +31,7 @@ def csv_handler(file_name):
     return array
 
 # Teste de Leitura do Array
-array = csv_handler('National Universities Rankings.csv')
+array = csv_handler('BankChurners_Teste.csv')
 for i in range(len(array)):
     print('ID: ' + array[i].id)
     print('Name: ' + array[i].name)
