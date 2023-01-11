@@ -106,7 +106,6 @@ class MainActivity : AppCompatActivity() {
             if (device.status=="offline") {
                 // cor do texto vermelho para o estado offline
                 textViewDeviceStatus.setTextColor(Color.parseColor("#E91E63"))
-                textViewDeviceID.setBackgroundColor(Color.rgb(255,255,255))
             } else {
                 // cor do texto verde para o estado online
                 textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"))
