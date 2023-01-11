@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                 // cor do texto verde para o estado online
                 textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"))
                 // textViewDeviceID -> background consoante a leitura da quantidade de luz solar
-                var cor: Int = 255-(device.valldrnew!!.toInt() * 255 / 100)
+                var cor: Int = 255-(device.valldrnew!!.toInt() * 255 / 90)
                 if (cor > 205) cor = 205; if (cor < 0 ) cor = 0
                 var r  : Int = cor.toInt()  + 50
                 var g  : Int = cor.toInt()  + 50
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 if (r > 255) r = 255; if (r<0 ) r = 0
                 if (g > 255) g = 255; if (g<0 ) g = 0
                 if (b > 50 ) b = 50 ; if (b<19) b = 19
-                println("#### MainActivity | iddevices: "+device.iddevices+" | valldrnew: "+device.valldrnew+" | cor: $cor | r,g,b: $r, $g, $b\"")
+                //println("#### MainActivity | iddevices: "+device.iddevices+" | valldrnew: "+device.valldrnew+" | cor: $cor | r,g,b: $r, $g, $b\"")
                 textViewDeviceID.setBackgroundColor(Color.rgb(r,g,b))
             }
 
