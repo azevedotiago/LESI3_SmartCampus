@@ -3,6 +3,7 @@ package ipca.example.smartenergy
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Color.rgb
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             val textViewDeviceStatus = rowView.findViewById<TextView>(R.id.textViewDeviceStatus)
 
             val device = devices[position]
-            //println("#### MainActivity | devices[position]: "+position%2)
+            //println("#### MainActivity | devices[position]: "+poition%2)
             if (position % 2 == 0 ) {
                 // nas ROWS pares coloca o fundo (background) a cinza claro
                 rowView.setBackgroundColor(Color.parseColor("#f6f6f6"))
@@ -103,11 +104,21 @@ class MainActivity : AppCompatActivity() {
             textViewDeviceStatus.text = device.status
             if (device.status=="offline") {
                 // cor do texto vermelho para o estado offline
-                textViewDeviceStatus.setTextColor(Color.parseColor("#E91E63"));
+                textViewDeviceStatus.setTextColor(Color.parseColor("#E91E63"))
+                textViewDeviceID.setBackgroundColor(Color.rgb(255,255,255))
             } else {
                 // cor do texto verde para o estado online
-                textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"));
+                textViewDeviceStatus.setTextColor(Color.parseColor("#228B22"))
+                // textViewDeviceID -> background consoante a leitura da quantidade de luz solar
+                var cor: Int = 255 - device.valldrnew!!.toInt()
+                var r : Int = cor.toInt()
+                var g : Int = cor.toInt()
+                var b : Int = cor/4.toInt()
+                println("#### MainActivity | iddevices: "+device.iddevices+" | valldrnew: "+device.valldrnew+ " | r,g,b: $r, $g, $b\"")
+                textViewDeviceID.setBackgroundColor(Color.rgb(r,g,b))
             }
+
+
 
             rowView.setOnClickListener {
                 Log.d(TAG, "device:${device.iddevices}")
