@@ -3,6 +3,12 @@ from collections import defaultdict
 from statistics import stdev
 from qpsolvers import solve_qp
 
+#numc-> NumeroCliente; tpc-> TipoCliente; gen-> Genero; dep-> NumeroDependentes; edu-> NivelEducacao; civil-> EstadoCivil;
+#sal-> IntervaloSalarial; cart-> TipoCartao; meses-> NumeroMesesCliente; tr-> TotalRelacao; inat-> NumeroMesesInativo;
+#lc-> LimiteCartao; baltot-> BalancoTotal; medcomp-> MediaCompra; mudtot-> ValorMudado; tottrans-> ValorTransferidoTotal;
+#tottransct-> ValorVezesTransferido; mudtotct-> ValorVezesTransferido(Q4-Q1); utracio-> RacioUtilizacao;
+#nb1-> NaiveBays1; nb2-> NaiveBays2
+
 # Criação da Class DataSet
 class DataSet:
     def __init__(self, numc=int, tpc= "", idade=int, gen="", dep=int, edu="", civil="", sal="", cart="", 
