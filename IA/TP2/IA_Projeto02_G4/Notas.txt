@@ -1,6 +1,6 @@
 Associação-> apriori
-Classificação-> 
-Agrupamento->
+Classificação-> k-nn/arvore de decisão/naive bays
+Agrupamento-> Clustering/k-means
 
 ------------------------------------
 
