@@ -6,7 +6,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 import pandas as pd 
 
 # Import dataset:
-url = "C:\LESI3_SmartCampus\IA\TP2\IA_Projeto02_G4\iris.csv"
+url = "ex\iris.csv"
 
 # Assign column names to dataset:
 names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'Class']

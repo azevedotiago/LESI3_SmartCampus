@@ -20,7 +20,7 @@ def normalizar(input, columns):
     
     
 # Import dataset:
-url = "C:\LESI3_SmartCampus\IA\TP2\IA_Projeto02_G4\BankChurners.csv"
+url = "BankChurners.csv"
 
 # Convert dataset to a pandas dataframe:
 dataset = pd.read_csv(url) 
