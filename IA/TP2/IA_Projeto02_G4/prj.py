@@ -31,9 +31,9 @@ def tabela_normalizar(tabela_mapeamento, tabela, tipo=True):
     return tabela
     
 # Import dataset:
-url = "C:\LESI3_SmartCampus\IA\TP2\IA_Projeto02_G4\BankChurners.csv"
-url_teste = "C:\LESI3_SmartCampus\IA\TP2\IA_Projeto02_G4\BankChurnersTestFiltrado.csv"
-url_output = "C:\LESI3_SmartCampus\IA\TP2\IA_Projeto02_G4\BankChurnersTestOutput.csv"
+url = "BankChurners.csv"
+url_teste = "BankChurnersTestFiltrado.csv"
+url_output = "BankChurnersTestOutput.csv"
 
 # Convert dataset to a pandas dataframe:
 dataset = pd.read_csv(url) 
