@@ -4,12 +4,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from apyori import apriori
 
-Data = pd.read_csv('BankChurners.csv', header = None)
+Data = pd.read_csv('BankChurners.csv')
 
 # Intializing the list
 transacts = []
+
 # populating a list of transactions
-for i in range(0, 7501): 
+for i in range(0, 100): 
   transacts.append([str(Data.values[i,j]) for j in range(0, 20)])
 
 rule = apriori(transactions = transacts, min_support = 0.003, min_confidence = 0.2, min_lift = 3, min_length = 2, max_length = 2)
@@ -24,6 +25,6 @@ def inspect(output):
     confidence = [result[2][0][2] for result in output]
     lift       = [result[2][0][3] for result in output]
     return list(zip(lhs, rhs, support, confidence, lift))
-output_DataFrame = pd.DataFrame(inspect(results), columns = ['Left_Hand_Side', 'Right_Hand_Side', 'Support', 'Confidence', 'Lift'])
+output_DataFrame = pd.DataFrame(inspect(results), columns = ['Customer_Age', 'Attrition_Flag','Dependent_count', 'Months_on_book', 'Total_Relationship_Count', 'Avg_Open_To_Buy'])
 
-output_DataFrame.nlargest(n = 10, columns = 'Lift')
+output_DataFrame.nlargest(n = 10, columns = 'Avg_Open_To_Buy')
