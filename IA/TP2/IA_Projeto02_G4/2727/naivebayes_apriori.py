@@ -34,6 +34,8 @@ classifier.fit(x, y)
 predictions = classifier.predict(x)
 print("\n### PREDICTIONS:")
 print(predictions)
+
 #Evaluating the model
 accuracy = accuracy_score(y, predictions)
 print("Accuracy: ", accuracy)
+
