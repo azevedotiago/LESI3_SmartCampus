@@ -9,7 +9,7 @@ Data = pd.read_csv('BankChurners.csv') #, header = None)
 # Intializing the list
 transacts = []
 # populating a list of transactions
-for i in range(0, 10127): 
+for i in range(0, 500): 
   transacts.append([str(Data.values[i,j]) for j in range(0, 20)])
 
 rule = apriori(transactions = transacts, min_support = 0.003, min_confidence = 0.2, min_lift = 3, min_length = 2, max_length = 2)
