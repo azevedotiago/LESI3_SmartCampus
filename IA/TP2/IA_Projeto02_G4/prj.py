@@ -104,5 +104,5 @@ dataset_teste.insert(len(dataset_teste.columns),"Income_Category_predict",y_test
 dataset_teste.insert(len(dataset_teste.columns),"Income_Category_original",y)
 
 
-table_print("Dataset Final", dataset_teste)
-dataset_teste.to_csv(url_output)
+#table_print("Dataset Final", dataset_teste)
+#dataset_teste.to_csv(url_output)
