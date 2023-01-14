@@ -23,7 +23,7 @@ print(X)
 
 print("\n### K-means");
 # Train k-means model
-kmeans = KMeans(n_clusters=2,n_init=10,algorithm="lloyd", max_iter=1000000)
+kmeans = KMeans(n_clusters=3,n_init=10,algorithm="lloyd", max_iter=1000000)
 kmeans.fit(X)
 print(kmeans)
 
