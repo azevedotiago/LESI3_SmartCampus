@@ -1,0 +1,56 @@
+This code performs association rule mining on a dataset called "BankChurners.csv" using the Apriori algorithm. The dataset is first loaded into a Pandas DataFrame and then a list of transactions is created from the data. The apriori function is then used to mine the association rules from the list of transactions, with the minimum support, minimum confidence, minimum lift, minimum and maximum length of the rules specified as input parameters. The mined rules are then converted into a list and passed to the inspect() function which formats it into a pandas dataframe with columns 'Left_Hand_Side', 'Right_Hand_Side', 'Support', 'Confidence', 'Lift'.
+The final output is the top 10 rules with highest lift using nlargest(n = 10, columns = 'Lift').
+The final output is a pandas DataFrame containing the association rules, where each row represents a rule, with the columns representing the left-hand side, right-hand side, support, confidence, and lift of each rule.
+The 'Support' column shows the percentage of transactions in which the rule occurs, the 'Confidence' column indicates the percentage of the time that the rule is true, and the 'Lift' column represents the increase in the ratio of the occurrence of the rule compared to its expected occurrence if the items were independent.
+
+
+
+
+explain this output:
+    Left_Hand_Side Right_Hand_Side  Support  Confidence      Lift
+0            0.364         $120K +    0.004    0.666667  6.535948
+1            0.526         $120K +    0.004    1.000000  9.803922
+2            0.576         $120K +    0.004    1.000000  9.803922
+3            0.722         $120K +    0.004    0.400000  3.921569
+4            0.727         $120K +    0.006    0.333333  3.267974
+..             ...             ...      ...         ...       ...
+582            837     High School    0.004    0.666667  3.174603
+583          865.0      Uneducated    0.004    1.000000  5.882353
+584            886        Graduate    0.004    1.000000  3.105590
+585            895        Graduate    0.004    1.000000  3.105590
+586            978        Graduate    0.004    1.000000  3.105590
+
+[587 rows x 5 columns]
+
+
+This output is a DataFrame containing the association rules mined from the dataset using the Apriori algorithm. Each row represents a different rule and the columns represent the following information:
+
+Left_Hand_Side: The left-hand side of the rule, which is the antecedent or the "if" part of the rule.
+Right_Hand_Side: The right-hand side of the rule, which is the consequent or the "then" part of the rule.
+Support: The percentage of transactions in which the rule occurs.
+Confidence: The percentage of the time that the rule is true, i.e. the percentage of transactions in which the left-hand side also contains the right-hand side.
+Lift: The increase in the ratio of the occurrence of the rule compared to its expected occurrence if the items were independent.
+For example, the first row of the output shows that 0.364% of the transactions contain the left-hand side (antecedent) and right-hand side (consequent) of the rule, the rule is true in 66.6667% of the time, the lift of this rule is 6.535948, which means that this rule is 6.535948 times more likely to occur than if the left-hand side and right-hand side were independent.
+
+It's worth noting that the values in the Left_Hand_Side and Right_Hand_Side are encoded in a way that may not be immediately interpretable, it seems like the data has been encoded in some way, so it's hard to say what these values represent without more context.
+
+
+EM PORTUGUÊS:
+
+Esse código executa a mineração de regra de associação em um conjunto de dados chamado "BankChurners.csv" usando o algoritmo Apriori. O conjunto de dados é carregado primeiro em um Pandas DataFrame e, em seguida, uma lista de transações é criada a partir dos dados. A função a priori é então usada para minerar as regras de associação da lista de transações, com suporte mínimo, confiança mínima, elevação mínima, comprimento mínimo e máximo das regras especificadas como parâmetros de entrada. As regras extraídas são então convertidas em uma lista e passadas para a função inspect() que formata em um dataframe pandas com as colunas 'Left_Hand_Side', 'Right_Hand_Side', 'Support', 'Confidence', 'Lift'.
+A saída final são as 10 principais regras com maior elevação usando nlargest(n = 10, colunas = 'Lift').
+A saída final é um DataFrame pandas contendo as regras de associação, onde cada linha representa uma regra, com as colunas representando o lado esquerdo, lado direito, suporte, confiança e aumento de cada regra.
+A coluna 'Suporte' mostra a porcentagem de transações em que a regra ocorre, a coluna 'Confiança' indica a porcentagem do tempo que a regra é verdadeira e a coluna 'Lift' representa o aumento na proporção da ocorrência da regra regra comparada com sua ocorrência esperada se os itens fossem independentes.
+
+
+
+Este output é um DataFrame contendo as regras de associação mineradas a partir do conjunto de dados usando o algoritmo Apriori. Cada linha representa uma regra diferente e as colunas representam as seguintes informações:
+
+Left_Hand_Side: A parte esquerda da regra, que é a antecedente ou a parte "se" da regra.
+Right_Hand_Side: A parte direita da regra, que é a consequente ou a parte "então" da regra.
+Suporte: A porcentagem de transações em que a regra ocorre.
+Confiança: A porcentagem de vezes que a regra é verdadeira, ou seja, a porcentagem de transações em que a parte esquerda também contém a parte direita.
+Elevação: Aumento na razão de ocorrência da regra em relação à sua ocorrência esperada se os itens fossem independentes.
+Por exemplo, a primeira linha do output mostra que 0,364% das transações contêm a parte esquerda (antecedente) e a parte direita (consequente) da regra, a regra é verdadeira em 66,6667% das vezes, a elevação desta regra é 6,535948, o que significa que esta regra é 6,535948 vezes mais provável de ocorrer do que se a parte esquerda e a parte direita fossem independentes.
+
+Vale a pena notar que os valores em Left_Hand_Side e Right_Hand_Side estão codificados de uma forma que pode não ser imediatamente interpretável, parece que os dados foram codificados de alguma forma, então é difícil dizer o que esses valores representam sem mais contexto.
